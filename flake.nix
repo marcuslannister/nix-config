@@ -20,7 +20,7 @@
     };
 
     dotfiles = {
-      url = "path:/Users/ken/dotfiles";
+      url = "github:marcuslannister/dotfiles";
       flake = false;
     };
   };

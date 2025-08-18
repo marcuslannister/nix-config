@@ -25,14 +25,17 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1755529679,
-        "narHash": "sha256-4HMyGGonXobL2S1a3jzDw2JdYaSWReA6gLsbWL3pInc=",
-        "path": "/Users/ken/dotfiles",
-        "type": "path"
+        "lastModified": 1755573048,
+        "narHash": "sha256-EoHUwxhlK8viEI/8pb4U4V6y80MCJio0X4tINpVJqFU=",
+        "owner": "marcuslannister",
+        "repo": "dotfiles",
+        "rev": "f1c023dfc9436c8ef390b7a7f0b51c50adc47bc2",
+        "type": "github"
       },
       "original": {
-        "path": "/Users/ken/dotfiles",
-        "type": "path"
+        "owner": "marcuslannister",
+        "repo": "dotfiles",
+        "type": "github"
       }
     },
     "flake-compat": {
