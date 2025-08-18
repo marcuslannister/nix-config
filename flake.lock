@@ -25,8 +25,8 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1755529679,
-        "narHash": "sha256-4HMyGGonXobL2S1a3jzDw2JdYaSWReA6gLsbWL3pInc=",
+        "lastModified": 1755531011,
+        "narHash": "sha256-rbw53KuRjZLgehBkSv3spJqDBvGFR+EC/DlnTnzWKSY=",
         "path": "/Users/ken/dotfiles",
         "type": "path"
       },
