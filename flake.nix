@@ -21,7 +21,7 @@
 
     dotfiles = {
       url = "path:/Users/user/dotfiles";
-      flake = false;
+      flake = true;
     };
   };
 
