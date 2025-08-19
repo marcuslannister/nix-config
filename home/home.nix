@@ -84,7 +84,7 @@ in
     "zsh/.zshrc.personal".source = mkDotfileSource ".config/zsh/.zshrc.personal";
     "zsh/.zshrc.fzf".source = mkDotfileSource ".config/zsh/.zshrc.fzf";
 
-    "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
-    "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
+    "kitty/kitty.conf".source = "${dotfiles}/.config/kitty/kitty.conf";
+    "kitty/current-theme.conf".source = "${dotfiles}/.config/kitty/current-theme.conf";
   };
 }
