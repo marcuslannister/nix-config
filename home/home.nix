@@ -83,5 +83,8 @@ in
     # Don't forget to run zompile after change these files
     "zsh/.zshrc.personal".source = mkDotfileSource ".config/zsh/.zshrc.personal";
     "zsh/.zshrc.fzf".source = mkDotfileSource ".config/zsh/.zshrc.fzf";
+
+    "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
+    "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
   };
 }
