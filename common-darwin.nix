@@ -34,8 +34,6 @@
     # base
     vim
     git
-    python3
-    ruby # for ~/.scm_breeze/install.sh
     jujutsu
 
     # utils
@@ -63,6 +61,15 @@
     pandoc
     tectonic
     # pdflatex
+
+    # Blog
+    hugo
+
+    # Program Language
+    python3
+    ruby # for ~/.scm_breeze/install.sh
+    go
+    uv
   ];
 
   # User configuration for Darwin
