@@ -5,6 +5,7 @@
     # Use consistent nixpkgs for all platforms
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
@@ -25,7 +26,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles, nixpkgs-unstable }:
   let
     # System definitions
     systems = {
@@ -52,6 +53,13 @@
     mkDarwinConfig = { system ? systems.darwin, modules ? [] }:
       nix-darwin.lib.darwinSystem {
         inherit system;
+
+        # Add specialArgs here with the correct input name
+        specialArgs = {
+          unstable = nixpkgs-unstable.legacyPackages.${system};
+          inherit dotfiles;
+        };
+
         modules = [
           # Base Darwin configuration
           sharedModules.common-darwin
@@ -95,6 +103,7 @@
     mkNixosConfig = { system, modules ? [], hostname }:
       nixpkgs.lib.nixosSystem {
         inherit system;
+
         modules = [
           sharedModules.common
           # sharedModules.nixos
