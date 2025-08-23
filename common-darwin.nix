@@ -19,15 +19,17 @@
   };
 
   # fixme: patch from https://github.com/NixOS/nixpkgs/issues/339576#issuecomment-2574076670
-  nixpkgs.overlays = [
-    (final: prev:
-      {
-        bitwarden-cli = prev.bitwarden-cli.overrideAttrs (oldAttrs:
-          { nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ prev.llvmPackages_18.stdenv.cc ];
-            stdenv = prev.llvmPackages_18.stdenv;
-          });
-      })
-  ];
+  # nixpkgs.overlays = [
+  #   (final: prev:
+  #     {
+  #       bitwarden-cli = prev.bitwarden-cli.overrideAttrs (oldAttrs:
+  #         { nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ prev.llvmPackages_18.stdenv.cc ];
+  #           stdenv = prev.llvmPackages_18.stdenv;
+  #         });
+  #     })
+  # ];
+
+
 
   # Environment packages
   environment.systemPackages = with pkgs; [
@@ -52,7 +54,7 @@
     # misc
     zoxide
     delta
-    bitwarden-cli
+    # bitwarden-cli
 
     # network
     iperf3
@@ -63,6 +65,8 @@
     pandoc
     tectonic
     # pdflatex
+
+
   ];
 
   # User configuration for Darwin
