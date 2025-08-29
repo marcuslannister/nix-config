@@ -70,6 +70,7 @@
     ruby # for ~/.scm_breeze/install.sh
     go
     uv
+    nodejs
   ];
 
   # User configuration for Darwin
