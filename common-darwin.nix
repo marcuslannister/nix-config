@@ -29,7 +29,7 @@
   #     })
   # ];
 
-
+  nixpkgs.config.allowUnfree = true;
 
   # Environment packages
   environment.systemPackages = with pkgs; [
@@ -65,6 +65,9 @@
     pandoc
     tectonic
     # pdflatex
+    # aspell
+    # aspellDicts.en
+    (aspellWithDicts (dicts: with dicts; [en en-computers en-science]))
 
     # cmake
     unstable.syncthing
