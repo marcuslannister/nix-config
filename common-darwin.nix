@@ -72,6 +72,9 @@
     # cmake
     # unstable.syncthing
 
+    # docker
+    docker-compose
+
   ];
 
   # # 1. Enable the Syncthing service for the system
