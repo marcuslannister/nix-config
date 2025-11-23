@@ -38,7 +38,7 @@
     git
     python3
     ruby # for ~/.scm_breeze/install.sh
-    jujutsu
+    # jujutsu
 
     # utils
     eza # A modern replacement for ‘ls’
