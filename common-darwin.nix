@@ -39,6 +39,7 @@
     python3
     ruby # for ~/.scm_breeze/install.sh
     # jujutsu
+    nodejs_24
 
     # utils
     eza # A modern replacement for ‘ls’
