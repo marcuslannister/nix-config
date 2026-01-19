@@ -45,6 +45,7 @@
     eza # A modern replacement for ‘ls’
     ripgrep # recursively searches directories for a regex pattern
     tmux
+    zellij
 
     # files
     duf
