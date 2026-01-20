@@ -46,6 +46,7 @@
     ripgrep # recursively searches directories for a regex pattern
     tmux
     zellij
+    ncdu
 
     # files
     duf
