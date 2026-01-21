@@ -36,10 +36,18 @@
     # base
     vim
     git
-    python3
     ruby # for ~/.scm_breeze/install.sh
     # jujutsu
     nodejs_24
+
+
+    # python
+    (python3.withPackages (ps: with ps; [
+      pip
+      setuptools
+      wheel
+    ]))
+
 
     # utils
     eza # A modern replacement for ‘ls’
