@@ -15,10 +15,18 @@
   programs.git.enable = true;
 
   environment.systemPackages = with pkgs; [
+    # base
     vim
-    eza
+    git
+
+    # utils
+    eza # A modern replacement for ‘ls’
+    ripgrep # recursively searches directories for a regex pattern
+    zellij
+    ncdu
+
+    # misc
     zoxide
-    tmux
     delta
   ];
 
