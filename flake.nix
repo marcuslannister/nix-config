@@ -198,17 +198,17 @@
     # === Deploy-rs Configuration ===
     deploy = {
       nodes = {
-        vm16-nixos = {
-          hostname = "vm16-nixos";
-          sshUser = "user";
-          remoteBuild = true;
+        # vm16-nixos = {
+        #   hostname = "vm16-nixos";
+        #   sshUser = "user";
+        #   remoteBuild = true;
 
-          profiles.system = {
-            user = "root";
-            path = deploy-rs.lib.${systems.linux}.activate.nixos
-              self.nixosConfigurations.vm16-nixos;
-          };
-        };
+        #   profiles.system = {
+        #     user = "root";
+        #     path = deploy-rs.lib.${systems.linux}.activate.nixos
+        #       self.nixosConfigurations.vm16-nixos;
+        #   };
+        # };
 
         # nix95 = {
         #   hostname = "nix95";
@@ -223,21 +223,22 @@
         # };
 
         # Debian node (home-manager only)
-        # vm99 = {
-        #   hostname = "vm99";
-        #   sshUser = "user";
-        #   remoteBuild = true;
-        #   # modules = [
-        #   #   {
-        #   #     home-manager.users.user = import ./home-debian.nix;
-        #   #   }
-        #   # ];
-        #
-        #   profiles.home = {
-        #     user = "user";
-        #     path = deploy-rs.lib.${systems.linux}.activate.home-manager
-        #       self.homeConfigurations.user-debian;
-        #   };
+        vm99 = {
+          hostname = "vm99";
+          sshUser = "user";
+          remoteBuild = true;
+          # modules = [
+          #   {
+          #     home-manager.users.user = import ./home-debian.nix;
+          #   }
+          # ];
+
+          profiles.home = {
+            user = "user";
+            path = deploy-rs.lib.${systems.linux}.activate.home-manager
+              self.homeConfigurations.user-debian;
+          };
+         };
       };
     };
 

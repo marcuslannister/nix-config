@@ -18,6 +18,7 @@ in
   # === Basic Configuration ===
   home = {
     username = "user";
+    homeDirectory = if pkgs.stdenv.isDarwin then "/Users/user" else "/home/user";
     stateVersion = "25.05";
   };
 
