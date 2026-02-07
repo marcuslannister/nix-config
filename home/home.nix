@@ -87,5 +87,8 @@ in
 
     "kitty/kitty.conf".source = "${dotfiles}/.config/kitty/kitty.conf";
     "kitty/current-theme.conf".source = "${dotfiles}/.config/kitty/current-theme.conf";
+
+    "zellij/config.kdl".source = "${dotfiles}/.config/zellij/config.kdl";
+    "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
   };
 }
