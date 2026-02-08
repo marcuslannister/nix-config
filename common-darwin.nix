@@ -71,6 +71,7 @@
     iperf3
     croc
     axel
+    speedtest-cli
 
     # document
     pandoc
