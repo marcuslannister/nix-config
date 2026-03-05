@@ -163,6 +163,12 @@
         extraSpecialArgs = { inherit dotfiles; };
       };
 
+      ken-debian-ai = mkHomeConfig {
+        system = systems.linux;
+        modules = [ ./home/home-debian-ai.nix ];
+        extraSpecialArgs = { inherit dotfiles; };
+      };
+
       # Darwin home-manager (if not using darwinModules)
       ken-darwin = mkHomeConfig {
         system = systems.darwin;
@@ -223,8 +229,8 @@
         # };
 
         # Debian node (home-manager only)
-        vm99 = {
-          hostname = "vm99";
+        vm98 = {
+          hostname = "vm98";
           sshUser = "ken";
           remoteBuild = true;
           # modules = [
@@ -237,6 +243,24 @@
             user = "ken";
             path = deploy-rs.lib.${systems.linux}.activate.home-manager
               self.homeConfigurations.ken-debian;
+          };
+         };
+
+        # Debian AI node (home-manager only)
+        vm97 = {
+          hostname = "vm97";
+          sshUser = "ken";
+          remoteBuild = true;
+          # modules = [
+          #   {
+          #     home-manager.users.ken = import ./home-debian.nix;
+          #   }
+          # ];
+
+          profiles.home = {
+            user = "ken";
+            path = deploy-rs.lib.${systems.linux}.activate.home-manager
+              self.homeConfigurations.ken-debian-ai;
           };
          };
       };
