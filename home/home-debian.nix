@@ -53,6 +53,7 @@
     croc
     axel
     speedtest-cli
+    openiscsi
 
     # document
     pandoc
