@@ -41,6 +41,7 @@
     dust
     fzf
     fd
+    jq
 
     # misc
     zoxide
