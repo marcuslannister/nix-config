@@ -61,6 +61,7 @@
     dust
     fzf
     fd
+    sd
 
     # misc
     zoxide
