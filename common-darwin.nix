@@ -39,7 +39,7 @@
     ruby # for ~/.scm_breeze/install.sh
     # jujutsu
     nodejs_24
-
+    shellcheck
 
     # python
     (python3.withPackages (ps: with ps; [
@@ -47,7 +47,6 @@
       setuptools
       wheel
     ]))
-
 
     # utils
     eza # A modern replacement for ‘ls’

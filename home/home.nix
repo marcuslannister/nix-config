@@ -90,5 +90,6 @@ in
 
     "zellij/config.kdl".source = "${dotfiles}/.config/zellij/config.kdl";
     "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
+    "zellij/layouts/default.kdl".source = "${dotfiles}/.config/zellij/layouts/default.kdl";
   };
 }
