@@ -43,7 +43,7 @@ in
     ".gitconfig".source = mkDotfileSource ".gitconfig";
 
     ".local/bin/git-ediff-tui" = {
-      source = mkDotfileSource "local/bin/git-ediff-tui";
+      source = "${dotfiles}/local/bin/git-ediff-tui";
       executable = true;
     };
 
