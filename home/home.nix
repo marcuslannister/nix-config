@@ -40,7 +40,12 @@ in
     ".zimrc".source = "${dotfiles}/.zimrc";
 
     # Version Control
-    ".gitconfig".source = "${dotfiles}/.gitconfig";
+    ".gitconfig".source = mkDotfileSource ".gitconfig";
+
+    ".local/bin/git-ediff-tui" = {
+      source = mkDotfileSource "local/bin/git-ediff-tui";
+      executable = true;
+    };
 
     # Vim
     ".vimrc".source = "${dotfiles}/.vimrc";
