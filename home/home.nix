@@ -42,6 +42,9 @@ in
     # Version Control
     ".gitconfig".source = mkDotfileSource ".gitconfig";
 
+    # Package managers
+    ".npmrc".source = mkDotfileSource ".npmrc";
+
     ".local/bin/git-ediff-tui" = {
       source = "${dotfiles}/local/bin/git-ediff-tui";
       executable = true;
