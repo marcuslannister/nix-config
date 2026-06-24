@@ -135,6 +135,7 @@
     darwinConfigurations = {
       "Ken-MM-M4" = macMiniConfig; # Make sure the host name is same
       "Ken-MM-M1" = macMiniConfig;
+      "Ken-MBP-M1" = macMiniConfig;
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
 
       # Intel Mac (if you have one)
