@@ -135,6 +135,7 @@
     darwinConfigurations = {
       "mac-mini-m4" = macMiniConfig; # Make sure the host name is same
       "mac-mini-m1" = macMiniConfig;
+      "macbook-pro-m1" = macMiniConfig;
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
 
       # Intel Mac (if you have one)
