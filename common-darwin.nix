@@ -44,6 +44,7 @@
     # python
     (python3.withPackages (ps: with ps; [
       pip
+      pyyaml
       setuptools
       wheel
     ]))
