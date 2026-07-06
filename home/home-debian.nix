@@ -20,7 +20,6 @@
     # jujutsu
     nodejs_24
 
-
     # python
     (python3.withPackages (ps: with ps; [
       pip
@@ -68,5 +67,6 @@
 
     # docker
     docker-compose
+    sqlite
   ];
 }
