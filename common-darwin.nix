@@ -48,6 +48,7 @@
       setuptools
       wheel
     ]))
+    uv
 
     # utils
     eza # A modern replacement for ‘ls’
@@ -87,6 +88,7 @@
 
     # docker
     docker-compose
+    sqlite
 
   ];
 
