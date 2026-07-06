@@ -94,8 +94,8 @@ in
     "zsh/.zshrc.fzf".source = mkDotfileSource ".config/zsh/.zshrc.fzf";
     "otty".source = mkDotfileSource ".config/otty";
 
-    "kitty/kitty.conf".source = "${dotfiles}/.config/kitty/kitty.conf";
-    "kitty/current-theme.conf".source = "${dotfiles}/.config/kitty/current-theme.conf";
+    "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
+    "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
 
     "zellij/config.kdl".source = "${dotfiles}/.config/zellij/config.kdl";
     "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
