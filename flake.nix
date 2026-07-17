@@ -24,9 +24,11 @@
       url = "github:marcuslannister/dotfiles";
       flake = false;
     };
+
+    zjstatus.url = "github:dj95/zjstatus";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles, nixpkgs-unstable }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles, nixpkgs-unstable, zjstatus }:
   let
     # System definitions
     systems = {
@@ -35,10 +37,15 @@
       linux = "x86_64-linux";
     };
 
+    zjstatusOverlay = final: prev: {
+      zjstatus = zjstatus.packages.${prev.system}.default;
+    };
+
     # Helper function to create pkgs for each system
     mkPkgs = system: nixpkgsInput: import nixpkgsInput {
       inherit system;
       config.allowUnfree = true;
+      overlays = [ zjstatusOverlay ];
     };
 
     # Shared configuration modules
@@ -65,6 +72,7 @@
           sharedModules.common-darwin
           {
             nixpkgs.hostPlatform = system;
+            nixpkgs.overlays = [ zjstatusOverlay ];
           }
 
           # Home Manager integration
@@ -125,6 +133,7 @@
           {
             networking.hostName = hostname;
             nix.settings.trusted-users = [ "root" "user" ];
+            nixpkgs.overlays = [ zjstatusOverlay ];
           }
         ] ++ modules;
       };
