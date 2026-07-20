@@ -38,7 +38,11 @@
     };
 
     zjstatusOverlay = final: prev: {
-      zjstatus = zjstatus.packages.${prev.system}.default;
+      zjstatus = zjstatus.packages.${prev.system}.default.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          "${dotfiles}/.config/zellij/patches/zjstatus-focused-pane-title.patch"
+        ];
+      });
     };
 
     # Helper function to create pkgs for each system
