@@ -12,15 +12,6 @@ let
     if pkgs.stdenv.isDarwin
     then mkDotfileLink file
     else "${dotfiles}/${file}";
-
-  zjstatusReleaseUrl = "https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm";
-  zellijLayout = builtins.readFile "${dotfiles}/.config/zellij/layouts/default.kdl";
-  zellijLayoutWithNixPlugin =
-    assert pkgs.lib.strings.hasInfix zjstatusReleaseUrl zellijLayout;
-    builtins.replaceStrings
-      [ zjstatusReleaseUrl ]
-      [ "file:${pkgs.zjstatus}/bin/zjstatus.wasm" ]
-      zellijLayout;
 in
 
 {
@@ -107,7 +98,8 @@ in
     "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
 
     "zellij/config.kdl".source = mkDotfileSource "/.config/zellij/config.kdl";
+    "zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
     "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
-    "zellij/layouts/default.kdl".text = zellijLayoutWithNixPlugin;
+    "zellij/layouts/default.kdl".source = mkDotfileSource ".config/zellij/layouts/default.kdl";
   };
 }

@@ -5,8 +5,15 @@ set -eu
 repo_root=${0:A:h:h}
 flake_ref=$repo_root
 home_dir=$(nix eval --raw "$flake_ref#darwinConfigurations.default.config.home-manager.users.user.home.homeDirectory")
-layout_attr="darwinConfigurations.default.config.home-manager.users.user.home.file.\"$home_dir/.config/zellij/layouts/default.kdl\".text"
-actual_layout=$(nix eval --raw "$flake_ref#$layout_attr")
+layout_key="$home_dir/.config/zellij/layouts/default.kdl"
+plugin_key="$home_dir/.config/zellij/plugins/zjstatus.wasm"
+layout_source=$(nix build --no-link --print-out-paths --impure --expr '
+  (builtins.getFlake "'"$repo_root"'")
+    .darwinConfigurations.default.config.home-manager.users.user.home.file
+    ."'"$layout_key"'".source
+')
+plugin_source=$(nix eval --raw "$flake_ref#darwinConfigurations.default.config.home-manager.users.user.home.file.\"$plugin_key\".source")
+actual_layout=$(<"$layout_source")
 upstream_path=$(nix eval --impure --raw --expr '
   let
     flake = builtins.getFlake "'"$repo_root"'";
@@ -14,18 +21,22 @@ upstream_path=$(nix eval --impure --raw --expr '
   in
     (builtins.getAttr system flake.inputs.zjstatus.packages).default.outPath
 ')
-expected_location="file:$upstream_path/bin/zjstatus.wasm"
-actual_location=$(print -r -- "$actual_layout" | rg -o 'file:[^" ]+/bin/zjstatus\.wasm' | head -1)
+expected_source="$upstream_path/bin/zjstatus.wasm"
+expected_location='file:~/.config/zellij/plugins/zjstatus.wasm'
+actual_location=$(print -r -- "$actual_layout" | rg -o 'plugin location="[^"]+' | head -1)
+actual_location=${actual_location#*\"}
 
 if [[ $actual_location != $expected_location ]]; then
-  print -u2 -- "expected upstream local plugin: $expected_location"
-  print -u2 -- "actual plugin: $actual_location"
+  print -u2 -- "expected stable local plugin location: $expected_location"
+  print -u2 -- "actual plugin location: $actual_location"
   exit 1
 fi
 
-if print -r -- "$actual_layout" | rg -q 'plugin location="https://'; then
-  print -u2 -- 'generated layout still uses a remote plugin URL'
+if [[ $plugin_source != $expected_source ]]; then
+  print -u2 -- "expected upstream plugin source: $expected_source"
+  print -u2 -- "actual plugin source: $plugin_source"
   exit 1
 fi
 
-print -- "generated layout uses upstream local plugin: $expected_location"
+print -- "layout uses stable local plugin: $expected_location"
+print -- "plugin source is upstream artifact: $expected_source"
