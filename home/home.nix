@@ -12,6 +12,11 @@ let
     if pkgs.stdenv.isDarwin
     then mkDotfileLink file
     else "${dotfiles}/${file}";
+
+  zellijSmartTabs = pkgs.fetchurl {
+    url = "https://github.com/YesYouKenSpace/zellij-smart-tabs/releases/download/v0.2.4/zellij-smart-tabs.wasm";
+    hash = "sha256-CUSSxJWAZLejW4uGwoVpudHCRD1gqHLanyamHmjF3y0=";
+  };
 in
 
 {
@@ -98,6 +103,7 @@ in
     "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
 
     "zellij/config.kdl".source = mkDotfileSource "/.config/zellij/config.kdl";
+    "zellij/plugins/zellij-smart-tabs.wasm".source = zellijSmartTabs;
     "zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
     "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
     "zellij/layouts/default.kdl".source = mkDotfileSource ".config/zellij/layouts/default.kdl";

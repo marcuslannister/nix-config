@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Install Smart Tabs v0.2.4 as a Nix-managed local Zellij plugin.
 - Deploy engineering-agent repository conventions from dotfiles.
 - Deploy corrected Zellij and Kitty ANSI palettes from dotfiles.
 - Install zjstatus from a pinned Nix flake and deploy the unlocked Zellij startup mode from dotfiles.
