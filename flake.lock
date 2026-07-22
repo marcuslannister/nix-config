@@ -40,11 +40,11 @@
     "dotfiles": {
       "flake": false,
       "locked": {
-        "lastModified": 1784709635,
-        "narHash": "sha256-f+g9n+8zLeASNOKYGFKIHsoIqjcP1wLoslVHv+EP/XY=",
+        "lastModified": 1784711064,
+        "narHash": "sha256-mEK3fQNoUJvD9CCCXJIY8n+PL1MvQc4/GlnlU8Uri/g=",
         "owner": "marcuslannister",
         "repo": "dotfiles",
-        "rev": "a2969aea85c35967d37c81c8eeef2ed4b5762eb4",
+        "rev": "957da6a98d89c9f47cf30bb9fdbddceabcd4d3ab",
         "type": "github"
       },
       "original": {
