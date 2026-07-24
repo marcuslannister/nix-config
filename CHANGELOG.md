@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Deploy Karabiner modifier-chord fixes and complex-modification assets from dotfiles.
 - Deploy FZF Ctrl-R history search to remote Zsh sessions.
 - Deploy Smart Tabs labels without program names from dotfiles.
 - Install Smart Tabs v0.2.4 as a Nix-managed local Zellij plugin.
