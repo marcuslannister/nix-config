@@ -56,6 +56,16 @@
     tmux
     unstable.zellij
     ncdu
+    bat
+    btop
+    procs
+    gdu
+    smartmontools
+    global # GNU Global source code tagging
+    minicom
+    getopt
+    scrcpy
+    opencode
 
     # files
     duf
@@ -63,17 +73,68 @@
     fzf
     fd
     sd
+    p7zip
+    pbzip2
+    pigz
 
     # misc
     zoxide
     delta
+    skim # provides `sk`
     # bitwarden-cli
+
+    # GNU tool replacements (macOS ships BSD variants)
+    gnutar
+    gnugrep
+    gawk
+    findutils
 
     # network
     iperf3
     croc
     axel
     speedtest-cli
+    cloudflared
+    wgcf
+    mitmproxy
+    ffsend
+    dog
+    mtr
+    bandwhich
+    socat
+
+    # dev tools
+    automake
+    cmake
+    gcc
+    guile
+    git-filter-repo
+    quilt
+    subversion
+    vcpkg
+    texinfo
+    rustup
+    gh
+
+    # editors & language servers
+    bash-language-server
+    marksman
+    shfmt
+    stylua
+    micro
+    nodePackages.prettier
+
+    # media
+    imagemagick
+    jpegoptim
+    libjxl
+    tesseract
+    qrencode
+    gnutls
+
+    # shell
+    nushell
+    neovide
 
     # document
     pandoc
