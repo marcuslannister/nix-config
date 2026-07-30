@@ -58,14 +58,6 @@
     ncdu
     bat
     btop
-    procs
-    gdu
-    smartmontools
-    global # GNU Global source code tagging
-    minicom
-    getopt
-    scrcpy
-    opencode
 
     # files
     duf
@@ -94,13 +86,6 @@
     croc
     axel
     speedtest-cli
-    cloudflared
-    wgcf
-    mitmproxy
-    ffsend
-    dog
-    mtr
-    bandwhich
     socat
 
     # dev tools
@@ -110,8 +95,6 @@
     guile
     git-filter-repo
     quilt
-    subversion
-    vcpkg
     texinfo
     rustup
     gh
@@ -129,12 +112,7 @@
     jpegoptim
     libjxl
     tesseract
-    qrencode
     gnutls
-
-    # shell
-    nushell
-    neovide
 
     # document
     pandoc
