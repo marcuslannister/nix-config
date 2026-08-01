@@ -4,15 +4,16 @@ set -eu
 
 repo_root=${0:A:h:h}
 flake_ref=$repo_root
-home_dir=$(nix eval --raw "$flake_ref#darwinConfigurations.default.config.home-manager.users.user.home.homeDirectory")
+local_user=$(whoami)
+home_dir=$(nix eval --impure --raw "$flake_ref#darwinConfigurations.default.config.home-manager.users.${local_user}.home.homeDirectory")
 layout_key="$home_dir/.config/zellij/layouts/default.kdl"
 plugin_key="$home_dir/.config/zellij/plugins/zjstatus.wasm"
 layout_source=$(nix build --no-link --print-out-paths --impure --expr '
   (builtins.getFlake "'"$repo_root"'")
-    .darwinConfigurations.default.config.home-manager.users.user.home.file
+    .darwinConfigurations.default.config.home-manager.users.'"$local_user"'.home.file
     ."'"$layout_key"'".source
 ')
-plugin_source=$(nix eval --raw "$flake_ref#darwinConfigurations.default.config.home-manager.users.user.home.file.\"$plugin_key\".source")
+plugin_source=$(nix eval --impure --raw "$flake_ref#darwinConfigurations.default.config.home-manager.users.${local_user}.home.file.\"$plugin_key\".source")
 actual_layout=$(<"$layout_source")
 upstream_path=$(nix eval --impure --raw --expr '
   let
