@@ -215,18 +215,6 @@
     # === Deploy-rs Configuration ===
     deploy = {
       nodes = {
-        # vm16-nixos = {
-        #   hostname = "vm16-nixos";
-        #   sshUser = "user";
-        #   remoteBuild = true;
-
-        #   profiles.system = {
-        #     user = "root";
-        #     path = deploy-rs.lib.${systems.linux}.activate.nixos
-        #       self.nixosConfigurations.vm16-nixos;
-        #   };
-        # };
-
         # Debian node (home-manager only)
         vm98 = {
           hostname = "vm98";

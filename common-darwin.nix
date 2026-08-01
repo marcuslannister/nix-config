@@ -131,18 +131,6 @@
 
   ];
 
-  # # 1. Enable the Syncthing service for the system
-  # services.syncthing = {
-  #   enable = true;
-  #   # # IMPORTANT: Specify your macOS username here
-  #   # user = "user";
-  #   # # Optional: Specify the group, defaults to 'staff' which is usually correct
-  #   # group = "staff";
-  #   # # Optional: Specify where Syncthing stores its data and configuration
-  #   # dataDir = "/Users/user/Library/Application Support/Syncthing";
-  #   # configDir = "/Users/user/Library/Application Support/Syncthing";
-  # };
-
   # User configuration for Darwin
   users.users.${username} = {
     name = username;
