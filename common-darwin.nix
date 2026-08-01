@@ -1,5 +1,5 @@
 # common-darwin.nix
-{ config, pkgs, unstable, ... }:
+{ config, pkgs, unstable, username, ... }:
 
 {
   # Darwin-specific configuration
@@ -8,7 +8,7 @@
   # Nix configuration
   nix.settings = {
     experimental-features = "nix-command flakes";
-    trusted-users = [ "root" "user" ];
+    trusted-users = [ "root" username ];
   };
 
   # Enable programs
@@ -144,9 +144,9 @@
   # };
 
   # User configuration for Darwin
-  users.users.user = {
-    name = "user";
-    home = "/Users/user";
+  users.users.${username} = {
+    name = username;
+    home = "/Users/${username}";
     shell = pkgs.zsh;
   };
 }

@@ -1,10 +1,10 @@
-{ config, pkgs, inputs, dotfiles, ... }:
+{ config, pkgs, inputs, dotfiles, username, ... }:
 
 let
   # Platform-aware dotfiles path
   dotfilesPath = if pkgs.stdenv.isDarwin
-    then "/Users/user/dotfiles"
-    else "/home/user/dotfiles";
+    then "/Users/${username}/dotfiles"
+    else "/home/${username}/dotfiles";
 
   # Helper function
   mkDotfileLink = file: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${file}";
@@ -22,8 +22,8 @@ in
 {
   # === Basic Configuration ===
   home = {
-    username = "user";
-    homeDirectory = if pkgs.stdenv.isDarwin then "/Users/user" else "/home/user";
+    username = username;
+    homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
     stateVersion = "25.05";
   };
 

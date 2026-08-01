@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   system.stateVersion = "25.05";
@@ -52,9 +52,9 @@
 
   ];
 
-  users.users.user = {
+  users.users.${username} = {
     isNormalUser = true;
-    home = "/home/user";
+    home = "/home/${username}";
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
       # replace with your own public key
