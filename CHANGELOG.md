@@ -11,3 +11,5 @@
 - Install zjstatus from a pinned Nix flake and deploy the unlocked Zellij startup mode from dotfiles.
 - Update Zellij to 0.44.3 on Darwin.
 - Disable zjstatus single-pane frame toggling to prevent persistent redraw flicker.
+- Replace hardcoded "user" username with dynamic $USER detection across system, Darwin, and home-manager configs.
+- Rename flake output and Darwin hostname keys to drop personal name, genericize SSH key comment, and remove dead nix95 config block.

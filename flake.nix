@@ -37,6 +37,9 @@
       linux = "x86_64-linux";
     };
 
+    # Dynamic account username (requires --impure; see devShell aliases below)
+    username = builtins.getEnv "USER";
+
     zjstatusOverlay = final: prev: {
       zjstatus = zjstatus.packages.${prev.system}.default;
     };
@@ -64,7 +67,7 @@
         # Add specialArgs here with the correct input name
         specialArgs = {
           unstable = nixpkgs-unstable.legacyPackages.${system};
-          inherit dotfiles;
+          inherit dotfiles username;
         };
 
         modules = [
@@ -81,8 +84,8 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.user = sharedModules.home;
-              extraSpecialArgs = inputs // { inherit dotfiles; };
+              users.${username} = sharedModules.home;
+              extraSpecialArgs = inputs // { inherit dotfiles username; };
               backupFileExtension = "backup";
             };
           }
@@ -104,13 +107,14 @@
       home-manager.lib.homeManagerConfiguration {
         pkgs = mkPkgs system (if (builtins.match ".*darwin.*" system != null) then nixpkgs-darwin else nixpkgs);
         modules = [ sharedModules.home ] ++ modules;
-        extraSpecialArgs = inputs // extraSpecialArgs;
+        extraSpecialArgs = inputs // { inherit username; } // extraSpecialArgs;
       };
 
     # NixOS configuration factory
     mkNixosConfig = { system, modules ? [], hostname }:
       nixpkgs.lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit username; };
 
         modules = [
           sharedModules.common
@@ -123,8 +127,8 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              users.user = sharedModules.home;
-              extraSpecialArgs = inputs;
+              users.${username} = sharedModules.home;
+              extraSpecialArgs = inputs // { inherit username; };
               backupFileExtension = "backup";
             };
           }
@@ -132,7 +136,7 @@
           # System-specific settings
           {
             networking.hostName = hostname;
-            nix.settings.trusted-users = [ "root" "user" ];
+            nix.settings.trusted-users = [ "root" username ];
             nixpkgs.overlays = [ zjstatusOverlay ];
           }
         ] ++ modules;
@@ -142,6 +146,13 @@
   {
     # === Darwin Configurations ===
     darwinConfigurations = {
+      # TODO: mac-mini-m1, macbook-pro-m1, macbook-pro-2015-intel still need their
+      # physical hostnames renamed to match (System Settings > General > Sharing >
+      # Local hostname / Computer Name, or `sudo scutil --set ComputerName/HostName/
+      # LocalHostName <name>`). Until then, the implicit hostname lookup used by
+      # `darwin-rebuild switch --flake .` (no explicit target) won't find these
+      # entries on those machines -- use an explicit `--flake .#mac-mini-m1` (etc.)
+      # instead, or fall back to `default`.
       "mac-mini-m4" = macMiniConfig; # Make sure the host name is same
       "mac-mini-m1" = macMiniConfig;
       "macbook-pro-m1" = macMiniConfig;
@@ -162,31 +173,31 @@
     # === Home Manager Configurations ===
     homeConfigurations = {
       # Standalone home-manager for non-NixOS systems
-      user = mkHomeConfig {
+      linux = mkHomeConfig {
         system = systems.linux;
         extraSpecialArgs = { inherit dotfiles; };
       };
 
-      user-debian = mkHomeConfig {
+      debian = mkHomeConfig {
         system = systems.linux;
         modules = [ ./home/home-debian.nix ];
         extraSpecialArgs = { inherit dotfiles; };
       };
 
-      user-debian-ai = mkHomeConfig {
+      debian-ai = mkHomeConfig {
         system = systems.linux;
         modules = [ ./home/home-debian-ai.nix ];
         extraSpecialArgs = { inherit dotfiles; };
       };
 
       # Darwin home-manager (if not using darwinModules)
-      user-darwin = mkHomeConfig {
+      darwin = mkHomeConfig {
         system = systems.darwin;
         extraSpecialArgs = { inherit dotfiles; };
       };
 
       # Intel Darwin home-manager
-      user-darwin-intel = mkHomeConfig {
+      darwin-intel = mkHomeConfig {
         system = systems.darwin-intel;
         modules = [ sharedModules.home ];
         extraSpecialArgs = { inherit dotfiles; };
@@ -195,16 +206,6 @@
 
     # === NixOS Configurations ===
     nixosConfigurations = {
-      # nix95 = mkNixosConfig {
-      #   system = systems.linux;
-      #   hostname = "nix95";
-      #   modules = [
-      #     {
-      #       home-manager.users.user = import ./home-nix95.nix;
-      #     }
-      #   ];
-      # };
-
       vm16-nixos = mkNixosConfig {
         system = systems.linux;
         hostname = "vm16-nixos";
@@ -226,51 +227,39 @@
         #   };
         # };
 
-        # nix95 = {
-        #   hostname = "nix95";
-        #   sshUser = "user";
-        #   remoteBuild = true;
-        #
-        #   profiles.system = {
-        #     user = "root";
-        #     path = deploy-rs.lib.${systems.linux}.activate.nixos
-        #       self.nixosConfigurations.nix95;
-        #   };
-        # };
-
         # Debian node (home-manager only)
         vm98 = {
           hostname = "vm98";
-          sshUser = "user";
+          sshUser = username;
           remoteBuild = true;
           # modules = [
           #   {
-          #     home-manager.users.user = import ./home-debian.nix;
+          #     home-manager.users.${username} = import ./home-debian.nix;
           #   }
           # ];
 
           profiles.home = {
-            user = "user";
+            user = username;
             path = deploy-rs.lib.${systems.linux}.activate.home-manager
-              self.homeConfigurations.user-debian;
+              self.homeConfigurations.debian;
           };
          };
 
         # Debian AI node (home-manager only)
         vm97 = {
           hostname = "vm97";
-          sshUser = "user";
+          sshUser = username;
           remoteBuild = true;
           # modules = [
           #   {
-          #     home-manager.users.user = import ./home-debian.nix;
+          #     home-manager.users.${username} = import ./home-debian.nix;
           #   }
           # ];
 
           profiles.home = {
-            user = "user";
+            user = username;
             path = deploy-rs.lib.${systems.linux}.activate.home-manager
-              self.homeConfigurations.user-debian-ai;
+              self.homeConfigurations.debian-ai;
           };
          };
       };
@@ -299,15 +288,17 @@
           echo "🚀 Welcome to the Nix development environment!!"
           echo ""
           echo "Available commands:"
-          echo "  dd          - deploy --dry-run"
-          echo "  deploy-nix95 - deploy .#nix95"
-          echo "  hm-switch   - home-manager switch --flake ."
+          echo "  dd            - deploy --dry-run"
+          echo "  hm-switch     - home-manager switch --flake . --impure"
+          echo "  darwin-switch - darwin-rebuild switch --flake . --impure"
+          echo "  nixos-switch  - sudo nixos-rebuild switch --flake . --impure"
           echo ""
 
           # Useful aliases
           alias dd="deploy --dry-run"
-          alias deploy-nix95="deploy .#nix95"
-          alias hm-switch="home-manager switch --flake ."
+          alias hm-switch="home-manager switch --flake . --impure"
+          alias darwin-switch="darwin-rebuild switch --flake . --impure"
+          alias nixos-switch="sudo nixos-rebuild switch --flake . --impure"
           alias nix-fmt="nixpkgs-fmt ."
 
           # Set up development environment
