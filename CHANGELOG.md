@@ -13,3 +13,4 @@
 - Disable zjstatus single-pane frame toggling to prevent persistent redraw flicker.
 - Replace hardcoded personal username with dynamic $USER detection across system, Darwin, and home-manager configs.
 - Rename flake output and Darwin hostname keys to drop personal name, genericize SSH key comment, and remove dead nix95 config block.
+- Resolve the dynamic username via SUDO_USER when invoked through sudo, since darwin-rebuild/nixos-rebuild reset $USER to root even with `sudo -E`.

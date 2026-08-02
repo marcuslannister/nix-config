@@ -37,8 +37,14 @@
       linux = "x86_64-linux";
     };
 
-    # Dynamic account username (requires --impure; see devShell aliases below)
-    username = builtins.getEnv "USER";
+    # Dynamic account username (requires --impure; see devShell aliases below).
+    # Prefer SUDO_USER: darwin-rebuild/nixos-rebuild run under sudo, which resets
+    # USER/LOGNAME to "root" even with `sudo -E`, so plain $USER would misidentify
+    # the account when switching via sudo.
+    username =
+      let sudoUser = builtins.getEnv "SUDO_USER";
+          plainUser = builtins.getEnv "USER";
+      in if sudoUser != "" then sudoUser else plainUser;
 
     zjstatusOverlay = final: prev: {
       zjstatus = zjstatus.packages.${prev.system}.default;
