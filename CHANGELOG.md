@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add scmpuff v0.7.0, pinned via a local buildGoModule package since nixpkgs only ships 0.5.0/0.6.0, scoped to mac-mini-m1 only.
 - Deploy Karabiner modifier-chord fixes and complex-modification assets from dotfiles.
 - Deploy FZF Ctrl-R history search to remote Zsh sessions.
 - Deploy Smart Tabs labels without program names from dotfiles.

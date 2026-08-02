@@ -160,9 +160,18 @@
       # entries on those machines -- use an explicit `--flake .#mac-mini-m1` (etc.)
       # instead, or fall back to `default`.
       "mac-mini-m4" = macMiniConfig; # Make sure the host name is same
-      "mac-mini-m1" = macMiniConfig;
       "macbook-pro-m1" = macMiniConfig;
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
+
+      # mac-mini-m1 only: scmpuff, pinned to upstream v0.7.0 (see pkgs/scmpuff.nix)
+      "mac-mini-m1" = mkDarwinConfig {
+        system = systems.darwin;
+        modules = [
+          ({ pkgs, ... }: {
+            environment.systemPackages = [ (pkgs.callPackage ./pkgs/scmpuff.nix { }) ];
+          })
+        ];
+      };
 
       # Intel Mac (if you have one)
       "macbook-pro-2015-intel" = mkDarwinConfig {
