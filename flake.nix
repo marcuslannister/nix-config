@@ -167,8 +167,8 @@
       "mac-mini-m1" = mkDarwinConfig {
         system = systems.darwin;
         modules = [
-          ({ pkgs, ... }: {
-            environment.systemPackages = [ (pkgs.callPackage ./pkgs/scmpuff.nix { }) ];
+          ({ unstable, ... }: {
+            environment.systemPackages = [ (unstable.callPackage ./pkgs/scmpuff.nix { }) ];
           })
         ];
       };

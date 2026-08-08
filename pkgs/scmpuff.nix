@@ -1,4 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub }:
+{ lib, buildGoModule, fetchFromGitHub, gitMinimal, which }:
 
 # nixpkgs (25.05 stable and unstable) only ships 0.5.0/0.6.0; pin the latest
 # upstream release directly until nixpkgs catches up.
@@ -15,6 +15,8 @@ buildGoModule (finalAttrs: {
   };
 
   vendorHash = "sha256-Uu3tZhIoYPq4QWc63Y5cPNa+MZtFklwuZyUc0CJLlXc=";
+
+  nativeCheckInputs = [ gitMinimal which ];
 
   ldflags = [
     "-s"
