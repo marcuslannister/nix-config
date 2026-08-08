@@ -6,3 +6,7 @@ result-*
 .direnv
 
 .research
+
+# CodeGraph index; daemon.sock is a unix socket, which breaks `nix build`/
+# `darwin-rebuild --flake .` on a dirty tree ("has an unsupported type")
+.codegraph
