@@ -75,8 +75,22 @@
     # it lives in ~/.config/emacs-plus/build.yml (see home/home.nix).
     # brewPrefix follows the platform on its own: /opt/homebrew on ARM,
     # /usr/local on Intel.  A Mac with no Homebrew logs an error and skips.
-    emacsModule = { ... }:
+    emacsModule = { config, lib, ... }:
+      let
+        emacsPrefix = "${lib.removeSuffix "/bin" config.homebrew.brewPrefix}/opt/emacs-plus@31";
+      in
       {
+        # Homebrew Bundle builds the app bundles inside the keg, where Finder and
+        # Spotlight never look, so copy them into /Applications afterwards.  The
+        # script stops on its own unless the keg holds a new build.  A failed
+        # copy must not abort the switch: activation runs under `set -e`, and a
+        # stale /Applications is a far smaller problem than a system generation
+        # that never finished activating.
+        system.activationScripts.homebrew.text = lib.mkAfter ''
+          /bin/sh ${./scripts/sync-emacs-apps.sh} "${emacsPrefix}" ||
+            echo >&2 "warning: could not sync the Emacs app bundles to /Applications"
+        '';
+
         homebrew = {
           enable = true;
 
