@@ -91,7 +91,15 @@
     # dev tools
     automake
     cmake
-    gcc
+    # Emacs.app native compilation links every .eln against this GCC's runtime
+    # archives (libemutls_w.a, libheapt_w.a, libgcc.a); do not drop it, or all
+    # native compilation fails with "error invoking gcc driver". ~/.emacs.d
+    # early-init.el finds them via `gcc -print-libgcc-file-name`.
+    # Taken from unstable to get 15.2.0 exactly, matching the libgccjit 15.2.0
+    # bundled in Emacs.app.  25.05's own gcc15 is 15.1.0 and cannot build on
+    # aarch64-darwin at all: its libgcc re-exports ___register_frame_table and
+    # friends, which the linker cannot resolve.  The unstable build is cached.
+    unstable.gcc15
     guile
     git-filter-repo
     quilt
