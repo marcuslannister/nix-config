@@ -75,35 +75,27 @@
     # it lives in ~/.config/emacs-plus/build.yml (see home/home.nix).
     # brewPrefix follows the platform on its own: /opt/homebrew on ARM,
     # /usr/local on Intel.  A Mac with no Homebrew logs an error and skips.
-    # The Homebrew activation prefix installs the out-of-store trust symlink
-    # before `brew bundle`; home-manager runs too late for this file.
-    emacsModule = { lib, ... }: {
-      system.activationScripts.homebrew.text = lib.mkBefore ''
-        /usr/bin/install -d -m 0755 -o ${username} -g staff "/Users/${username}/.homebrew"
-        sudo --user=${username} --set-home /bin/ln -sfn \
-          "/Users/${username}/dotfiles/.homebrew/trust.json" \
-          "/Users/${username}/.homebrew/trust.json"
-      '';
+    emacsModule = { ... }:
+      {
+        homebrew = {
+          enable = true;
 
-      homebrew = {
-        enable = true;
+          taps = [ "d12frosted/emacs-plus" ];
 
-        taps = [ "d12frosted/emacs-plus" ];
+          brews = [
+            {
+              name = "emacs-plus@31";
+              args = [ "with-xwidgets" ];
+            }
+          ];
 
-        brews = [
-          {
-            name = "emacs-plus@31";
-            args = [ "with-xwidgets" ];
-          }
-        ];
-
-        onActivation = {
-          autoUpdate = false;
-          upgrade = false;
-          cleanup = "none";
+          onActivation = {
+            autoUpdate = false;
+            upgrade = false;
+            cleanup = "none";
+          };
         };
       };
-    };
 
     # Darwin configuration factory
     mkDarwinConfig = { system ? systems.darwin, modules ? [] }:
