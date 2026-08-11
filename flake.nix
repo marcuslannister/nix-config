@@ -160,7 +160,40 @@
       # entries on those machines -- use an explicit `--flake .#mac-mini-m1` (etc.)
       # instead, or fall back to `default`.
       "mac-mini-m4" = macMiniConfig; # Make sure the host name is same
-      "macbook-pro-m1" = macMiniConfig;
+      # macbook-pro-m1 only: Emacs comes from the d12frosted/emacs-plus tap.
+      # emacs-plus@31 tracks the emacs-31 pretest branch and has no bottle, so
+      # every install compiles from source -- hence upgrade = false, which keeps
+      # an unrelated `darwin-rebuild switch` from turning into a 30-minute build.
+      # cleanup = "none" because this Mac has 139 formulae and 78 casks installed
+      # by hand that the Brewfile does not describe.  Anything stricter would
+      # start uninstalling them.  The dragon-plus icon cannot be passed as a
+      # formula arg; it lives in ~/.config/emacs-plus/build.yml (see home/home.nix).
+      "macbook-pro-m1" = mkDarwinConfig {
+        system = systems.darwin;
+        modules = [
+          {
+            homebrew = {
+              enable = true;
+
+              taps = [ "d12frosted/emacs-plus" ];
+
+              brews = [
+                {
+                  name = "emacs-plus@31";
+                  args = [ "with-xwidgets" ];
+                }
+              ];
+
+              onActivation = {
+                autoUpdate = false;
+                upgrade = false;
+                cleanup = "none";
+              };
+            };
+          }
+        ];
+      };
+
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
 
       # mac-mini-m1 only: scmpuff, pinned to upstream v0.7.0 (see pkgs/scmpuff.nix)

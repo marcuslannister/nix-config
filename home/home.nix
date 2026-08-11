@@ -107,5 +107,15 @@ in
     "zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
     "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
     "zellij/layouts/default.kdl".source = mkDotfileSource ".config/zellij/layouts/default.kdl";
+  }
+  # emacs-plus reads its icon and patch choices from this file; there is no
+  # formula option for the icon.  Only macbook-pro-m1 installs emacs-plus, but
+  # the flake gives every Darwin host the same home module, so the file lands
+  # on all of them -- 18 bytes that nothing else reads.  Note that homebrew
+  # activation runs before home-manager, so a first-ever install picks up the
+  # default icon; `brew postinstall emacs-plus@31` re-applies this without
+  # recompiling.
+  // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
+    "emacs-plus/build.yml".text = "icon: dragon-plus\n";
   };
 }
