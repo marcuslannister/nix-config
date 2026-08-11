@@ -102,6 +102,11 @@ in
     ".local/share/vim/backup/.keep".text = "";
     ".local/share/vim/swap/.keep".text = "";
     ".local/share/vim/undo/.keep".text = "";
+  }
+  # Homebrew reads the taps it may install from without a prompt from this
+  # file.  Darwin-only; Homebrew is not installed on the Linux hosts.
+  // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
+    ".homebrew/trust.json".source = mkDotfileSource ".homebrew/trust.json";
   };
 
   # === XDG Configuration ===
