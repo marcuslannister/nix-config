@@ -75,9 +75,16 @@
     # it lives in ~/.config/emacs-plus/build.yml (see home/home.nix).
     # brewPrefix follows the platform on its own: /opt/homebrew on ARM,
     # /usr/local on Intel.  A Mac with no Homebrew logs an error and skips.
-    # One manual step per machine: `brew trust --tap d12frosted/emacs-plus`, run
-    # both normally and under `env -u XDG_CONFIG_HOME` (see CHANGELOG).
-    emacsModule = {
+    # The Homebrew activation prefix installs the out-of-store trust symlink
+    # before `brew bundle`; home-manager runs too late for this file.
+    emacsModule = { lib, ... }: {
+      system.activationScripts.homebrew.text = lib.mkBefore ''
+        /usr/bin/install -d -m 0755 -o ${username} -g staff "/Users/${username}/.homebrew"
+        sudo --user=${username} --set-home /bin/ln -sfn \
+          "/Users/${username}/dotfiles/.homebrew/trust.json" \
+          "/Users/${username}/.homebrew/trust.json"
+      '';
+
       homebrew = {
         enable = true;
 
