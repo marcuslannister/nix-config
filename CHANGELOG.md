@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Deploy the tracked TTY7 configuration through Home Manager.
 - Install the xterm-ghostty terminfo entry into `~/.terminfo` on every managed host, so ssh sessions from Ghostty no longer fail with "can't find terminal definition for xterm-ghostty".
 - Give every Darwin host `emacs-plus@31`, ARM and Intel alike: the homebrew block moved out of the `macbook-pro-m1` entry into a shared `emacsModule` that `mkDarwinConfig` adds to every configuration. nix-darwin picks the right `brewPrefix` per platform on its own (`/opt/homebrew/bin` on aarch64, `/usr/local/bin` on Intel) and skips activation with an error, rather than failing the switch, on a Mac with no Homebrew. The activation prefix installs the trusted-taps link before Homebrew Bundle runs.
 - Resolve `unstable` to nixpkgs-darwin 25.05 on x86_64-darwin, since nixpkgs 26.11 dropped that platform and importing it throws at evaluation time, which had made the macbook-pro-2015-intel configuration unevaluable. On Intel only, `gcc15`, `zellij` and `syncthing` now come from 25.05 at older versions; aarch64-darwin still tracks unstable.

@@ -110,6 +110,7 @@ in
     "zsh/.zshrc.personal".source = mkDotfileSource ".config/zsh/.zshrc.personal";
     "zsh/.zshrc.fzf".source = mkDotfileSource ".config/zsh/.zshrc.fzf";
     "otty".source = mkDotfileSource ".config/otty";
+    "tty7/config.json".source = mkDotfileSource ".config/tty7/config.json";
 
     "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
     "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
