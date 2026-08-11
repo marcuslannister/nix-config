@@ -91,18 +91,8 @@
     # dev tools
     automake
     cmake
-    # The general-purpose GCC on PATH.  Emacs native compilation no longer
-    # depends on it: emacs-plus@31 pulls Homebrew's own gcc and libgccjit in as
-    # hard dependencies, so .eln builds find libemutls_w.a and friends under
-    # /opt/homebrew without help.  (The earlier -L injection in ~/.emacs.d
-    # early-init.el existed only because Homebrew gcc had been removed, and it
-    # claimed to match "libgccjit 15.2.0 bundled in Emacs.app" -- that was
-    # wrong; the bundled dylib reports current version 26.0.26.)
-    # Still taken from unstable: 25.05's own gcc15 is 15.1.0 and cannot build on
-    # aarch64-darwin at all: its libgcc re-exports ___register_frame_table and
-    # friends, which the linker cannot resolve.  The unstable build is cached.
-    # TODO: once the Homebrew Emacs has compiled cleanly for a while, check
-    # whether anything still wants this and consider dropping it.
+    # From unstable: 25.05's gcc15 is 15.1.0 and cannot build on aarch64-darwin.
+    # Its libgcc re-exports ___register_frame_table, which the linker cannot resolve.
     unstable.gcc15
     guile
     git-filter-repo
