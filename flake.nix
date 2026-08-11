@@ -65,20 +65,61 @@
       home = import ./home/home.nix;
     };
 
+    # Emacs on every Mac, ARM and Intel alike, from the d12frosted/emacs-plus
+    # tap.  emacs-plus@31 tracks the emacs-31 pretest branch and has no bottle, so
+    # every install compiles from source -- hence upgrade = false, which keeps an
+    # unrelated `darwin-rebuild switch` from turning into a 30-minute build.
+    # cleanup = "none" because these Macs carry formulae and casks installed by
+    # hand that the Brewfile does not describe; anything stricter would start
+    # uninstalling them.  The dragon-plus icon cannot be passed as a formula arg;
+    # it lives in ~/.config/emacs-plus/build.yml (see home/home.nix).
+    # brewPrefix follows the platform on its own: /opt/homebrew on ARM,
+    # /usr/local on Intel.  A Mac with no Homebrew logs an error and skips.
+    # One manual step per machine: `brew trust --tap d12frosted/emacs-plus`, run
+    # both normally and under `env -u XDG_CONFIG_HOME` (see CHANGELOG).
+    emacsModule = {
+      homebrew = {
+        enable = true;
+
+        taps = [ "d12frosted/emacs-plus" ];
+
+        brews = [
+          {
+            name = "emacs-plus@31";
+            args = [ "with-xwidgets" ];
+          }
+        ];
+
+        onActivation = {
+          autoUpdate = false;
+          upgrade = false;
+          cleanup = "none";
+        };
+      };
+    };
+
     # Darwin configuration factory
     mkDarwinConfig = { system ? systems.darwin, modules ? [] }:
       nix-darwin.lib.darwinSystem {
         inherit system;
 
         # Add specialArgs here with the correct input name
+        # On x86_64-darwin `unstable` is really 25.05: nixpkgs 26.11 dropped
+        # x86_64-darwin, and importing it throws at evaluation time, which would
+        # take the whole Intel host down.  The packages read through this arg
+        # (gcc15, zellij, syncthing) all exist in 25.05, just at older versions.
         specialArgs = {
-          unstable = nixpkgs-unstable.legacyPackages.${system};
+          unstable =
+            if system == systems.darwin-intel
+            then nixpkgs-darwin.legacyPackages.${system}
+            else nixpkgs-unstable.legacyPackages.${system};
           inherit dotfiles username;
         };
 
         modules = [
           # Base Darwin configuration
           sharedModules.common-darwin
+          emacsModule
           {
             nixpkgs.hostPlatform = system;
             nixpkgs.overlays = [ zjstatusOverlay ];
@@ -160,39 +201,8 @@
       # entries on those machines -- use an explicit `--flake .#mac-mini-m1` (etc.)
       # instead, or fall back to `default`.
       "mac-mini-m4" = macMiniConfig; # Make sure the host name is same
-      # macbook-pro-m1 only: Emacs comes from the d12frosted/emacs-plus tap.
-      # emacs-plus@31 tracks the emacs-31 pretest branch and has no bottle, so
-      # every install compiles from source -- hence upgrade = false, which keeps
-      # an unrelated `darwin-rebuild switch` from turning into a 30-minute build.
-      # cleanup = "none" because this Mac has 139 formulae and 78 casks installed
-      # by hand that the Brewfile does not describe.  Anything stricter would
-      # start uninstalling them.  The dragon-plus icon cannot be passed as a
-      # formula arg; it lives in ~/.config/emacs-plus/build.yml (see home/home.nix).
-      "macbook-pro-m1" = mkDarwinConfig {
-        system = systems.darwin;
-        modules = [
-          {
-            homebrew = {
-              enable = true;
 
-              taps = [ "d12frosted/emacs-plus" ];
-
-              brews = [
-                {
-                  name = "emacs-plus@31";
-                  args = [ "with-xwidgets" ];
-                }
-              ];
-
-              onActivation = {
-                autoUpdate = false;
-                upgrade = false;
-                cleanup = "none";
-              };
-            };
-          }
-        ];
-      };
+      "macbook-pro-m1" = mkDarwinConfig { system = systems.darwin; };
 
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
 
