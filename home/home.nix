@@ -13,6 +13,11 @@ let
     then mkDotfileLink file
     else "${dotfiles}/${file}";
 
+  # ssh'ing into a host from Ghostty leaves TERM=xterm-ghostty, which no stock
+  # ncurses database knows about; without this every remote shell greets you
+  # with "can't find terminal definition for xterm-ghostty".
+  ghosttyTerminfo = pkgs.callPackage ../pkgs/ghostty-terminfo.nix { };
+
   zellijSmartTabs = pkgs.fetchurl {
     url = "https://github.com/YesYouKenSpace/zellij-smart-tabs/releases/download/v0.2.4/zellij-smart-tabs.wasm";
     hash = "sha256-CUSSxJWAZLejW4uGwoVpudHCRD1gqHLanyamHmjF3y0=";
@@ -84,6 +89,13 @@ in
     ".local/bin/ns.sh" = {
       source = mkDotfileSource "local/bin/ns.sh";
       executable = false;
+    };
+
+    # ~/.terminfo is on ncurses' built-in search path, so this resolves even
+    # before TERMINFO_DIRS is exported by the profile scripts.
+    ".terminfo" = {
+      source = "${ghosttyTerminfo}/share/terminfo";
+      recursive = true;
     };
 
     # Create directories by placing empty .keep files
