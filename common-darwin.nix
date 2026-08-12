@@ -39,6 +39,10 @@
     ruby # for ~/.scm_breeze/install.sh
     # jujutsu
     nodejs_24
+    # From unstable: 25.05 carries bun 1.2.13, a year behind.  Homebrew had
+    # 1.3.14; unstable is 1.3.13.  On Intel `unstable` resolves to 25.05, so
+    # that host stays on 1.2.13 (same trade-off as gcc15 and zellij).
+    unstable.bun
     shellcheck
 
     # python
@@ -75,11 +79,22 @@
     skim # provides `sk`
     # bitwarden-cli
 
-    # GNU tool replacements (macOS ships BSD variants)
+    # GNU tool replacements (macOS ships BSD variants).  gnused and diffutils
+    # shadow the BSD sed and diff, the same way gnutar/gnugrep/gawk already do.
+    # coreutils stays g-prefixed: ~/.emacs.d/lisp/init-dired.el looks for `gls`,
+    # and the BSD ls it falls back to has no --dired.
     gnutar
     gnugrep
     gawk
     findutils
+    gnused
+    diffutils
+    # Both: ~/.zshenv used to put Homebrew's coreutils gnubin first on PATH, so
+    # ls, cp, rm and date were GNU already; plain coreutils keeps that.  The
+    # prefixed set is still needed for `gls`, which ~/.emacs.d/lisp/init-dired.el
+    # looks for and BSD ls cannot replace (no --dired).
+    coreutils
+    coreutils-prefixed
 
     # network
     iperf3
@@ -87,10 +102,21 @@
     axel
     speedtest-cli
     socat
+    wget
+    httpie
+    # httping and nexttrace stay on Homebrew: both are Linux-only in nixpkgs
+    # 25.05 (meta.platforms excludes darwin).  See CONTEXT.md, "Exception".
 
     # dev tools
+    autoconf
     automake
     cmake
+    gnumake
+    ninja
+    # pkg-config, not pkgconf: the nixpkgs pkgconf package installs a `pkgconf`
+    # binary only, while autotools and cmake look for `pkg-config` by name.
+    pkg-config
+    lld
     # From unstable: 25.05's gcc15 is 15.1.0 and cannot build on aarch64-darwin.
     # Its libgcc re-exports ___register_frame_table, which the linker cannot resolve.
     unstable.gcc15
@@ -102,6 +128,7 @@
     gh
 
     # editors & language servers
+    neovim
     bash-language-server
     marksman
     shfmt
@@ -110,6 +137,8 @@
     nodePackages.prettier
 
     # media
+    ffmpeg
+    yt-dlp
     imagemagick
     jpegoptim
     libjxl
@@ -131,6 +160,21 @@
     docker-compose
     sqlite
 
+  ];
+
+  # Fonts that were Homebrew casks.  They are files, not app bundles, so Nix
+  # owns them (see CONTEXT.md); fonts.packages installs into /Library/Fonts.
+  fonts.packages = with pkgs; [
+    ibm-plex
+    inconsolata
+    inter
+    iosevka
+    jetbrains-mono
+    maple-mono.NF-CN
+    source-sans-pro
+    source-serif-pro
+    nerd-fonts.iosevka-term
+    nerd-fonts.jetbrains-mono
   ];
 
   # User configuration for Darwin
