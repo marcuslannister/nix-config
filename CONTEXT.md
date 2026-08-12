@@ -23,8 +23,9 @@ themselves.
 _Avoid_: top-level, root formula, direct install
 
 **Exception**:
-A command-line tool kept on Homebrew because nixpkgs has no package for it. An
-Exception carries a comment saying why it is one.
+A command-line tool kept on Homebrew for one of two reasons: nixpkgs has no
+package for it, or something outside this repository is bound to its Homebrew
+path. An Exception carries a comment saying which reason applies.
 _Avoid_: workaround, special case, fallback
 
 **Drift**:
