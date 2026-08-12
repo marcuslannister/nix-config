@@ -30,7 +30,6 @@
       # this machine only
       "electrum"
       "openusage"
-      "squirrel-app"
     ];
   };
 }

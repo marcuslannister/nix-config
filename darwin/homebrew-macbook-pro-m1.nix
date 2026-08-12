@@ -35,9 +35,7 @@
 
     casks = [
       "electrum"
-      "squirrel-app"
       "supercmd"
-      "thaw"
       "tutti"
     ];
   };

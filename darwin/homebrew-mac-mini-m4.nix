@@ -55,10 +55,6 @@
       # shared with mac-mini-m1 only
       "calibre"
 
-      # input method, Declared under the current token; the retired `squirrel`
-      # record is dropped by path, never by `brew uninstall`
-      "squirrel-app"
-
       # ~/.emacs.d/lisp/init-local.el asks for "Aporetic Sans M Nerd Font", and
       # nixpkgs has no equivalent.  The other 15 font casks this machine carried
       # are gone: 10 are supplied by fonts.packages in common-darwin.nix, and 5
