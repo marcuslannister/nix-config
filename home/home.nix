@@ -102,6 +102,19 @@ in
     ".local/share/vim/backup/.keep".text = "";
     ".local/share/vim/swap/.keep".text = "";
     ".local/share/vim/undo/.keep".text = "";
+  }
+  # Homebrew reads its trust store from ~/.homebrew/trust.json when
+  # XDG_CONFIG_HOME is unset, which is the case during `darwin-rebuild switch`;
+  # an interactive shell has it set and reads ~/.config/homebrew/trust.json
+  # instead.  Activation is the one that matters: `brew bundle` refuses to load
+  # formulae from an untrusted tap and takes the switch down with it.
+  #
+  # This has to stay an out-of-store symlink -- `brew trust` writes to the file,
+  # which a Nix store path would forbid.  Note the same ordering caveat as the
+  # emacs-plus icon below: home-manager runs after Homebrew, so a first-ever
+  # switch on a new Mac needs this file in place beforehand.
+  // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
+    ".homebrew/trust.json".source = mkDotfileLink ".homebrew/trust.json";
   };
 
   # === XDG Configuration ===
