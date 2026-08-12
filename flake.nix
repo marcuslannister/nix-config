@@ -168,13 +168,18 @@
       # `darwin-rebuild switch --flake .` (no explicit target) won't find these
       # entries on those machines -- use an explicit `--flake .#mac-mini-m1` (etc.)
       # instead, or fall back to `default`.
-      "mac-mini-m4" = macMiniConfig; # Make sure the host name is same
+      # Its own entry rather than macMiniConfig, which `default` also uses: the
+      # fallback any Mac lands on must not carry one machine's cask list.
+      "mac-mini-m4" = mkDarwinConfig {
+        system = systems.darwin;
+        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-mac-mini-m4.nix ];
+      };
 
-      # The only host whose Homebrew state is fully written down; see
-      # darwin/homebrew-macbook-pro-m1.nix for why it is not shared yet.
+      # The only host whose Homebrew state is fully written down: the two Mac
+      # minis have their casks declared but not yet their brews.
       "macbook-pro-m1" = mkDarwinConfig {
         system = systems.darwin;
-        modules = [ ./darwin/homebrew-macbook-pro-m1.nix ];
+        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-macbook-pro-m1.nix ];
       };
 
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
@@ -183,6 +188,8 @@
       "mac-mini-m1" = mkDarwinConfig {
         system = systems.darwin;
         modules = [
+          ./darwin/homebrew-arm.nix
+          ./darwin/homebrew-mac-mini-m1.nix
           ({ unstable, ... }: {
             environment.systemPackages = [ (unstable.callPackage ./pkgs/scmpuff.nix { }) ];
           })

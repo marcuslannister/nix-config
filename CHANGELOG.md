@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Declare Homebrew on all three ARM Macs. `darwin/homebrew-arm.nix` holds the 52 casks they all carry, and `darwin/homebrew-mac-mini-m4.nix` and `darwin/homebrew-mac-mini-m1.nix` hold each machine's extras, so adopting the list installs and removes nothing anywhere. The shared casks live in their own module rather than `darwin/homebrew.nix`, which reaches every Darwin host including `default` and the Intel Mac; neither should acquire one group's application list. mac-mini-m4 gets its own entry for the same reason, since `default` used to share `macMiniConfig` with it.
+- Leave the Mac minis' brews undeclared for now: separating Leaves from dependencies needs the install receipts under `/opt/homebrew/Cellar`, which exist only on those machines. Until then `tests/homebrew-drift.zsh` reports their formulae, their font casks and their `git-credential-manager` pair as undeclared, which is accurate.
 - Drop `switchresx`, `wezterm` and `fliqlo` from macbook-pro-m1, and untap `wez/wezterm` with nothing left to serve. `kitty` remains the terminal here.
 - Drop the `git-credential-manager` cask: `gh` already holds a token with `repo` scope and its credential helper needs no prompt, which GCM cannot manage from a non-interactive shell. Its installer was also appending a helper chain and an Azure DevOps section to `~/.gitconfig` on every reinstall.
 - Make the configuration the complete description of Homebrew on macbook-pro-m1, under one rule recorded in the new `CONTEXT.md`: an `.app` bundle belongs to Homebrew, everything else belongs to Nix, and a command-line tool with no nixpkgs package is an Exception carrying a comment saying why. Formulae went 139 → 63, casks 78 → 61, taps 26 → 11.
