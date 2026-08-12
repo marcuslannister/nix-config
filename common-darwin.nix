@@ -31,7 +31,12 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  # Environment packages
+  # Environment packages.
+  #
+  # The tools below the base set include mac-mini-m4's Homebrew Leaves, moved
+  # here on 2026-08-12 under the rule in CONTEXT.md: everything that is not an
+  # app bundle belongs to Nix.  Every one was checked with meta.available on
+  # both aarch64-darwin and x86_64-darwin, so the Intel Mac still evaluates.
   environment.systemPackages = with pkgs; [
     # base
     vim
@@ -62,6 +67,13 @@
     ncdu
     bat
     btop
+    gdu
+    procs
+    glow
+    lazygit
+    yazi
+    nushell
+    starship
 
     # files
     duf
@@ -104,6 +116,18 @@
     socat
     wget
     httpie
+    bandwhich
+    cloudflared
+    dog
+    doggo
+    ffsend
+    fping
+    mitmproxy
+    mtr
+    net-snmp
+    wakeonlan
+    wgcf
+    wireguard-tools
     # httping and nexttrace stay on Homebrew: both are Linux-only in nixpkgs
     # 25.05 (meta.platforms excludes darwin).  See CONTEXT.md, "Exception".
 
@@ -126,6 +150,14 @@
     texinfo
     rustup
     gh
+    go
+    hugo
+    llvm
+    pyenv
+    subversion
+    fswatch
+    global
+    minicom
 
     # editors & language servers
     neovim
@@ -144,6 +176,7 @@
     libjxl
     tesseract
     gnutls
+    fontforge
 
     # document
     pandoc
@@ -153,8 +186,13 @@
     # aspellDicts.en
     (aspellWithDicts (dicts: with dicts; [en en-computers en-science]))
 
-    # cmake
-    # unstable.syncthing
+    # mac and hardware
+    mas
+    opencode
+    qrencode
+    scrcpy
+    smartmontools
+    # syncthing stays on Homebrew; see darwin/homebrew-mac-mini-m4.nix
 
     # docker
     docker-compose
