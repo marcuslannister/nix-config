@@ -63,53 +63,8 @@
       common-darwin = import ./common-darwin.nix;  # For Darwin
       nixos = import ./nixos.nix;
       home = import ./home/home.nix;
+      homebrew = import ./darwin/homebrew.nix;  # For Darwin
     };
-
-    # Emacs on every Mac, ARM and Intel alike, from the d12frosted/emacs-plus
-    # tap.  emacs-plus@31 tracks the emacs-31 pretest branch and has no bottle, so
-    # every install compiles from source -- hence upgrade = false, which keeps an
-    # unrelated `darwin-rebuild switch` from turning into a 30-minute build.
-    # cleanup = "none" because these Macs carry formulae and casks installed by
-    # hand that the Brewfile does not describe; anything stricter would start
-    # uninstalling them.  The dragon-plus icon cannot be passed as a formula arg;
-    # it lives in ~/.config/emacs-plus/build.yml (see home/home.nix).
-    # brewPrefix follows the platform on its own: /opt/homebrew on ARM,
-    # /usr/local on Intel.  A Mac with no Homebrew logs an error and skips.
-    emacsModule = { config, lib, ... }:
-      let
-        emacsPrefix = "${lib.removeSuffix "/bin" config.homebrew.brewPrefix}/opt/emacs-plus@31";
-      in
-      {
-        # Homebrew Bundle builds the app bundles inside the keg, where Finder and
-        # Spotlight never look, so copy them into /Applications afterwards.  The
-        # script stops on its own unless the keg holds a new build.  A failed
-        # copy must not abort the switch: activation runs under `set -e`, and a
-        # stale /Applications is a far smaller problem than a system generation
-        # that never finished activating.
-        system.activationScripts.homebrew.text = lib.mkAfter ''
-          /bin/sh ${./scripts/sync-emacs-apps.sh} "${emacsPrefix}" ||
-            echo >&2 "warning: could not sync the Emacs app bundles to /Applications"
-        '';
-
-        homebrew = {
-          enable = true;
-
-          taps = [ "d12frosted/emacs-plus" ];
-
-          brews = [
-            {
-              name = "emacs-plus@31";
-              args = [ "with-xwidgets" ];
-            }
-          ];
-
-          onActivation = {
-            autoUpdate = false;
-            upgrade = false;
-            cleanup = "none";
-          };
-        };
-      };
 
     # Darwin configuration factory
     mkDarwinConfig = { system ? systems.darwin, modules ? [] }:
@@ -132,7 +87,7 @@
         modules = [
           # Base Darwin configuration
           sharedModules.common-darwin
-          emacsModule
+          sharedModules.homebrew
           {
             nixpkgs.hostPlatform = system;
             nixpkgs.overlays = [ zjstatusOverlay ];
@@ -215,7 +170,12 @@
       # instead, or fall back to `default`.
       "mac-mini-m4" = macMiniConfig; # Make sure the host name is same
 
-      "macbook-pro-m1" = mkDarwinConfig { system = systems.darwin; };
+      # The only host whose Homebrew state is fully written down; see
+      # darwin/homebrew-macbook-pro-m1.nix for why it is not shared yet.
+      "macbook-pro-m1" = mkDarwinConfig {
+        system = systems.darwin;
+        modules = [ ./darwin/homebrew-macbook-pro-m1.nix ];
+      };
 
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
 

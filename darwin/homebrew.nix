@@ -1,0 +1,67 @@
+# darwin/homebrew.nix
+#
+# What every Darwin host gets from Homebrew.  The rule (see CONTEXT.md): an
+# `.app` bundle belongs to Homebrew, everything else belongs to Nix.  A
+# command-line tool with no nixpkgs package is an Exception and carries a
+# comment saying why.
+#
+# Emacs comes from the d12frosted/emacs-plus tap on every Mac, ARM and Intel
+# alike.  emacs-plus@31 tracks the emacs-31 pretest branch and has no bottle,
+# so every install compiles from source -- hence upgrade = false, which keeps
+# an unrelated `darwin-rebuild switch` from turning into a 30-minute build.
+#
+# cleanup = "none" is deliberate and not a placeholder.  Homebrew 6 refuses
+# `brew bundle --cleanup` without `--force-cleanup`, and that flag also resets
+# the global trust store to the Brewfile's values.  This module cannot declare
+# trust, so a cleanup run would empty the store and every third-party tap below
+# would stop loading.  Completeness is enforced by tests/homebrew-drift.zsh
+# instead, so removal stays a deliberate act rather than a side effect of
+# activation.
+#
+# Every tap here must be trusted or `brew bundle` refuses to load its formulae
+# and the switch fails.  Trust lives in two files, and which one Homebrew reads
+# depends on the environment: an interactive shell has XDG_CONFIG_HOME set and
+# uses ~/.config/homebrew/trust.json, while activation runs without it and uses
+# ~/.homebrew/trust.json -- the symlink into ~/dotfiles.  Trusting a tap for
+# activation therefore needs `env -u XDG_CONFIG_HOME brew trust --taps ...`.
+#
+# brewPrefix follows the platform on its own: /opt/homebrew on ARM, /usr/local
+# on Intel.  A Mac with no Homebrew logs an error and skips.
+{ config, lib, ... }:
+
+let
+  emacsPrefix = "${lib.removeSuffix "/bin" config.homebrew.brewPrefix}/opt/emacs-plus@31";
+in
+{
+  # Homebrew Bundle builds the app bundles inside the keg, where Finder and
+  # Spotlight never look, so copy them into /Applications afterwards.  The
+  # script stops on its own unless the keg holds a new build.  A failed copy
+  # must not abort the switch: activation runs under `set -e`, and a stale
+  # /Applications is a far smaller problem than a system generation that never
+  # finished activating.
+  system.activationScripts.homebrew.text = lib.mkAfter ''
+    /bin/sh ${../scripts/sync-emacs-apps.sh} "${emacsPrefix}" ||
+      echo >&2 "warning: could not sync the Emacs app bundles to /Applications"
+  '';
+
+  homebrew = {
+    enable = true;
+
+    taps = [ "d12frosted/emacs-plus" ];
+
+    brews = [
+      {
+        name = "emacs-plus@31";
+        args = [ "with-xwidgets" ];
+      }
+    ];
+
+    # The dragon-plus icon cannot be passed as a formula arg; it lives in
+    # ~/.config/emacs-plus/build.yml (see home/home.nix).
+    onActivation = {
+      autoUpdate = false;
+      upgrade = false;
+      cleanup = "none";
+    };
+  };
+}
