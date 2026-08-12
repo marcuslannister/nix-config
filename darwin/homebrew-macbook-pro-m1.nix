@@ -21,7 +21,6 @@
       "pouriyajamshidi/tap"     # tcping
       "supercmdlabs/supercmd"   # supercmd
       "tw93/tap"                # kakuku
-      "wez/wezterm"             # wezterm
     ];
 
     # Exceptions, every one verified against nixpkgs 25.05 on 2026-08-11:
@@ -50,7 +49,6 @@
       "kitty"
       "markedit"
       "visual-studio-code"
-      "wezterm"
       "zed"
 
       # input methods and text
@@ -73,9 +71,7 @@
 
       # display and screen
       "betterdisplay"
-      "fliqlo"
       "shottr"
-      "switchresx"
 
       # media
       "iina"

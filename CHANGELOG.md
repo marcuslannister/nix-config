@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Drop `switchresx`, `wezterm` and `fliqlo` from macbook-pro-m1, and untap `wez/wezterm` with nothing left to serve. `kitty` remains the terminal here.
 - Drop the `git-credential-manager` cask: `gh` already holds a token with `repo` scope and its credential helper needs no prompt, which GCM cannot manage from a non-interactive shell. Its installer was also appending a helper chain and an Azure DevOps section to `~/.gitconfig` on every reinstall.
 - Make the configuration the complete description of Homebrew on macbook-pro-m1, under one rule recorded in the new `CONTEXT.md`: an `.app` bundle belongs to Homebrew, everything else belongs to Nix, and a command-line tool with no nixpkgs package is an Exception carrying a comment saying why. Formulae went 139 → 63, casks 78 → 61, taps 26 → 11.
 - Move 25 command-line tools from Homebrew to `environment.systemPackages`: `wget`, `httpie`, `ffmpeg`, `yt-dlp`, `neovim`, `autoconf`, `gnumake`, `ninja`, `pkg-config`, `lld`, `coreutils`, `coreutils-prefixed`, `diffutils`, `gnused` and `unstable.bun`, and drop `aicommits`, `nvm`, `mingw-w64`, `yabai`, `skhd`, `gptcommit`, `nightlight`, `sshpass` and `librime` outright.
