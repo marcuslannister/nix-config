@@ -116,7 +116,6 @@
       "tmpdisk"
 
       # misc tools
-      "git-credential-manager"
       "kakuku"
       "lm-studio"
       "macgpt"
