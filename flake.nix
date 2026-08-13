@@ -57,6 +57,15 @@
       overlays = [ zjstatusOverlay ];
     };
 
+    # scmpuff took SCM Breeze's place on the three ARM Macs on 2026-08-12.  The
+    # pin to upstream v0.7.0 is what nixpkgs lacks (it ships 0.5.0/0.6.0), and it
+    # is built from unstable for the Go it wants: unstable carries 1.26, the
+    # 25.05 that `unstable` resolves to on Intel carries 1.24.  The Intel Mac
+    # therefore stays without it -- see specialArgs in mkDarwinConfig.
+    scmpuffModule = { unstable, ... }: {
+      environment.systemPackages = [ (unstable.callPackage ./pkgs/scmpuff.nix { }) ];
+    };
+
     # Shared configuration modules
     sharedModules = {
       common = import ./common.nix;
@@ -172,27 +181,24 @@
       # fallback any Mac lands on must not carry one machine's cask list.
       "mac-mini-m4" = mkDarwinConfig {
         system = systems.darwin;
-        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-mac-mini-m4.nix ];
+        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-mac-mini-m4.nix scmpuffModule ];
       };
 
       # The only host whose Homebrew state is fully written down: the two Mac
       # minis have their casks declared but not yet their brews.
       "macbook-pro-m1" = mkDarwinConfig {
         system = systems.darwin;
-        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-macbook-pro-m1.nix ];
+        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-macbook-pro-m1.nix scmpuffModule ];
       };
 
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
 
-      # mac-mini-m1 only: scmpuff, pinned to upstream v0.7.0 (see pkgs/scmpuff.nix)
       "mac-mini-m1" = mkDarwinConfig {
         system = systems.darwin;
         modules = [
           ./darwin/homebrew-arm.nix
           ./darwin/homebrew-mac-mini-m1.nix
-          ({ unstable, ... }: {
-            environment.systemPackages = [ (unstable.callPackage ./pkgs/scmpuff.nix { }) ];
-          })
+          scmpuffModule
         ];
       };
 

@@ -41,7 +41,8 @@
     # base
     vim
     git
-    ruby # for ~/.scm_breeze/install.sh
+    # ruby is gone with SCM Breeze, whose install.sh was the only thing that
+    # asked for it; macOS still ships /usr/bin/ruby for anything else.
     # jujutsu
     nodejs_24
     # From unstable: 25.05 carries bun 1.2.13, a year behind.  Homebrew had
