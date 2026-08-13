@@ -119,6 +119,10 @@
       macMiniConfig = mkDarwinConfig {
         system = systems.darwin;
         modules = [
+          # `default` is what a Mac whose hostname does not match lands on, and
+          # every host Declares scmpuff now, so the fallback does too.
+          scmpuffModule
+
           # Mac specific settings
           {
             # system.defaults.dock.autohide = false;
@@ -206,6 +210,16 @@
       "macbook-pro-2015-intel" = mkDarwinConfig {
         system = systems.darwin-intel;
         modules = [
+          # nixpkgs' scmpuff, 0.5.0, where the other Macs run the v0.7.0 pin.
+          # This is the one host that cannot have the pin: its go.mod asks for
+          # Go 1.26, 25.05 carries 1.24, and unstable has no x86_64-darwin to
+          # borrow a newer one from.  0.5.0 answers to the same `scmpuff exec
+          # --relative` and its `init -s` names the same subcommands, which is
+          # all ~/.config/zsh/.zshrc.personal asks of it.
+          ({ pkgs, ... }: {
+            environment.systemPackages = [ pkgs.scmpuff ];
+          })
+
           # Intel Mac specific settings
           {
             # system.defaults.dock.autohide = false;

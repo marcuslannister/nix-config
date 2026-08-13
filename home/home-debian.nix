@@ -1,5 +1,12 @@
 # home-debian.nix
-{ config, pkgs, inputs, dotfiles, ... }:
+{ config, pkgs, inputs, dotfiles, nixpkgs-unstable, ... }:
+
+let
+  # The same v0.7.0 pin the ARM Macs run, built against unstable: scmpuff's
+  # go.mod asks for Go 1.26, and 25.05 carries 1.24 here as it does there.
+  # nixpkgs' own package is 0.5.0.
+  scmpuffPin = nixpkgs-unstable.legacyPackages.${pkgs.system}.callPackage ../pkgs/scmpuff.nix { };
+in
 
 {
   # Import the base home configuration
@@ -16,7 +23,7 @@
     # base
     vim
     git
-    ruby # for ~/.scm_breeze/install.sh
+    scmpuffPin # took SCM Breeze's place, which was ruby's only reason to be here
     # jujutsu
     nodejs_24
 
