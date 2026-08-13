@@ -123,7 +123,12 @@ in
     "zsh/.zshrc.personal".source = mkDotfileSource ".config/zsh/.zshrc.personal";
     "zsh/.zshrc.fzf".source = mkDotfileSource ".config/zsh/.zshrc.fzf";
     "otty".source = mkDotfileSource ".config/otty";
-    "tty7/config.json".source = mkDotfileSource ".config/tty7/config.json";
+    # tty7's config.json is deliberately not Declared.  The tty7 server writes
+    # that file itself, so each activation found the server's copy in the way
+    # and displaced it -- 47 SSH profiles and the frecency counters -- into
+    # config.json.backup, which the next activation then overwrote.  Linking it
+    # into the dotfiles repo would publish those hosts as well, that repo being
+    # public.  tty7 owns the file; leave it alone.
 
     "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
     "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
