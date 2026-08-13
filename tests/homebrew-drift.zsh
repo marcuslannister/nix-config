@@ -65,12 +65,26 @@ dependencies=(${(@f)"$(python3 - $prefix $declared_leaves <<'PY'
 import json, sys, glob, os
 prefix, leaves = sys.argv[1], sys.argv[2:]
 def receipt(name):
-    for path in glob.glob(f'{prefix}/Cellar/{name}/*/INSTALL_RECEIPT.json'):
+    # A formula keeps its older kegs on disk until `brew cleanup` runs, and each
+    # keg's tab names the dependencies of that build alone.  Six formulae are in
+    # that state here, and libtiff was one: its 4.7.1_1 tab named four
+    # dependencies and its 4.7.2 tab named seven.  Glob order chose between them,
+    # so the closure below -- and with it the Adopted verdict -- depended on how
+    # the directory happened to be laid out.  `$prefix/opt/<name>` is the keg
+    # Homebrew has linked, so its tab is the one that describes what this Mac
+    # uses.  Newest tab first as a fallback, for a formula with no opt link.
+    paths = []
+    linked = os.path.join(prefix, 'opt', name)
+    if os.path.exists(linked):
+        paths.append(os.path.join(os.path.realpath(linked), 'INSTALL_RECEIPT.json'))
+    paths += sorted(glob.glob(f'{prefix}/Cellar/{name}/*/INSTALL_RECEIPT.json'),
+                    key=os.path.getmtime, reverse=True)
+    for path in paths:
         try:
             with open(path) as handle:
                 return json.load(handle)
         except (OSError, ValueError):
-            return None
+            continue  # a damaged tab must not hide the kegs behind it
     return None
 seen, queue = set(), list(leaves)
 while queue:
