@@ -1,8 +1,14 @@
 # darwin/homebrew-arm.nix
 #
-# The casks installed on all three ARM Macs.  Anything only some of them carry
-# stays in that host's own file, so adopting this module installs nothing and
-# removes nothing -- it describes what is already true.
+# The casks all three ARM Macs should carry.  Anything only some of them want
+# stays in that host's own file.
+#
+# This list started as a description of what was already true on all three, so
+# adopting it installed and removed nothing.  It is now a decision as well: a
+# cask promoted here is installed on any of the three that lacks it at the next
+# switch, and a cask dropped from here leaves all three.  `thaw` was promoted
+# that way on 2026-08-12 and installed on mac-mini-m4 by the switch that
+# followed.
 #
 # Deliberately not in darwin/homebrew.nix: that module reaches every Darwin
 # host, including `default` and the Intel Mac, and neither should acquire one
@@ -12,84 +18,62 @@
 {
   homebrew = {
     taps = [
-      "farion1231/ccswitch"     # cc-switch
-      "tw93/tap"                # kakuku
+      "farion1231/ccswitch" # cc-switch
     ];
 
     casks = [
       # browsers
       "brave-browser"
       "google-chrome"
-      "microsoft-edge"
 
       # editors and terminals
       "kitty"
       "markedit"
       "visual-studio-code"
-      "zed"
 
       # input methods and text
       "atext"
       "cc-switch"
-      "input-source-pro"
       "keyboardholder"
-      "switchkey"
+      # Declared under the current token; the retired `squirrel` record beside
+      # it is dropped by path, never by `brew uninstall`, which resolves the
+      # alias and deletes the live cask.
+      "squirrel-app"
 
       # window and input management
       "alt-tab"
       "bettertouchtool"
       "hammerspoon"
-      "jordanbaird-ice"
       "karabiner-elements"
       "macgesture"
       "raycast"
 
       # display and screen
       "betterdisplay"
-      "shottr"
 
       # media
       "iina"
-      "openemu"
       "spotify"
-      "tidal"
-      "vlc"
       "yacreader"
 
       # network and remote
-      "clashx"
-      "moonlight"
-      "rustdesk"
-      "tunnelbear"
       "winbox"
 
       # security and privacy
       "lulu"
       "oversight"
 
-      # notes, reading and reference
-      "anki"
-      "logseq"
-      "netnewswire"
-      "numi"
-      "scapple"
-
       # system utilities
       "apparency"
       "appcleaner"
-      "imazing"
-      "istat-menus"
       "opencore-patcher"
       "sensei"
       "sloth"
+      "thaw"
       "tmpdisk"
 
       # misc tools
-      "kakuku"
       "lm-studio"
-      "macgpt"
-      "microsoft-auto-update"
-      "via"
     ];
   };
 }

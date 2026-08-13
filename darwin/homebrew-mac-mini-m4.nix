@@ -2,12 +2,13 @@
 #
 # What mac-mini-m4 holds beyond darwin/homebrew.nix and the shared ARM list in
 # darwin/homebrew-arm.nix: its Exceptions, the taps that serve them and its
-# casks.  This machine's Homebrew state is now completely Declared.
+# casks.  This machine's Homebrew state is completely Declared.
 #
 # Its 129 Leaves were read from the install receipts under /opt/homebrew/Cellar
-# on 2026-08-12.  48 were already in environment.systemPackages, 34 moved there,
-# 17 were dropped outright, and the rest turned out to be dependencies that
-# `installed_on_request` had wrongly flagged as Leaves.
+# on 2026-08-12.  45 were already in environment.systemPackages, 33 moved there,
+# 18 were dropped outright, 7 stayed Declared here, and the remaining 26 turned
+# out to be dependencies that `installed_on_request` had wrongly flagged as
+# Leaves.
 #
 # Three Caskroom records are retired cask tokens kept as symlinks beside the
 # live one -- squirrel -> squirrel-app, fontforge -> fontforge-app and
@@ -26,19 +27,15 @@
 {
   homebrew = {
     taps = [
-      "darrylmorley/whatcable"  # whatcable
-      "lihaoyun6/tap"           # xhistory
-      "neighbor-z/swiftmtp"     # swiftmtp
-      "nowledge-co/tap"         # con-beta
-      "pouriyajamshidi/tap"     # tcping
-      "scouzi1966/afm"          # afm
-      "steipete/tap"            # codexbar
+      "darrylmorley/whatcable" # whatcable
+      "neighbor-z/swiftmtp" # swiftmtp
+      "pouriyajamshidi/tap" # tcping
     ];
 
     # Exceptions, every one checked against this flake's nixpkgs on
     # aarch64-darwin with meta.available on 2026-08-12: httping and nexttrace
     # are Linux-only, nixpkgs `mole` is an unrelated SSH tunnel tool rather than
-    # this Mac cleanup utility, and afm and tcping have no package at all.
+    # this Mac cleanup utility, and tcping has no package at all.
     #
     # syncthing is the second kind of Exception (see CONTEXT.md): nixpkgs has
     # it, but a loaded launchd agent -- ~/Library/LaunchAgents/syncthing.plist,
@@ -47,7 +44,6 @@
     # nix-darwin has no services.syncthing option, so Declaring the agent is
     # separate work.
     brews = [
-      "afm"
       "httping"
       "mole"
       "nexttrace"
@@ -57,44 +53,22 @@
 
     casks = [
       # shared with mac-mini-m1 only
-      "amethyst"
-      "android-platform-tools"
       "calibre"
-      "fontbase"
-      "forklift"
-      "openmtp"
-      "orion"
 
-      # input method, Declared under the current token; the retired `squirrel`
-      # record is dropped by path, never by `brew uninstall`
-      "squirrel-app"
-
-      # fonts with no nixpkgs equivalent.  The other 14 font casks this machine
-      # carried are gone: 10 are supplied by fonts.packages in
-      # common-darwin.nix, and 4 were dropped with macbook-pro-m1's.
+      # ~/.emacs.d/lisp/init-local.el asks for "Aporetic Sans M Nerd Font", and
+      # nixpkgs has no equivalent.  The other 15 font casks this machine carried
+      # are gone: 10 are supplied by fonts.packages in common-darwin.nix, and 5
+      # were dropped.
       "font-aporetic"
-      "font-server-mono"
 
       # this machine only
-      "android-file-transfer"
-      "balenaetcher"
-      "codexbar"
-      "con-beta"
       "docker-desktop"
       "fluidvoice"
-      "fontforge-app"
-      "ghostty"
       "macdown-3000"
       "magicquit"
-      "pearcleaner"
       "popclip"
       "swiftmtp"
-      # a JDK rather than an .app, but Homebrew puts it in
-      # /Library/Java/JavaVirtualMachines where `java_home` finds it, which the
-      # Nix store does not do
-      "temurin"
       "whatcable"
-      "xhistory"
       "zen"
     ];
   };

@@ -8,13 +8,13 @@
 {
   homebrew = {
     taps = [
-      "barrybarrywu/tap"        # tutti
-      "daipeihust/tap"          # im-select
-      "darrylmorley/whatcable"  # whatcable-cli
-      "hakky54/crip"            # crip
-      "lance0/tap"              # ttl
-      "pouriyajamshidi/tap"     # tcping
-      "supercmdlabs/supercmd"   # supercmd
+      "barrybarrywu/tap" # tutti
+      "daipeihust/tap" # im-select
+      "darrylmorley/whatcable" # whatcable-cli
+      "hakky54/crip" # crip
+      "lance0/tap" # ttl
+      "pouriyajamshidi/tap" # tcping
+      "supercmdlabs/supercmd" # supercmd
     ];
 
     # Exceptions, every one verified against nixpkgs 25.05 on 2026-08-11:
@@ -35,9 +35,7 @@
 
     casks = [
       "electrum"
-      "squirrel-app"
       "supercmd"
-      "thaw"
       "tutti"
     ];
   };

@@ -37,8 +37,8 @@
 
 {
   homebrew = {
-    # tw93/tap serves `mole` here as well, but darwin/homebrew-arm.nix already
-    # Declares it for kakuku, so it is deliberately not repeated.
+    # tw93/tap serves the `mole` Exception.  It stays here after `kakuku` and
+    # the shared ARM tap were dropped.
     taps = [
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
@@ -46,6 +46,7 @@
       "lance0/tap" # ttl
       "pouriyajamshidi/tap" # tcping
       "steipete/tap" # peekaboo
+      "tw93/tap" # mole
     ];
 
     # Exceptions, every one checked against this flake's nixpkgs with
@@ -85,7 +86,6 @@
       # never by `brew uninstall`.
       "electrum"
       "openusage"
-      "squirrel-app"
     ];
   };
 }
