@@ -314,7 +314,7 @@
     # === Development Shells ===
     devShells = nixpkgs.lib.genAttrs [ systems.darwin systems.linux ] (system:
       let pkgs = mkPkgs system nixpkgs; in
-      pkgs.mkShell {
+      { default = pkgs.mkShell {
         name = "nix-config-dev";
 
         buildInputs = with pkgs; [
@@ -350,7 +350,7 @@
           # Set up development environment
           export EDITOR="vim"
         '';
-      }
+      }; }
     );
 
     # === Checks ===
