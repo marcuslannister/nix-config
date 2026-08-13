@@ -1,8 +1,9 @@
 #!/usr/bin/env zsh
 
-# Fails when the install receipts under `$(brew --prefix)/Cellar` describe a
-# dependency graph that cannot be true, so that `tests/homebrew-drift.zsh` is
-# never asked to walk one.
+# Fails when the kegs under `$(brew --prefix)/Cellar` cannot form a usable
+# Homebrew installation.  It validates the receipt graph before
+# `tests/homebrew-drift.zsh` walks it and checks that each keg has a stable opt
+# path for binaries linked against Homebrew.
 #
 # The drift test reads each keg's `runtime_dependencies` to decide which
 # formulae are dependencies of a Declared Leaf and which are Adopted (see
@@ -25,6 +26,8 @@
 #   cycle     a real dependency graph is acyclic, so any loop is a stale tab
 #   dangling  a tab naming a formula with no keg means the closure walk stops
 #             short of dependencies that are genuinely installed
+#   unlinked  a keg with no valid opt link cannot satisfy binaries that use
+#             Homebrew's stable opt path
 #
 # Extra kegs are reported but do not fail: Homebrew leaves them until
 # `brew cleanup`, and the drift test now reads the linked keg, not whichever
@@ -75,6 +78,8 @@ for name in installed:
 dangling = {name: [d for d in named if d not in have]
             for name, named in deps.items()}
 dangling = {name: missing for name, missing in dangling.items() if missing}
+unlinked = [name for name in installed
+            if not os.path.exists(os.path.join(prefix, 'opt', name))]
 
 # Depth-first search over the installed graph.  A grey node reached a second
 # time closes a loop, and the slice of the current path from that node is it.
@@ -118,6 +123,10 @@ for name, missing in sorted(dangling.items()):
     print(f'stale tab, {name} names uninstalled {" ".join(missing)}',
           file=sys.stderr)
     faults += 1
+for name in unlinked:
+    print(f'unlinked keg, {name} has no valid {prefix}/opt/{name}',
+          file=sys.stderr)
+    faults += 1
 
 if faults:
     print(f'\nRepair each named formula, then run this test again:',
@@ -126,5 +135,5 @@ if faults:
           ' && brew install <names>', file=sys.stderr)
     sys.exit(1)
 
-print(f'{len(installed)} kegs, no cycle and no dangling dependency')
+print(f'{len(installed)} kegs, no cycle, dangling dependency or unlinked keg')
 PY
