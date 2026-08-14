@@ -61,7 +61,9 @@
     # pin to upstream v0.7.0 is what nixpkgs lacks (it ships 0.5.0/0.6.0), and it
     # is built from unstable for the Go it wants: unstable carries 1.26, the
     # 25.05 that `unstable` resolves to on Intel carries 1.24.  The Intel Mac
-    # therefore stays without it -- see specialArgs in mkDarwinConfig.
+    # therefore cannot take this module and Declares nixpkgs' 0.5.0 in its own
+    # entry below -- see specialArgs in mkDarwinConfig for why `unstable` is
+    # 25.05 there.  The Debian hosts build the same pin, in home/home-debian*.nix.
     scmpuffModule = { unstable, ... }: {
       environment.systemPackages = [ (unstable.callPackage ./pkgs/scmpuff.nix { }) ];
     };
