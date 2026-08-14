@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update the dotfiles input to add the Emacs configuration directory to `PATH` for Anvil MCP clients.
 - Make `tests/homebrew-keg-health.zsh` reject an installed keg whose missing or broken `opt` link leaves path-bound dependents unusable.
 - Deploy the Go toolchain path and `IC_BOX` to all Zsh invocations from dotfiles.
 - Update the dotfiles input to add Claude shortcuts, set the UTF-8 shell locale and Nix system path, and remove obsolete SCM Breeze loading.
