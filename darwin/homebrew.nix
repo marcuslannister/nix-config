@@ -54,6 +54,12 @@ in
         name = "emacs-plus@31";
         args = [ "with-xwidgets" ];
       }
+
+      # herdr: absent from nixpkgs (checked 2026-08-15), bottled in
+      # homebrew/core for both aarch64 and x86_64, no tap needed.  Wanted on
+      # every Mac, not just the ARM ones, so it lives here rather than in
+      # darwin/homebrew-arm.nix.
+      "herdr"
     ];
 
     # The dragon-plus icon cannot be passed as a formula arg; it lives in
