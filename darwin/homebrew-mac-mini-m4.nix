@@ -29,13 +29,10 @@
     taps = [
       "darrylmorley/whatcable" # whatcable
       "neighbor-z/swiftmtp" # swiftmtp
-      "pouriyajamshidi/tap" # tcping
     ];
 
-    # Exceptions, every one checked against this flake's nixpkgs on
-    # aarch64-darwin with meta.available on 2026-08-12: httping and nexttrace
-    # are Linux-only, nixpkgs `mole` is an unrelated SSH tunnel tool rather than
-    # this Mac cleanup utility, and tcping has no package at all.
+    # httping, mole, nexttrace and tcping promoted to darwin/homebrew-arm.nix
+    # on 2026-08-15 -- all three ARM Macs carried them.
     #
     # syncthing is the second kind of Exception (see CONTEXT.md): nixpkgs has
     # it, but a loaded launchd agent -- ~/Library/LaunchAgents/syncthing.plist,
@@ -44,11 +41,7 @@
     # nix-darwin has no services.syncthing option, so Declaring the agent is
     # separate work.
     brews = [
-      "httping"
-      "mole"
-      "nexttrace"
       "syncthing"
-      "tcping"
     ];
 
     casks = [

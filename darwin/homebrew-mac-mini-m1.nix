@@ -37,36 +37,27 @@
 
 {
   homebrew = {
-    # tw93/tap serves the `mole` Exception.  It stays here after `kakuku` and
-    # the shared ARM tap were dropped.
     taps = [
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
       "hakky54/crip" # crip
       "lance0/tap" # ttl
-      "pouriyajamshidi/tap" # tcping
       "steipete/tap" # peekaboo
-      "tw93/tap" # mole
     ];
 
     # Exceptions, every one checked against this flake's nixpkgs with
     # meta.available on 2026-08-12, on x86_64-darwin as well as aarch64-darwin:
-    # crip, httping and nexttrace are Linux-only, nixpkgs `mole` is an
-    # unrelated SSH tunnel tool rather than this Mac cleanup utility, and
-    # im-select, peekaboo, tcping, ttl and whatcable-cli have no package at
-    # all.  httping and nexttrace come from homebrew/core and need no tap.
+    # crip is Linux-only, and im-select, peekaboo, ttl and whatcable-cli have
+    # no package at all.  httping, mole, nexttrace and tcping promoted to
+    # darwin/homebrew-arm.nix on 2026-08-15 -- all three ARM Macs carried them.
     #
     # Unlike mac-mini-m4, this machine has no syncthing formula and so no
     # Exception of the second kind: the syncthing.plist on disk belongs to the
     # other account, and nothing it names is installed.
     brews = [
       "crip"
-      "httping"
       "im-select"
-      "mole"
-      "nexttrace"
       "peekaboo"
-      "tcping"
       "ttl"
       "whatcable-cli"
     ];

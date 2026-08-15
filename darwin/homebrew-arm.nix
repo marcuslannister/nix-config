@@ -1,14 +1,15 @@
 # darwin/homebrew-arm.nix
 #
-# The casks all three ARM Macs should carry.  Anything only some of them want
-# stays in that host's own file.
+# The casks and brews all three ARM Macs should carry.  Anything only some of
+# them want stays in that host's own file.
 #
 # This list started as a description of what was already true on all three, so
 # adopting it installed and removed nothing.  It is now a decision as well: a
-# cask promoted here is installed on any of the three that lacks it at the next
-# switch, and a cask dropped from here leaves all three.  `thaw` was promoted
-# that way on 2026-08-12 and installed on mac-mini-m4 by the switch that
-# followed.
+# formula promoted here is installed on any of the three that lacks it at the
+# next switch, and one dropped from here leaves all three.  `thaw` was
+# promoted that way on 2026-08-12 and installed on mac-mini-m4 by the switch
+# that followed.  httping, mole, nexttrace and tcping were promoted the same
+# way on 2026-08-15.
 #
 # Deliberately not in darwin/homebrew.nix: that module reaches every Darwin
 # host, including `default` and the Intel Mac, and neither should acquire one
@@ -19,6 +20,20 @@
   homebrew = {
     taps = [
       "farion1231/ccswitch" # cc-switch
+      "tw93/tap" # mole
+      "pouriyajamshidi/tap" # tcping
+    ];
+
+    # Exceptions, checked against this flake's nixpkgs on 2026-08-12/13:
+    # httping and nexttrace are Linux-only, nixpkgs `mole` is an unrelated SSH
+    # tunnel tool rather than this Mac cleanup utility, and tcping has no
+    # package at all.  httping and nexttrace come from homebrew/core and need
+    # no tap.
+    brews = [
+      "httping"
+      "mole"
+      "nexttrace"
+      "tcping"
     ];
 
     casks = [

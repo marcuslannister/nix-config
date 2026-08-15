@@ -13,22 +13,16 @@
       "darrylmorley/whatcable" # whatcable-cli
       "hakky54/crip" # crip
       "lance0/tap" # ttl
-      "pouriyajamshidi/tap" # tcping
       "supercmdlabs/supercmd" # supercmd
     ];
 
-    # Exceptions, every one verified against nixpkgs 25.05 on 2026-08-11:
-    # httping and nexttrace are Linux-only (meta.platforms excludes darwin);
-    # crip is Linux-only; nixpkgs `mole` is an unrelated SSH tunnel tool, not
-    # this Mac cleanup utility; im-select, tcping, ttl and whatcable-cli have
-    # no nixpkgs package at all.
+    # Exceptions, every one verified against nixpkgs 25.05 on 2026-08-11: crip
+    # is Linux-only; im-select, ttl and whatcable-cli have no nixpkgs package
+    # at all.  httping, mole, nexttrace and tcping promoted to
+    # darwin/homebrew-arm.nix on 2026-08-15 -- all three ARM Macs carried them.
     brews = [
       "crip"
-      "httping"
       "im-select"
-      "mole"
-      "nexttrace"
-      "tcping"
       "ttl"
       "whatcable-cli"
     ];
