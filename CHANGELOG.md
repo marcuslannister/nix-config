@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `muxy` with its `muxy-app/tap` in the shared Darwin Homebrew module, so every Darwin host installs it.
 - Declare `herdr` in `darwin/homebrew.nix`, absent from nixpkgs and bottled in homebrew/core for both aarch64 and x86_64 with no tap needed, so it reaches every Darwin host rather than the ARM Macs alone.
 - Promote `httping`, `mole`, `nexttrace` and `tcping` from the three per-host Homebrew files into the shared `darwin/homebrew-arm.nix`, since all three ARM Macs carried the same four Exceptions with the same taps. As a side effect this fixes a pre-existing drift on mac-mini-m4 and macbook-pro-m1, both of which Declared `mole` without the `tw93/tap` it needs.
 - Update the dotfiles input to give scmpuff's `git` wrapper a fallback command word, so a shell that replays the wrapper without `SCMPUFF_GIT_CMD` — Claude Code's shell snapshot is one — can run `git` at all rather than failing every call with "permission denied", and to add the pi continue setting.

@@ -47,7 +47,10 @@ in
   homebrew = {
     enable = true;
 
-    taps = [ "d12frosted/emacs-plus" ];
+    taps = [
+      "d12frosted/emacs-plus"
+      "muxy-app/tap"
+    ];
 
     brews = [
       {
@@ -60,6 +63,10 @@ in
       # every Mac, not just the ARM ones, so it lives here rather than in
       # darwin/homebrew-arm.nix.
       "herdr"
+    ];
+
+    casks = [
+      "muxy"
     ];
 
     # The dragon-plus icon cannot be passed as a formula arg; it lives in
