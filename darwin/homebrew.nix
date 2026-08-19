@@ -50,6 +50,7 @@ in
     taps = [
       "d12frosted/emacs-plus"
       "muxy-app/tap"
+      "eryouhao/tap"
     ];
 
     brews = [
@@ -67,6 +68,7 @@ in
 
     casks = [
       "muxy"
+      "graker"
     ];
 
     # The dragon-plus icon cannot be passed as a formula arg; it lives in

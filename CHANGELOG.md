@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `graker` with its `eryouhao/tap` in the shared Darwin Homebrew module, so every Darwin host installs it.
 - Deploy the shared Homebrew trust store to both activation and interactive paths, so the `muxy-app/tap` trust entry is available whether `XDG_CONFIG_HOME` is set or not.
 - Declare `muxy` with its `muxy-app/tap` in the shared Darwin Homebrew module, so every Darwin host installs it.
 - Declare `herdr` in `darwin/homebrew.nix`, absent from nixpkgs and bottled in homebrew/core for both aarch64 and x86_64 with no tap needed, so it reaches every Darwin host rather than the ARM Macs alone.
