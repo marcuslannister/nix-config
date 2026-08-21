@@ -2,10 +2,15 @@
 { config, pkgs, inputs, dotfiles, nixpkgs-unstable, ... }:
 
 let
-  # The same v0.7.0 pin the ARM Macs run, built against unstable: scmpuff's
-  # go.mod asks for Go 1.26, and 25.05 carries 1.24 here as it does there.
-  # nixpkgs' own package is 0.5.0.
-  scmpuffPin = nixpkgs-unstable.legacyPackages.${pkgs.system}.callPackage ../pkgs/scmpuff.nix { };
+  # nixpkgs' own scmpuff rather than the v0.7.0 pin the ARM Macs run: that pin
+  # adds gitMinimal and which as check inputs, which turns on scmpuff's
+  # testscript shell-wrapper suite, and those tests eval `scmpuff init -s`
+  # whose output shells out to /usr/bin/env -- absent from the Linux build
+  # sandbox, so the derivation cannot build here at all.  The Macs build
+  # unsandboxed and are unaffected.  Unstable's 0.6.0, not 25.05's 0.5.0,
+  # to stay closer to the Macs; both answer to the same `scmpuff exec
+  # --relative` that .zshrc uses.
+  scmpuffPkg = nixpkgs-unstable.legacyPackages.${pkgs.system}.scmpuff;
 in
 
 {
@@ -23,7 +28,7 @@ in
     # base
     vim
     git
-    scmpuffPin # took SCM Breeze's place, which was ruby's only reason to be here
+    scmpuffPkg # took SCM Breeze's place, which was ruby's only reason to be here
     # jujutsu
     nodejs_24
 
