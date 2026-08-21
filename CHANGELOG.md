@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update the dotfiles input to fall back to `xterm-256color` when an SSH session's forwarded `TERM` has no terminfo entry on the host, so a shell reached from muxy or Ghostty stops corrupting its prompt on the first keystroke where `~/.terminfo` has not been deployed.
 - Declare `graker` with its `eryouhao/tap` in the shared Darwin Homebrew module, so every Darwin host installs it.
 - Deploy the shared Homebrew trust store to both activation and interactive paths, so the `muxy-app/tap` trust entry is available whether `XDG_CONFIG_HOME` is set or not.
 - Declare `muxy` with its `muxy-app/tap` in the shared Darwin Homebrew module, so every Darwin host installs it.
