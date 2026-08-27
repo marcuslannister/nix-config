@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `docker-desktop` on mac-mini-m1 alone, so NanoClaw's per-group agent containers can rebuild natively for aarch64-darwin during the Intel-to-ARM migration rather than carrying over an amd64 image.
 - Update the dotfiles input, which drops the SSH `TERM` guard `.zshenv` briefly carried. The `xterm-ghostty` terminfo entry this repository already Declares in `home/home.nix` is what repairs the redraw corruption a muxy or Ghostty session sees over SSH; the guard rewrote `TERM` only on a host with no entry, so it stayed inert on every Declared host and would have masked a missing entry rather than exposing the Drift.
 - Take scmpuff from nixpkgs on the Debian nodes instead of the local v0.7.0 pin. The pin adds `gitMinimal` and `which` as check inputs, which turns on scmpuff's testscript shell-wrapper suite, and those tests eval `scmpuff init -s`, whose output shells out to `/usr/bin/env` -- a path the Linux build sandbox does not provide, so the derivation could not build there at all and took every deploy to vm97 and vm98 down with it. The Macs build unsandboxed and keep the pin.
 - Declare `graker` with its `eryouhao/tap` in the shared Darwin Homebrew module, so every Darwin host installs it.
