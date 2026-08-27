@@ -45,6 +45,11 @@
     # asked for it; macOS still ships /usr/bin/ruby for anything else.
     # jujutsu
     nodejs_24
+    # corepack (bundled with nodejs_24) can't enable its shims here: it tries
+    # to symlink into the Nix system-path store realization, which is
+    # read-only, so `corepack enable` always fails with EACCES. Declaring
+    # pnpm itself sidesteps that rather than relying on corepack's shim.
+    pnpm
     # From unstable: 25.05 carries bun 1.2.13, a year behind.  Homebrew had
     # 1.3.14; unstable is 1.3.13.  On Intel `unstable` resolves to 25.05, so
     # that host stays on 1.2.13 (same trade-off as gcc15 and zellij).
