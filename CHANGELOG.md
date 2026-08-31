@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `helix` in the shared Darwin `environment.systemPackages` and Deploy its `config.toml` from dotfiles through `mkDotfileSource` in `home/home.nix`.
 - Declare `pnpm` in the shared Darwin `environment.systemPackages`, next to `nodejs_24`. Corepack's `enable` step, which is how a plain `nodejs_24` install would otherwise put a project-pinned `pnpm` on `PATH`, tries to symlink into the Nix system-path store realization and fails with `EACCES` there, since that path is read-only. Declaring `pnpm` itself sidesteps the shim entirely, and its own built-in package-manager-version handling still honors a project's `packageManager` pin. This also removes a stray, Nix-unmanaged `pnpm` 8.0.0 under `/opt/homebrew` on mac-mini-m1 that had been shadowing every other `pnpm` on `PATH`.
 - Declare `docker-desktop` on mac-mini-m1 alone, so NanoClaw's per-group agent containers can rebuild natively for aarch64-darwin during the Intel-to-ARM migration rather than carrying over an amd64 image.
 - Update the dotfiles input, which drops the SSH `TERM` guard `.zshenv` briefly carried. The `xterm-ghostty` terminfo entry this repository already Declares in `home/home.nix` is what repairs the redraw corruption a muxy or Ghostty session sees over SSH; the guard rewrote `TERM` only on a host with no entry, so it stayed inert on every Declared host and would have masked a missing entry rather than exposing the Drift.

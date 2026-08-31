@@ -135,6 +135,8 @@ in
     "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
     "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
 
+    "helix/config.toml".source = mkDotfileSource ".config/helix/config.toml";
+
     "zellij/config.kdl".source = mkDotfileSource "/.config/zellij/config.kdl";
     "zellij/plugins/zellij-smart-tabs.wasm".source = zellijSmartTabs;
     "zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";

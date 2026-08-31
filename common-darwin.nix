@@ -68,6 +68,7 @@
     # utils
     eza # A modern replacement for ‘ls’
     ripgrep # recursively searches directories for a regex pattern
+    helix
     tmux
     unstable.zellij
     ncdu
