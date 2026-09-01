@@ -6,9 +6,13 @@
 # comment saying why.
 #
 # Emacs comes from the d12frosted/emacs-plus tap on every Mac, ARM and Intel
-# alike.  emacs-plus@31 tracks the emacs-31 pretest branch and has no bottle,
-# so every install compiles from source -- hence upgrade = false, which keeps
-# an unrelated `darwin-rebuild switch` from turning into a 30-minute build.
+# alike.  emacs-plus@31 tracks the emacs-31 release series (31.1 as of
+# 2026-08-24) and has no bottle, so every install compiles from source.
+# upgrade = true lets every other Leaf upgrade on activation, but emacs-plus@31
+# must stay pinned -- `brew pin emacs-plus@31` -- or an unrelated
+# `darwin-rebuild switch` turns into a 30-minute build.  `brew bundle` skips
+# pinned formulae when it upgrades, so the pin, not this file, is what holds
+# Emacs back; `brew unpin emacs-plus@31` releases it again.
 #
 # cleanup = "none" is deliberate and not a placeholder.  Homebrew 6 refuses
 # `brew bundle --cleanup` without `--force-cleanup`, and that flag also resets
@@ -75,7 +79,7 @@ in
     # ~/.config/emacs-plus/build.yml (see home/home.nix).
     onActivation = {
       autoUpdate = false;
-      upgrade = false;
+      upgrade = true;
       cleanup = "none";
     };
   };
