@@ -19,7 +19,6 @@
 {
   homebrew = {
     taps = [
-      "farion1231/ccswitch" # cc-switch
       "tw93/tap" # mole
       "pouriyajamshidi/tap" # tcping
     ];
@@ -44,11 +43,9 @@
       # editors and terminals
       "kitty"
       "markedit"
-      "visual-studio-code"
 
       # input methods and text
       "atext"
-      "cc-switch"
       "keyboardholder"
       # Declared under the current token; the retired `squirrel` record beside
       # it is dropped by path, never by `brew uninstall`, which resolves the
@@ -69,7 +66,6 @@
       # media
       "iina"
       "spotify"
-      "yacreader"
 
       # network and remote
       "winbox"
@@ -81,7 +77,6 @@
       # system utilities
       "apparency"
       "appcleaner"
-      "opencore-patcher"
       "sensei"
       "sloth"
       "thaw"
