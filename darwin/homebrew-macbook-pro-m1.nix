@@ -11,20 +11,18 @@
       "barrybarrywu/tap" # tutti
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
-      "hakky54/crip" # crip
       "lance0/tap" # ttl
       "supercmdlabs/supercmd" # supercmd
     ];
 
-    # Exceptions, every one verified against nixpkgs 25.05 on 2026-08-11: crip
-    # is Linux-only; im-select, ttl and whatcable-cli have no nixpkgs package
-    # at all.  httping, mole, nexttrace and tcping promoted to
-    # darwin/homebrew-arm.nix on 2026-08-15 -- all three ARM Macs carried them.
-    # crip and ttl are qualified with their taps: homebrew/core grew its own
-    # unrelated formulae with those names on 2026-08-31, and `brew bundle`
-    # refuses to resolve the bare name once two taps claim it.
+    # Exceptions, every one verified against nixpkgs 25.05 on 2026-08-11:
+    # im-select, ttl and whatcable-cli have no nixpkgs package at all.
+    # httping, mole, nexttrace and tcping promoted to darwin/homebrew-arm.nix
+    # on 2026-08-15 -- all three ARM Macs carried them.  ttl is qualified with
+    # its tap: homebrew/core grew its own unrelated `ttl` formula on
+    # 2026-08-31, and `brew bundle` refuses to resolve the bare name once two
+    # taps claim it.  crip was dropped on 2026-09-01.
     brews = [
-      "hakky54/crip/crip"
       "im-select"
       "lance0/tap/ttl"
       "whatcable-cli"

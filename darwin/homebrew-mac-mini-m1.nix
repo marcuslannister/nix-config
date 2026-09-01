@@ -40,26 +40,24 @@
     taps = [
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
-      "hakky54/crip" # crip
       "lance0/tap" # ttl
       "steipete/tap" # peekaboo
     ];
 
     # Exceptions, every one checked against this flake's nixpkgs with
     # meta.available on 2026-08-12, on x86_64-darwin as well as aarch64-darwin:
-    # crip is Linux-only, and im-select, peekaboo, ttl and whatcable-cli have
-    # no package at all.  httping, mole, nexttrace and tcping promoted to
-    # darwin/homebrew-arm.nix on 2026-08-15 -- all three ARM Macs carried them.
+    # im-select, peekaboo, ttl and whatcable-cli have no package at all.
+    # httping, mole, nexttrace and tcping promoted to darwin/homebrew-arm.nix
+    # on 2026-08-15 -- all three ARM Macs carried them.
     #
     # Unlike mac-mini-m4, this machine has no syncthing formula and so no
     # Exception of the second kind: the syncthing.plist on disk belongs to the
     # other account, and nothing it names is installed.
     #
-    # crip and ttl are qualified with their taps: homebrew/core grew its own
-    # unrelated formulae with those names on 2026-08-31, and `brew bundle`
-    # refuses to resolve the bare name once two taps claim it.
+    # ttl is qualified with its tap: homebrew/core grew its own unrelated
+    # `ttl` formula on 2026-08-31, and `brew bundle` refuses to resolve the
+    # bare name once two taps claim it.  crip was dropped on 2026-09-01.
     brews = [
-      "hakky54/crip/crip"
       "im-select"
       "peekaboo"
       "lance0/tap/ttl"
