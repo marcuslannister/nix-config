@@ -9,7 +9,10 @@
 # next switch, and one dropped from here leaves all three.  `thaw` was
 # promoted that way on 2026-08-12 and installed on mac-mini-m4 by the switch
 # that followed.  httping, mole, nexttrace and tcping were promoted the same
-# way on 2026-08-15.
+# way on 2026-08-15.  keyboardholder was dropped on 2026-09-01: its app was
+# already gone from /Applications on macbook-pro-m1 (nothing left for an
+# upgrade to replace) and Homebrew deprecated the cask the same day for
+# failing the macOS Gatekeeper check.
 #
 # Deliberately not in darwin/homebrew.nix: that module reaches every Darwin
 # host, including `default` and the Intel Mac, and neither should acquire one
@@ -27,12 +30,14 @@
     # httping and nexttrace are Linux-only, nixpkgs `mole` is an unrelated SSH
     # tunnel tool rather than this Mac cleanup utility, and tcping has no
     # package at all.  httping and nexttrace come from homebrew/core and need
-    # no tap.
+    # no tap.  tcping is qualified with its tap: homebrew/core grew its own
+    # unrelated `tcping` formula on 2026-08-31, and `brew bundle` refuses to
+    # resolve the bare name once two taps claim it.
     brews = [
       "httping"
       "mole"
       "nexttrace"
-      "tcping"
+      "pouriyajamshidi/tap/tcping"
     ];
 
     casks = [
@@ -46,7 +51,6 @@
 
       # input methods and text
       "atext"
-      "keyboardholder"
       # Declared under the current token; the retired `squirrel` record beside
       # it is dropped by path, never by `brew uninstall`, which resolves the
       # alias and deletes the live cask.

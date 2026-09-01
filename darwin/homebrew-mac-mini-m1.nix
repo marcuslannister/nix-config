@@ -54,11 +54,15 @@
     # Unlike mac-mini-m4, this machine has no syncthing formula and so no
     # Exception of the second kind: the syncthing.plist on disk belongs to the
     # other account, and nothing it names is installed.
+    #
+    # crip and ttl are qualified with their taps: homebrew/core grew its own
+    # unrelated formulae with those names on 2026-08-31, and `brew bundle`
+    # refuses to resolve the bare name once two taps claim it.
     brews = [
-      "crip"
+      "hakky54/crip/crip"
       "im-select"
       "peekaboo"
-      "ttl"
+      "lance0/tap/ttl"
       "whatcable-cli"
     ];
 

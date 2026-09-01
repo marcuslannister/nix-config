@@ -20,10 +20,13 @@
     # is Linux-only; im-select, ttl and whatcable-cli have no nixpkgs package
     # at all.  httping, mole, nexttrace and tcping promoted to
     # darwin/homebrew-arm.nix on 2026-08-15 -- all three ARM Macs carried them.
+    # crip and ttl are qualified with their taps: homebrew/core grew its own
+    # unrelated formulae with those names on 2026-08-31, and `brew bundle`
+    # refuses to resolve the bare name once two taps claim it.
     brews = [
-      "crip"
+      "hakky54/crip/crip"
       "im-select"
-      "ttl"
+      "lance0/tap/ttl"
       "whatcable-cli"
     ];
 
