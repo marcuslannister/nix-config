@@ -68,10 +68,8 @@
       # shared with mac-mini-m4 only
       "amethyst"
       "android-platform-tools"
-      "calibre"
       "fontbase"
       "forklift"
-      "openmtp"
       "orion"
 
       # this machine only.  squirrel-app is the input method, Declared under
