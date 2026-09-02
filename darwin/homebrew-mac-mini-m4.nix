@@ -48,6 +48,8 @@
     casks = [
       # shared with mac-mini-m1 only
       "calibre"
+
+      # shared with macbook-pro-m1 only
       "fastpotify"
 
       # ~/.emacs.d/lisp/init-local.el asks for "Aporetic Sans M Nerd Font", and

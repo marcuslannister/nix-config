@@ -9,6 +9,7 @@
   homebrew = {
     taps = [
       "barrybarrywu/tap" # tutti
+      "crmne/tap" # fastpotify
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
       "lance0/tap" # ttl
@@ -30,6 +31,7 @@
 
     casks = [
       "electrum"
+      "fastpotify"
       "supercmd"
       "tutti"
     ];
