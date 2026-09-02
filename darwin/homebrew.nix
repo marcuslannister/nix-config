@@ -50,9 +50,14 @@ in
   system.activationScripts.preActivation.text = lib.mkAfter ''
     mkdir -p "${homebrewTrustHome}/.homebrew" "${homebrewTrustHome}/.config/homebrew"
     chown ${username} "${homebrewTrustHome}/.homebrew" "${homebrewTrustHome}/.config/homebrew"
-    ln -sfn "${homebrewTrustHome}/dotfiles/.homebrew/trust.json" "${homebrewTrustHome}/.homebrew/trust.json"
-    ln -sfn "${homebrewTrustHome}/dotfiles/.homebrew/trust.json" "${homebrewTrustHome}/.config/homebrew/trust.json"
-    chown -h ${username} "${homebrewTrustHome}/.homebrew/trust.json" "${homebrewTrustHome}/.config/homebrew/trust.json"
+    for trustLink in "${homebrewTrustHome}/.homebrew/trust.json" "${homebrewTrustHome}/.config/homebrew/trust.json"; do
+      if [ -e "$trustLink" ] && [ ! -L "$trustLink" ]; then
+        echo >&2 "warning: $trustLink is a real file, not a symlink -- leaving it alone rather than overwriting whatever trust data it holds"
+      else
+        ln -sfn "${homebrewTrustHome}/dotfiles/.homebrew/trust.json" "$trustLink"
+        chown -h ${username} "$trustLink"
+      fi
+    done
   '';
 
   # Homebrew Bundle builds the app bundles inside the keg, where Finder and
