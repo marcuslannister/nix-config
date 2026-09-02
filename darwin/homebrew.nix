@@ -29,14 +29,32 @@
 # ~/.homebrew/trust.json -- the symlink into ~/dotfiles.  Trusting a tap for
 # activation therefore needs `env -u XDG_CONFIG_HOME brew trust --taps ...`.
 #
+# Both trust.json links are (re)created below, in preActivation, rather than
+# by home-manager: nix-darwin's generated activation script runs `homebrew`
+# (which is where `brew bundle` and its trust-store write live) long before
+# home-manager's own user activation gets a turn.  A Mac whose links still
+# pointed into the old, home-manager-managed /nix/store path -- see the
+# CHANGELOG entry for the trust-store fix -- would fail `homebrew` before
+# home-manager could ever repair it.  preActivation runs first of all, as
+# root, so every path it touches is chowned back to the account explicitly.
+#
 # brewPrefix follows the platform on its own: /opt/homebrew on ARM, /usr/local
 # on Intel.  A Mac with no Homebrew logs an error and skips.
-{ config, lib, ... }:
+{ config, lib, username, ... }:
 
 let
   emacsPrefix = "${lib.removeSuffix "/bin" config.homebrew.brewPrefix}/opt/emacs-plus@31";
+  homebrewTrustHome = "/Users/${username}";
 in
 {
+  system.activationScripts.preActivation.text = lib.mkAfter ''
+    mkdir -p "${homebrewTrustHome}/.homebrew" "${homebrewTrustHome}/.config/homebrew"
+    chown ${username} "${homebrewTrustHome}/.homebrew" "${homebrewTrustHome}/.config/homebrew"
+    ln -sfn "${homebrewTrustHome}/dotfiles/.homebrew/trust.json" "${homebrewTrustHome}/.homebrew/trust.json"
+    ln -sfn "${homebrewTrustHome}/dotfiles/.homebrew/trust.json" "${homebrewTrustHome}/.config/homebrew/trust.json"
+    chown -h ${username} "${homebrewTrustHome}/.homebrew/trust.json" "${homebrewTrustHome}/.config/homebrew/trust.json"
+  '';
+
   # Homebrew Bundle builds the app bundles inside the keg, where Finder and
   # Spotlight never look, so copy them into /Applications afterwards.  The
   # script stops on its own unless the keg holds a new build.  A failed copy

@@ -104,31 +104,12 @@ in
     ".local/share/vim/undo/.keep".text = "";
   };
 
-  # Homebrew reads ~/.homebrew/trust.json when XDG_CONFIG_HOME is unset, which
-  # is the case during `darwin-rebuild switch`; an interactive shell has it set
-  # and reads ~/.config/homebrew/trust.json instead.  Both paths point to the
-  # same out-of-store file so activation and interactive commands share trust.
-  # `brew bundle` refuses to load formulae from an untrusted tap and takes the
-  # switch down with it.
-  #
-  # This is a raw `ln -sfn`, not `home.file` + mkOutOfStoreSymlink like the
-  # rest of this module: `home.file` always makes ~/.homebrew/trust.json point
-  # into the /nix/store home-manager-files tree first, one hop, before that
-  # hop's target points on into dotfiles.  Homebrew >=6.0.20 checks ownership
-  # of the directory one hop away and stops there, so it sees the store's
-  # root-owned directory and refuses to write -- "Refusing to write insecure
-  # trust store: target directory ... is not owned by the current user."  A
-  # direct symlink into dotfiles has no store hop in the way.  Note the same
-  # ordering caveat as the emacs-plus icon below: home-manager runs after
-  # Homebrew, so a first-ever switch on a new Mac needs ~/.homebrew/trust.json
-  # in place beforehand.
-  home.activation.linkHomebrewTrust = pkgs.lib.mkIf pkgs.stdenv.isDarwin (
-    config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      run mkdir -p "$HOME/.homebrew" "$HOME/.config/homebrew"
-      run ln -sfn "${dotfilesPath}/.homebrew/trust.json" "$HOME/.homebrew/trust.json"
-      run ln -sfn "${dotfilesPath}/.homebrew/trust.json" "$HOME/.config/homebrew/trust.json"
-    ''
-  );
+  # ~/.homebrew/trust.json and ~/.config/homebrew/trust.json are created by
+  # darwin/homebrew.nix's preActivation script, not here: nix-darwin runs the
+  # `homebrew` activation step (where `brew bundle` writes to trust.json)
+  # before home-manager's own activation ever gets a turn, so a fix living
+  # here could not repair a Mac whose links were still broken when that step
+  # ran.  See the comment in darwin/homebrew.nix for the full story.
 
   # === XDG Configuration ===
   xdg.configFile = {
