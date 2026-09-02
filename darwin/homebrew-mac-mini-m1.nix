@@ -38,6 +38,7 @@
 {
   homebrew = {
     taps = [
+      "crmne/tap" # fastpotify
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
       "lance0/tap" # ttl
@@ -69,6 +70,7 @@
       "amethyst"
       "android-platform-tools"
       "calibre"
+      "fastpotify"
       "fontbase"
       "forklift"
       "openmtp"
