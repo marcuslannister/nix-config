@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Rebuild `emacs-plus@31` by hand on mac-mini-m1: 31.0.91 -> 31.1, re-pinned after. All three ARM Macs now carry 31.1.
 - Drop `openmtp` outright and `calibre` from mac-mini-m1, keeping `calibre` on mac-mini-m4: both casks' `.app` bundles were already gone from `/Applications` on mac-mini-m1, leaving Homebrew's Caskroom records stale, so `brew uninstall --cask --zap` needed `--force` to clear them.
 - Move `fastpotify` and its `crmne/tap` from mac-mini-m1 to macbook-pro-m1, superseding the entry below: it is shared between macbook-pro-m1 and mac-mini-m4, not mac-mini-m1.
 - Declare `fastpotify` with its `crmne/tap` on mac-mini-m1 and mac-mini-m4, the two hosts that carry it.
