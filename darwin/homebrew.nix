@@ -38,12 +38,12 @@
 # home-manager could ever repair it.  preActivation runs first of all, as
 # root, so every path it touches is chowned back to the account explicitly.
 #
-# brewPrefix follows the platform on its own: /opt/homebrew on ARM, /usr/local
-# on Intel.  A Mac with no Homebrew logs an error and skips.
+# homebrew.prefix follows the platform on its own: /opt/homebrew on ARM,
+# /usr/local on Intel.  A Mac with no Homebrew logs an error and skips.
 { config, lib, username, ... }:
 
 let
-  emacsPrefix = "${lib.removeSuffix "/bin" config.homebrew.brewPrefix}/opt/emacs-plus@31";
+  emacsPrefix = "${config.homebrew.prefix}/opt/emacs-plus@31";
   homebrewTrustHome = "/Users/${username}";
 in
 {

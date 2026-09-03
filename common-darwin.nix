@@ -173,7 +173,7 @@
     shfmt
     stylua
     micro
-    nodePackages.prettier
+    prettier
 
     # media
     ffmpeg
