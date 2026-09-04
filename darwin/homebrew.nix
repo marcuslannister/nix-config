@@ -101,7 +101,7 @@ in
     # The dragon-plus icon cannot be passed as a formula arg; it lives in
     # ~/.config/emacs-plus/build.yml (see home/home.nix).
     onActivation = {
-      autoUpdate = false;
+      autoUpdate = true;
       upgrade = true;
       cleanup = "none";
     };
