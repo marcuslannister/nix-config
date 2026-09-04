@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Set `homebrew.onActivation.autoUpdate = true` so `drs` refreshes Homebrew's tap index before it upgrades casks, rather than upgrading against whatever index a Mac happened to have cached. Trade-off: every `drs` now makes a network call and can pull in a newer cask/formula definition, even on a switch unrelated to Homebrew.
 - Upgrade `nixpkgs`, `nixpkgs-darwin`, `nix-darwin` and `home-manager` from 25.05 to 26.05. Two breaking changes needed fixing: `nodePackages.prettier` is gone in 26.05 (packages moved to the top level), so `common-darwin.nix` now Declares plain `prettier`; and `homebrew.brewPrefix` was renamed to `homebrew.prefix` with different semantics -- the old option pointed at the bin directory (`/opt/homebrew/bin`), the new one at the Homebrew prefix itself (`/opt/homebrew`) -- so `darwin/homebrew.nix`'s `emacsPrefix` derivation drops its `removeSuffix "/bin"` and reads `config.homebrew.prefix` directly. Verified by building the full system closure for mac-mini-m4, mac-mini-m1 and macbook-pro-m1; macbook-pro-2015-intel evaluates cleanly but its build was skipped.
 - Rebuild `emacs-plus@31` by hand on mac-mini-m1: 31.0.91 -> 31.1, re-pinned after. All three ARM Macs now carry 31.1.
 - Drop `openmtp` outright and `calibre` from mac-mini-m1, keeping `calibre` on mac-mini-m4: both casks' `.app` bundles were already gone from `/Applications` on mac-mini-m1, leaving Homebrew's Caskroom records stale, so `brew uninstall --cask --zap` needed `--force` to clear them.
