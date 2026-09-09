@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fix `flake.nix`'s `zjstatusOverlay` to reference `prev.stdenv.hostPlatform.system` instead of the deprecated `prev.system`, the last remaining source of that eval warning.
 - Declare `crisp` cask on macbook-pro-m1: a menu bar display manager for DDC brightness, HiDPI and virtual displays.
 - Fix `home/home-debian.nix` and `home/home-debian-ai.nix` to reference `pkgs.stdenv.hostPlatform.system` instead of the deprecated `pkgs.system` when picking `nixpkgs-unstable`'s `scmpuff`.
 - Drop `noto-fonts-color-emoji` from the shared Darwin `fonts.packages`, superseding the entry below: `fluent-emoji-flat` already covers Kitty's color emoji, so Noto never got used.
