@@ -30,6 +30,7 @@
     ];
 
     casks = [
+      "crisp"
       "electrum"
       "fastpotify"
       "supercmd"
