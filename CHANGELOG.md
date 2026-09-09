@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `~/.config/herdr/config.toml` via `xdg.configFile`, same pattern as `kitty`/`helix`, and bind `remote_image_paste = "alt+v"` in the dotfiles source so herdr's SSH clipboard-image bridge matches Claude Code's local `alt+v` -> `chat:imagePaste` binding.
 - Fix `flake.nix`'s `zjstatusOverlay` to reference `prev.stdenv.hostPlatform.system` instead of the deprecated `prev.system`, the last remaining source of that eval warning.
 - Declare `crisp` cask on macbook-pro-m1: a menu bar display manager for DDC brightness, HiDPI and virtual displays.
 - Fix `home/home-debian.nix` and `home/home-debian-ai.nix` to reference `pkgs.stdenv.hostPlatform.system` instead of the deprecated `pkgs.system` when picking `nixpkgs-unstable`'s `scmpuff`.
