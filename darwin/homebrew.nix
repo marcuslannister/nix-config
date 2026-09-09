@@ -66,9 +66,23 @@ in
   # must not abort the switch: activation runs under `set -e`, and a stale
   # /Applications is a far smaller problem than a system generation that never
   # finished activating.
+  # Docker Desktop keeps two privileged helpers, com.docker.vmnetd and
+  # com.docker.socket, in /Library/LaunchDaemons.  Installing them needs root,
+  # so a cask upgrade replaces Docker.app and leaves them stale or missing, and
+  # Docker then dies at "repairing vmnetd configuration: applescript error"
+  # behind an admin-password dialog no headless Mac ever answers.  `install
+  # config` is the same step Docker runs itself, with root already in hand.  It
+  # is idempotent, so it runs on every switch rather than only when the daemons
+  # are missing: that repairs a stale pair too.  A Mac that does not Declare
+  # Docker skips it, and a failed install must not abort the switch.
   system.activationScripts.homebrew.text = lib.mkAfter ''
     /bin/sh ${../scripts/sync-emacs-apps.sh} "${emacsPrefix}" ||
       echo >&2 "warning: could not sync the Emacs app bundles to /Applications"
+
+    if [ -x /Applications/Docker.app/Contents/MacOS/install ]; then
+      /Applications/Docker.app/Contents/MacOS/install config --user ${username} >/dev/null ||
+        echo >&2 "warning: could not install Docker's privileged helpers -- Docker Desktop will ask for an admin password on its next start"
+    fi
   '';
 
   homebrew = {

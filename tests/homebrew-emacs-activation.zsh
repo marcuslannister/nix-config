@@ -32,6 +32,13 @@ for config_name in default macbook-pro-2015-intel; do
   fi
 
   print -- "$config_name runs bundle, then syncs the Emacs apps, and tolerates a failed sync"
+
+  # Docker's privileged helpers need root, which only activation has.
+  if ! print -r -- "$activation" | rg -Fq -- 'Docker.app/Contents/MacOS/install config'; then
+    print -u2 -- "$config_name never installs Docker's privileged helpers"
+    exit 1
+  fi
+  print -- "$config_name reinstalls Docker's privileged helpers"
 done
 
 # 2. The sync copies a fresh build once, then skips until the keg changes.
