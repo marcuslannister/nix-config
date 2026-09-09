@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Fix `home/home-debian.nix` and `home/home-debian-ai.nix` to reference `pkgs.stdenv.hostPlatform.system` instead of the deprecated `pkgs.system` when picking `nixpkgs-unstable`'s `scmpuff`.
 - Drop `noto-fonts-color-emoji` from the shared Darwin `fonts.packages`, superseding the entry below: `fluent-emoji-flat` already covers Kitty's color emoji, so Noto never got used.
 - Declare `fluent-emoji-flat` (vendored COLR TTF from microsoft/fluentui-emoji Flat) in Darwin `fonts.packages`, and link it into `~/Library/Fonts` so Kitty/CoreText can resolve the family. Rebuilds of the TTF stay out of `darwin-rebuild`; copy a new file into `pkgs/fluent-emoji-flat/` when the glyph set changes.
 - Declare `noto-fonts-color-emoji` in the shared Darwin `fonts.packages`, so Kitty can map color emoji to Noto instead of Apple Color Emoji.
