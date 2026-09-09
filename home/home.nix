@@ -132,6 +132,8 @@ in
     "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
     "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
 
+    "herdr/config.toml".source = mkDotfileSource ".config/herdr/config.toml";
+
     "helix/config.toml".source = mkDotfileSource ".config/helix/config.toml";
 
     "zellij/config.kdl".source = mkDotfileSource "/.config/zellij/config.kdl";
