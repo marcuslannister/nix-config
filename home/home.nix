@@ -102,6 +102,11 @@ in
     ".local/share/vim/backup/.keep".text = "";
     ".local/share/vim/swap/.keep".text = "";
     ".local/share/vim/undo/.keep".text = "";
+  } // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
+    # CoreText/Kitty do not see fonts nested under /Library/Fonts/Nix Fonts
+    # (noto-fonts-color-emoji never showed up). Link the TTF where they look.
+    "Library/Fonts/FluentEmojiFlat.ttf".source =
+      "${pkgs.callPackage ../pkgs/fluent-emoji-flat { }}/share/fonts/truetype/FluentEmojiFlat.ttf";
   };
 
   # ~/.homebrew/trust.json and ~/.config/homebrew/trust.json are created by

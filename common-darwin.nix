@@ -216,6 +216,8 @@
     iosevka
     jetbrains-mono
     maple-mono.NF-CN
+    noto-fonts-color-emoji
+    (callPackage ./pkgs/fluent-emoji-flat { })
     source-sans-pro
     source-serif-pro
     nerd-fonts.iosevka-term
