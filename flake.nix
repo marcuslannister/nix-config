@@ -47,7 +47,7 @@
       in if sudoUser != "" then sudoUser else plainUser;
 
     zjstatusOverlay = final: prev: {
-      zjstatus = zjstatus.packages.${prev.system}.default;
+      zjstatus = zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
     };
 
     # Helper function to create pkgs for each system
