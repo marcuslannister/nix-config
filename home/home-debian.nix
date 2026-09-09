@@ -10,7 +10,7 @@ let
   # unsandboxed and are unaffected.  Unstable's 0.6.0, not 25.05's 0.5.0,
   # to stay closer to the Macs; both answer to the same `scmpuff exec
   # --relative` that .zshrc uses.
-  scmpuffPkg = nixpkgs-unstable.legacyPackages.${pkgs.system}.scmpuff;
+  scmpuffPkg = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.scmpuff;
 in
 
 {
