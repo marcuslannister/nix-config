@@ -2,6 +2,7 @@
 
 # COLR v0 TTF built from microsoft/fluentui-emoji Flat SVGs with nanoemoji.
 # Vendored: a live rebuild of ~3000 SVGs is too slow for darwin-rebuild.
+# Rebuild in fluentui-emoji (width = 1024) and copy the TTF here.
 stdenvNoCC.mkDerivation {
   pname = "fluent-emoji-flat";
   version = "0.1.0";
