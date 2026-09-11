@@ -24,19 +24,22 @@
     taps = [
       "tw93/tap" # mole
       "pouriyajamshidi/tap" # tcping
+      "steipete/tap" # peekaboo
     ];
 
     # Exceptions, checked against this flake's nixpkgs on 2026-08-12/13:
     # httping and nexttrace are Linux-only, nixpkgs `mole` is an unrelated SSH
-    # tunnel tool rather than this Mac cleanup utility, and tcping has no
-    # package at all.  httping and nexttrace come from homebrew/core and need
-    # no tap.  tcping is qualified with its tap: homebrew/core grew its own
-    # unrelated `tcping` formula on 2026-08-31, and `brew bundle` refuses to
-    # resolve the bare name once two taps claim it.
+    # tunnel tool rather than this Mac cleanup utility, and tcping and
+    # peekaboo have no package at all.  httping and nexttrace come from
+    # homebrew/core and need no tap.  tcping is qualified with its tap:
+    # homebrew/core grew its own unrelated `tcping` formula on 2026-08-31, and
+    # `brew bundle` refuses to resolve the bare name once two taps claim it.
+    # peekaboo promoted here from mac-mini-m1's own file on 2026-09-10.
     brews = [
       "httping"
       "mole"
       "nexttrace"
+      "peekaboo"
       "pouriyajamshidi/tap/tcping"
     ];
 

@@ -41,14 +41,14 @@
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
       "lance0/tap" # ttl
-      "steipete/tap" # peekaboo
     ];
 
     # Exceptions, every one checked against this flake's nixpkgs with
     # meta.available on 2026-08-12, on x86_64-darwin as well as aarch64-darwin:
-    # im-select, peekaboo, ttl and whatcable-cli have no package at all.
+    # im-select, ttl and whatcable-cli have no package at all.
     # httping, mole, nexttrace and tcping promoted to darwin/homebrew-arm.nix
-    # on 2026-08-15 -- all three ARM Macs carried them.
+    # on 2026-08-15 -- all three ARM Macs carried them.  peekaboo promoted the
+    # same way on 2026-09-10, see darwin/homebrew-arm.nix.
     #
     # Unlike mac-mini-m4, this machine has no syncthing formula and so no
     # Exception of the second kind: the syncthing.plist on disk belongs to the
@@ -59,7 +59,6 @@
     # bare name once two taps claim it.  crip was dropped on 2026-09-01.
     brews = [
       "im-select"
-      "peekaboo"
       "lance0/tap/ttl"
       "whatcable-cli"
     ];
