@@ -1,6 +1,17 @@
-{ config, pkgs, inputs, dotfiles, username, ... }:
+{ config, pkgs, lib, inputs, dotfiles, username, ... }:
 
 let
+  # Global npm CLIs that aren't packaged in nixpkgs (or move too fast to pin
+  # via buildNpmPackage).  Declared here so the list lives in git; the actual
+  # install still hits the npm registry on every activation, so this trades
+  # reproducibility for "always current" -- fine for fast-moving agent tools.
+  npmGlobalTools = [
+    "agent-browser"
+    "@colbymchenry/codegraph"
+    "@earendil-works/pi-coding-agent"
+    "@openai/codex"
+    "@playwright/mcp"
+  ];
   # Platform-aware dotfiles path
   dotfilesPath = if pkgs.stdenv.isDarwin
     then "/Users/${username}/dotfiles"
@@ -108,6 +119,15 @@ in
     "Library/Fonts/FluentEmojiFlat.ttf".source =
       "${pkgs.callPackage ../pkgs/fluent-emoji-flat { }}/share/fonts/truetype/FluentEmojiFlat.ttf";
   };
+
+  # Install/update the npm-global CLIs declared above.  Runs after the
+  # ".npmrc" symlink (writeBoundary) is in place so `npm install -g` honors
+  # its `prefix=~/.local/npm-global`.  Idempotent: npm just re-checks/updates
+  # versions already at prefix on every activation.
+  home.activation.npmGlobalTools = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    export PATH="${pkgs.nodejs_24}/bin:$PATH"
+    run ${pkgs.nodejs_24}/bin/npm install -g --dangerously-allow-all-scripts ${lib.concatStringsSep " " npmGlobalTools}
+  '';
 
   # ~/.homebrew/trust.json and ~/.config/homebrew/trust.json are created by
   # darwin/homebrew.nix's preActivation script, not here: nix-darwin runs the
