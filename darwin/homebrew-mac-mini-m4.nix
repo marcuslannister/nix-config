@@ -59,6 +59,7 @@
       "font-aporetic"
 
       # this machine only
+      "anki"
       "docker-desktop"
       "fluidvoice"
       "macdown-3000"
