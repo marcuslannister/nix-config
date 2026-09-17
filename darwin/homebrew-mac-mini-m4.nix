@@ -60,7 +60,6 @@
 
       # this machine only
       "anki"
-      "docker-desktop"
       "fluidvoice"
       "macdown-3000"
       "magicquit"
