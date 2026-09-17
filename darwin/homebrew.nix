@@ -118,6 +118,13 @@ in
       autoUpdate = true;
       upgrade = true;
       cleanup = "none";
+
+      # `brew bundle` otherwise captures each formula/cask's own install
+      # output and only prints it on failure, so a Leaf's download sits
+      # silent behind the last "Using X" line for as long as it takes --
+      # several minutes for the likes of google-chrome or spotify.
+      # --verbose streams that output live instead.
+      extraFlags = [ "--verbose" ];
     };
   };
 }
