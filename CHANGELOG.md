@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `xdg.configFile."karabiner"` in `home/home.nix`, recursive like the existing `.vim` entry, so `karabiner.json` and `assets/complex_modifications/*` are symlinked from `~/Projects/dotfiles` instead of drifting locally. `automatic_backups/`, which Karabiner-Elements writes itself and the dotfiles repo does not track, is not part of the source tree, so it stays a real, unmanaged directory alongside the symlinked files.
 - Pass `--verbose` to `brew bundle` via `darwin/homebrew.nix`'s `homebrew.onActivation.extraFlags`. `brew bundle` normally captures each formula or cask's own install output and only prints it on failure, so an `upgrade = true` switch went silent behind the last "Using X" line for as long as a Leaf's download took -- several minutes for `google-chrome` or `spotify` -- and looked hung. `--verbose` streams that output live instead.
 - Drop the `docker-desktop` cask from mac-mini-m4: this machine has no use for Docker, and `darwin/homebrew.nix`'s `install config` reinstall step (see below) was hanging every `darwin-rebuild switch` on it, waiting on a system-extension approval that a headless run can never grant. `brew uninstall --cask docker-desktop --zap` still needs to run by hand to remove the installed app and its privileged `LaunchDaemon`s, since `cleanup = "none"` never uninstalls what a Declaration drops.
 - Declare `anki` cask on mac-mini-m4: a spaced-repetition flashcard app, absent from nixpkgs as a `.app` bundle.
