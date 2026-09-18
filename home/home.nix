@@ -156,6 +156,14 @@ in
 
     "helix/config.toml".source = mkDotfileSource ".config/helix/config.toml";
 
+    # Recursive so Karabiner-Elements' automatic_backups/ (not tracked in the
+    # dotfiles repo) can keep living alongside the managed files as a real
+    # directory, instead of the whole karabiner/ dir becoming one symlink.
+    "karabiner" = {
+      source = mkDotfileSource ".config/karabiner";
+      recursive = true;
+    };
+
     "zellij/config.kdl".source = mkDotfileSource "/.config/zellij/config.kdl";
     "zellij/plugins/zellij-smart-tabs.wasm".source = zellijSmartTabs;
     "zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
