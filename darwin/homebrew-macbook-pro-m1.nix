@@ -8,6 +8,7 @@
 {
   homebrew = {
     taps = [
+      "abue-ammar/tinycast" # tinycast
       "barrybarrywu/tap" # tutti
       "crmne/tap" # fastpotify
       "daipeihust/tap" # im-select
@@ -34,6 +35,7 @@
       "electrum"
       "fastpotify"
       "supercmd"
+      "tinycast"
       "tutti"
     ];
   };
