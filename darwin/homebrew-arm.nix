@@ -82,7 +82,6 @@
       "oversight"
 
       # system utilities
-      "apparency"
       "appcleaner"
       "sensei"
       "sloth"
