@@ -10,7 +10,7 @@
     taps = [
       "abue-ammar/tinycast" # tinycast
       "barrybarrywu/tap" # tutti
-      "crmne/tap" # fastpotify
+      "crmne/tap" # spotifast
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
       "lance0/tap" # ttl
@@ -33,7 +33,7 @@
     casks = [
       "crisp"
       "electrum"
-      "fastpotify"
+      "spotifast"
       "supercmd"
       "tinycast"
       "tutti"

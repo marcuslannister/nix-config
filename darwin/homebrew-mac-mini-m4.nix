@@ -27,7 +27,7 @@
 {
   homebrew = {
     taps = [
-      "crmne/tap" # fastpotify
+      "crmne/tap" # spotifast
       "darrylmorley/whatcable" # whatcable
       "neighbor-z/swiftmtp" # swiftmtp
     ];
@@ -50,7 +50,7 @@
       "calibre"
 
       # shared with macbook-pro-m1 only
-      "fastpotify"
+      "spotifast"
 
       # ~/.emacs.d/lisp/init-local.el asks for "Aporetic Sans M Nerd Font", and
       # nixpkgs has no equivalent.  The other 15 font casks this machine carried
