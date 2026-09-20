@@ -18,6 +18,9 @@
     # You can still use shellInit or other options as needed
   };
 
+  # Real agent dir (settings + npm). ~/.pi is a symlink; Pi does not read shell rc.
+  environment.variables.PI_CODING_AGENT_DIR = "/Users/${username}/Projects/pi-settings/agent";
+
   # fixme: patch from https://github.com/NixOS/nixpkgs/issues/339576#issuecomment-2574076670
   # nixpkgs.overlays = [
   #   (final: prev:

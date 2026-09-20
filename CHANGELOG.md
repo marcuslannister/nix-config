@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Set `environment.variables.PI_CODING_AGENT_DIR` in `common-darwin.nix` to `~/Projects/pi-settings/agent`, the real agent directory (settings, npm, git), so `pi update` does not pass the `~/.pi` symlink to npm as `--prefix`. Pi does not load shell rc; nix-darwin `environment.variables` is what a new shell after `darwin-rebuild` sees.
 - Pin `flake.lock` to the updated `dotfiles` input: point `em`/`emg` and `git-ediff-tui` at Emacs.app's `/tmp/emacs$UID/server` socket, because Homebrew `emacsclient` looks in `$TMPDIR` and misses it; Caps Lock tap sends fn (Globe Change Input Source) without posting Hyper; add the `pia` alias.
 - Declare `xdg.configFile."karabiner"` in `home/home.nix`, recursive like the existing `.vim` entry, so `karabiner.json` and `assets/complex_modifications/*` are symlinked from `~/Projects/dotfiles` instead of drifting locally. `automatic_backups/`, which Karabiner-Elements writes itself and the dotfiles repo does not track, is not part of the source tree, so it stays a real, unmanaged directory alongside the symlinked files.
 - Pass `--verbose` to `brew bundle` via `darwin/homebrew.nix`'s `homebrew.onActivation.extraFlags`. `brew bundle` normally captures each formula or cask's own install output and only prints it on failure, so an `upgrade = true` switch went silent behind the last "Using X" line for as long as a Leaf's download took -- several minutes for `google-chrome` or `spotify` -- and looked hung. `--verbose` streams that output live instead.
