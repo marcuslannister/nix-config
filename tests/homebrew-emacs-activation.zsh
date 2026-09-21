@@ -8,7 +8,7 @@ sync_script=$repo_root/scripts/sync-emacs-apps.sh
 
 # 1. Activation runs `brew bundle` first, then the app sync, and a failed sync
 #    only warns instead of aborting the switch.
-for config_name in default macbook-pro-2015-intel; do
+for config_name in default macbook-pro-2015; do
   activation=$(nix eval --impure --raw "$flake_ref#darwinConfigurations.${config_name}.config.system.activationScripts.homebrew.text")
 
   bundle_line=$(print -r -- "$activation" | rg -Fn -- 'brew bundle --file=' | head -1)

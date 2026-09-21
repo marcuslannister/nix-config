@@ -176,7 +176,7 @@
   {
     # === Darwin Configurations ===
     darwinConfigurations = {
-      # TODO: mac-mini-m1, macbook-pro-m1, macbook-pro-2015-intel still need their
+      # TODO: mac-mini-m1, macbook-pro-m1, macbook-pro-2015 still need their
       # physical hostnames renamed to match (System Settings > General > Sharing >
       # Local hostname / Computer Name, or `sudo scutil --set ComputerName/HostName/
       # LocalHostName <name>`). Until then, the implicit hostname lookup used by
@@ -209,9 +209,11 @@
       };
 
       # Intel Mac (if you have one)
-      "macbook-pro-2015-intel" = mkDarwinConfig {
+      "macbook-pro-2015" = mkDarwinConfig {
         system = systems.darwin-intel;
         modules = [
+          ./darwin/homebrew-common.nix
+
           # nixpkgs' scmpuff, 0.5.0, where the other Macs run the v0.7.0 pin.
           # This is the one host that cannot have the pin: its go.mod asks for
           # Go 1.26, 25.05 carries 1.24, and unstable has no x86_64-darwin to
