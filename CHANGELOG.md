@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Pin `flake.lock` to the updated `dotfiles` input so the deployed shell includes the `pil` alias for pi with gpt-5.6-luna.
 - Rename the `fastpotify` cask to `spotifast` on macbook-pro-m1 and mac-mini-m4: upstream renamed the project starting at 0.8.0, keeping the same `crmne/tap`. Apply on each Mac with `brew migrate --cask fastpotify` before the next `drs`, so Homebrew relabels the existing install instead of `brew bundle` installing `spotifast` fresh alongside it.
 - Declare the `abue-ammar/tinycast` tap and `tinycast` cask on macbook-pro-m1: a native launcher, hotkeys and clipboard-history app whose default cask requires macOS Tahoe on arm64, which this Mac satisfies (the `tinycast-sequoia`/`tinycast-universal` variants cover older macOS or Intel).
 - Drop the `apparency` cask from `darwin/homebrew-arm.nix`. `Apparency.app` was already gone from `/Applications`, so `brew bundle` with `upgrade = true` failed the whole switch trying to replace a missing source; the leftover Caskroom record was uninstalled by hand. Chrome stays Declared.
