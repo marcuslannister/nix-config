@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Thank @marcuslannister for the Intel Mac migration request.
+- Thank @marcuslannister for the Intel Mac cleanup request: keep `thaw` on ARM Macs only, not in the shared Homebrew cask list.
 - Rename the Intel Darwin configuration from `macbook-pro-2015-intel` to `macbook-pro-2015`.
 - Add `darwin/homebrew-common.nix` for the cross-architecture Homebrew subset and apply it to `macbook-pro-2015`. Keep `betterdisplay`, `iina`, `spotify`, `winbox` and `lm-studio` on ARM only by request; current Homebrew definitions also keep Raycast and tcping on ARM.
 - Pin `flake.lock` to the updated `dotfiles` input so the deployed shell includes the `pil` alias for pi with gpt-5.6-luna.

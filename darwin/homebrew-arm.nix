@@ -32,6 +32,7 @@
       "spotify"
       "winbox"
       "lm-studio"
+      "thaw"
     ];
   };
 }
