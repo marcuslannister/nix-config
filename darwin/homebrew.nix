@@ -100,12 +100,10 @@ in
         args = [ "with-xwidgets" ];
       }
 
-      # herdr: absent from nixpkgs (checked 2026-08-15), bottled in
-      # homebrew/core for both aarch64 and x86_64, no tap needed.  Wanted on
-      # every Mac, not just the ARM ones, so it lives here rather than in
-      # darwin/homebrew-arm.nix.
-      "herdr"
-    ];
+      # herdr: absent from nixpkgs (checked 2026-08-15), no tap needed.
+      # Homebrew currently has an ARM bottle but no x86_64 bottle; keep it on
+      # ARM rather than compiling its LLVM dependencies on the Intel Mac.
+    ] ++ lib.optional (config.nixpkgs.hostPlatform.system == "aarch64-darwin") "herdr";
 
     casks = [
       "muxy"

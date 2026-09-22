@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Keep `herdr` on ARM only: current Homebrew has no x86_64 bottle, so Intel would compile `llvm@22` from source during activation.
 - Thank @marcuslannister for the Intel Mac migration request.
 - Rename the Intel Darwin configuration from `macbook-pro-2015-intel` to `macbook-pro-2015`.
 - Add `darwin/homebrew-common.nix` for the cross-architecture Homebrew subset and apply it to `macbook-pro-2015`. Keep `betterdisplay`, `iina`, `spotify`, `winbox` and `lm-studio` on ARM only by request; current Homebrew definitions also keep Raycast and tcping on ARM.
