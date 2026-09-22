@@ -49,7 +49,6 @@
       "appcleaner"
       "sensei"
       "sloth"
-      "thaw"
       "tmpdisk"
     ];
   };
