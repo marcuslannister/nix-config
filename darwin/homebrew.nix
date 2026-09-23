@@ -5,14 +5,17 @@
 # command-line tool with no nixpkgs package is an Exception and carries a
 # comment saying why.
 #
-# Emacs comes from the d12frosted/emacs-plus tap on every Mac, ARM and Intel
-# alike.  emacs-plus@31 tracks the emacs-31 release series (31.1 as of
-# 2026-08-24) and has no bottle, so every install compiles from source.
+# On ARM, Emacs comes from the d12frosted/emacs-plus tap.  emacs-plus@31
+# tracks the emacs-31 release series (31.1 as of 2026-08-24) and has no
+# bottle, so every install compiles from source.
 # upgrade = true lets every other Leaf upgrade on activation, but emacs-plus@31
 # must stay pinned -- `brew pin emacs-plus@31` -- or an unrelated
 # `darwin-rebuild switch` turns into a 30-minute build.  `brew bundle` skips
 # pinned formulae when it upgrades, so the pin, not this file, is what holds
 # Emacs back; `brew unpin emacs-plus@31` releases it again.
+#
+# Intel uses the prebuilt `emacs-app` cask: emacs-plus@31 there builds gcc
+# from source (10+ h).  The cask has native-comp but no xwidgets.
 #
 # cleanup = "none" is deliberate and not a placeholder.  Homebrew 6 refuses
 # `brew bundle --cleanup` without `--force-cleanup`, and that flag also resets
@@ -45,6 +48,7 @@
 let
   emacsPrefix = "${config.homebrew.prefix}/opt/emacs-plus@31";
   homebrewTrustHome = "/Users/${username}";
+  isArm = config.nixpkgs.hostPlatform.system == "aarch64-darwin";
 in
 {
   system.activationScripts.preActivation.text = lib.mkAfter ''
@@ -94,7 +98,7 @@ in
       "eryouhao/tap"
     ];
 
-    brews = [
+    brews = lib.optionals isArm [
       {
         name = "emacs-plus@31";
         args = [ "with-xwidgets" ];
@@ -103,12 +107,13 @@ in
       # herdr: absent from nixpkgs (checked 2026-08-15), no tap needed.
       # Homebrew currently has an ARM bottle but no x86_64 bottle; keep it on
       # ARM rather than compiling its LLVM dependencies on the Intel Mac.
-    ] ++ lib.optional (config.nixpkgs.hostPlatform.system == "aarch64-darwin") "herdr";
+      "herdr"
+    ];
 
     casks = [
       "muxy"
       "graker"
-    ];
+    ] ++ lib.optional (!isArm) "emacs-app";
 
     # The dragon-plus icon cannot be passed as a formula arg; it lives in
     # ~/.config/emacs-plus/build.yml (see home/home.nix).
