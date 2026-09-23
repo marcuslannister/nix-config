@@ -252,6 +252,13 @@
         extraSpecialArgs = { inherit dotfiles; };
       };
 
+      # Omarchy tablet: live links into ~/dotfiles, like the Macs.
+      surface-pro-7-plus = mkHomeConfig {
+        system = systems.linux;
+        modules = [ ./home/home-omarchy.nix ];
+        extraSpecialArgs = { inherit dotfiles; liveDotfiles = true; };
+      };
+
       # Darwin home-manager (if not using darwinModules)
       darwin = mkHomeConfig {
         system = systems.darwin;
@@ -312,6 +319,21 @@
               self.homeConfigurations.debian-ai;
           };
          };
+
+        # Omarchy tablet (home-manager only).  `hostname` is the SSH alias.
+        # The account name differs from the Mac's, so deploy with
+        # `USER=<remote user> deploy .#surface-pro-7-plus -- --impure`.
+        surface-pro-7-plus = {
+          hostname = "sp";
+          sshUser = username;
+          remoteBuild = true;
+
+          profiles.home = {
+            user = username;
+            path = deploy-rs.lib.${systems.linux}.activate.home-manager
+              self.homeConfigurations.surface-pro-7-plus;
+          };
+        };
       };
     };
 
