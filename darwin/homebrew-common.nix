@@ -9,14 +9,17 @@
     taps = [
       "tw93/tap" # mole
       "steipete/tap" # peekaboo
+      "kris-anderson/netperf" # netperf-enable-demo
     ];
 
     # Exceptions checked against nixpkgs: httping and nexttrace are unavailable
     # on Darwin, mole is a different tool in nixpkgs, and peekaboo has no
-    # package.
+    # package.  netperf-enable-demo follows flent's documented macOS install
+    # (https://flent.org/intro.html#installing-flent).
     brews = [
       "httping"
       "mole"
+      "netperf-enable-demo"
       "nexttrace"
       "peekaboo"
     ];

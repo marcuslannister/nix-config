@@ -67,6 +67,15 @@
       wheel
     ]))
     uv
+    # nixpkgs marks flent bad on Darwin only for its Qt GUI; the CLI and
+    # matplotlib plots work.  netperf comes from the netperf-enable-demo brew.
+    (flent.overridePythonAttrs (old: {
+      nativeBuildInputs = [ ];
+      dependencies = [ python3Packages.matplotlib ];
+      preFixup = "";
+      doCheck = false;
+      meta = old.meta // { badPlatforms = [ ]; };
+    }))
 
     # utils
     eza # A modern replacement for ‘ls’
