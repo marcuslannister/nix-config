@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Remove the zellij-smart-tabs plugin: drop its fetched `.wasm`, the `~/.config/zellij/plugins` link, and its test, and update the `dotfiles` input so `config.kdl` no longer loads it.
 - Update the `dotfiles` input with the Karabiner modifier-chord fix, fast-forward-only pulls, `pis` and updated `pil` pi aliases, and Muxy package trust. Thank @marcuslannister for the update.
 - Keep `herdr` on ARM only: current Homebrew has no x86_64 bottle, so Intel would compile `llvm@22` from source during activation.
 - Thank @marcuslannister for the Intel Mac migration and cleanup requests, including keeping `thaw` on ARM Macs only.
