@@ -362,14 +362,14 @@
           echo "Available commands:"
           echo "  dd            - deploy --dry-run"
           echo "  hm-switch     - home-manager switch --flake . --impure"
-          echo "  darwin-switch - darwin-rebuild switch --flake . --impure"
+          echo "  darwin-switch - sudo darwin-rebuild switch --flake . --impure"
           echo "  nixos-switch  - sudo nixos-rebuild switch --flake . --impure"
           echo ""
 
           # Useful aliases
           alias dd="deploy --dry-run"
           alias hm-switch="home-manager switch --flake . --impure"
-          alias darwin-switch="darwin-rebuild switch --flake . --impure"
+          alias darwin-switch="sudo darwin-rebuild switch --flake . --impure"
           alias nixos-switch="sudo nixos-rebuild switch --flake . --impure"
           alias nix-fmt="nixpkgs-fmt ."
 

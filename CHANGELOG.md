@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `AGENTS.md` (with a `CLAUDE.md` symlink) holding the deploy command `sudo darwin-rebuild switch --flake . --impure`, and add the missing `sudo` to the devShell `darwin-switch` alias. Thank @marcuslannister for the request.
 - Add the Omarchy tablet `surface-pro-7-plus` as standalone Home Manager (`home/home-omarchy.nix`) with a deploy-rs node, like vm98. Pacman and Omarchy keep the system, desktop configs and the CLI tools they ship; Nix adds the rest, plus kitty (with `targets.genericLinux` for GPU access) so it shares the Macs' kitty config. A new `liveDotfiles` flag links its dotfiles into `~/dotfiles` like the Macs, and `karabiner` is now linked on macOS only.
 - Install Emacs on Intel from the prebuilt `emacs-app` cask instead of `emacs-plus@31`: on x86_64 the formula also compiles gcc from source for libgccjit, which took over 10 hours. The cask has native-comp but no xwidgets; ARM Macs keep `emacs-plus@31`.
 - Remove the zellij-smart-tabs plugin: drop its fetched `.wasm`, the `~/.config/zellij/plugins` link, and its test, and update the `dotfiles` input so `config.kdl` no longer loads it.
