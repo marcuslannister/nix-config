@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input with the Karabiner modifier-chord fix, fast-forward-only pulls, `pis` and updated `pil` pi aliases, and Muxy package trust. Thank @marcuslannister for the update.
 - Keep `herdr` on ARM only: current Homebrew has no x86_64 bottle, so Intel would compile `llvm@22` from source during activation.
 - Thank @marcuslannister for the Intel Mac migration and cleanup requests, including keeping `thaw` on ARM Macs only.
 - Rename the Intel Darwin configuration from `macbook-pro-2015-intel` to `macbook-pro-2015`.
