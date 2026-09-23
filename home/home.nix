@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, dotfiles, username, ... }:
+{ config, pkgs, lib, inputs, dotfiles, username, specialArgs, ... }:
 
 let
   # Global npm CLIs that aren't packaged in nixpkgs (or move too fast to pin
@@ -19,8 +19,10 @@ let
 
   # Helper function
   mkDotfileLink = file: config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/${file}";
+  # A Linux host passes liveDotfiles = true (via extraSpecialArgs) to get the
+  # macOS behavior: links into a ~/dotfiles checkout instead of store copies.
   mkDotfileSource = file:
-    if pkgs.stdenv.isDarwin
+    if pkgs.stdenv.isDarwin || (specialArgs.liveDotfiles or false)
     then mkDotfileLink file
     else "${dotfiles}/${file}";
 
@@ -151,14 +153,6 @@ in
 
     "helix/config.toml".source = mkDotfileSource ".config/helix/config.toml";
 
-    # Recursive so Karabiner-Elements' automatic_backups/ (not tracked in the
-    # dotfiles repo) can keep living alongside the managed files as a real
-    # directory, instead of the whole karabiner/ dir becoming one symlink.
-    "karabiner" = {
-      source = mkDotfileSource ".config/karabiner";
-      recursive = true;
-    };
-
     "zellij/config.kdl".source = mkDotfileSource "/.config/zellij/config.kdl";
     "zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
     "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
@@ -172,5 +166,13 @@ in
   # without recompiling.
   // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
     "emacs-plus/build.yml".text = "icon: dragon-plus\n";
+
+    # Recursive so Karabiner-Elements' automatic_backups/ (not tracked in the
+    # dotfiles repo) can keep living alongside the managed files as a real
+    # directory, instead of the whole karabiner/ dir becoming one symlink.
+    "karabiner" = {
+      source = mkDotfileSource ".config/karabiner";
+      recursive = true;
+    };
   };
 }
