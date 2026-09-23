@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add flent for bufferbloat tests on the Macs: nixpkgs `flent` without its Qt GUI (nixpkgs marks it bad on Darwin only for the GUI), plus the `netperf-enable-demo` brew from the `kris-anderson/netperf` tap, per flent's macOS install guide. Update the `dotfiles` input to trust that tap. Thank @marcuslannister for the request.
+- Document in `AGENTS.md` the dotfiles order: ship `~/dotfiles`, update the `dotfiles` input, deploy, then ship `flake.lock`. Thank @marcuslannister for the rule.
 - Add `AGENTS.md` (with a `CLAUDE.md` symlink) holding the deploy command `sudo darwin-rebuild switch --flake . --impure`, and add the missing `sudo` to the devShell `darwin-switch` alias. Thank @marcuslannister for the request.
 - Add the Omarchy tablet `surface-pro-7-plus` as standalone Home Manager (`home/home-omarchy.nix`) with a deploy-rs node, like vm98. Pacman and Omarchy keep the system, desktop configs and the CLI tools they ship; Nix adds the rest, plus kitty (with `targets.genericLinux` for GPU access) so it shares the Macs' kitty config. A new `liveDotfiles` flag links its dotfiles into `~/dotfiles` like the Macs, and `karabiner` is now linked on macOS only.
 - Install Emacs on Intel from the prebuilt `emacs-app` cask instead of `emacs-plus@31`: on x86_64 the formula also compiles gcc from source for libgccjit, which took over 10 hours. The cask has native-comp but no xwidgets; ARM Macs keep `emacs-plus@31`.
