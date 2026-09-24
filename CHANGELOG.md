@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add the Orca cask (`stablyai/orca/orca`, ARM and Intel) to `darwin/homebrew-common.nix` with its `stablyai/orca` tap, and update the `dotfiles` input to trust that tap. Thank @marcuslannister for the request.
 - Add flent for bufferbloat tests on the Macs: nixpkgs `flent` without its Qt GUI (nixpkgs marks it bad on Darwin only for the GUI), plus the `netperf-enable-demo` brew from the `kris-anderson/netperf` tap, per flent's macOS install guide. Update the `dotfiles` input to trust that tap. Thank @marcuslannister for the request.
 - Document in `AGENTS.md` the dotfiles order: ship `~/dotfiles`, update the `dotfiles` input, deploy, then ship `flake.lock`. Thank @marcuslannister for the rule.
 - Add `AGENTS.md` (with a `CLAUDE.md` symlink) holding the deploy command `sudo darwin-rebuild switch --flake . --impure`, and add the missing `sudo` to the devShell `darwin-switch` alias. Thank @marcuslannister for the request.

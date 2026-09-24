@@ -10,6 +10,7 @@
       "tw93/tap" # mole
       "steipete/tap" # peekaboo
       "kris-anderson/netperf" # netperf-enable-demo
+      "stablyai/orca" # orca
     ];
 
     # Exceptions checked against nixpkgs: httping and nexttrace are unavailable
@@ -32,6 +33,7 @@
       # editors and terminals
       "kitty"
       "markedit"
+      "stablyai/orca/orca"
 
       # input methods and text
       "atext"
