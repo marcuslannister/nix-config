@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Remove Muxy (cask and `muxy-app/tap`), the `.config/otty` link, and the tty7 note. Thank @marcuslannister for the request.
 - Update the `dotfiles` input to deploy the Orca Karabiner mappings.
 - Add the `hunk` brew (ARM and Intel), a terminal diff viewer for agent-authored changes, to `darwin/homebrew-common.nix`; nixpkgs has no package for it. Thank @marcuslannister for the request.
 - Add the Orca cask (`stablyai/orca/orca`, ARM and Intel) to `darwin/homebrew-common.nix` with its `stablyai/orca` tap, and update the `dotfiles` input to trust that tap. Thank @marcuslannister for the request.

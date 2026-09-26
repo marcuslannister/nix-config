@@ -94,7 +94,6 @@ in
 
     taps = [
       "d12frosted/emacs-plus"
-      "muxy-app/tap"
       "eryouhao/tap"
     ];
 
@@ -111,7 +110,6 @@ in
     ];
 
     casks = [
-      "muxy"
       "graker"
     ] ++ lib.optional (!isArm) "emacs-app";
 
