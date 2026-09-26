@@ -2,19 +2,19 @@
 
 ## Unreleased
 
-- Remove Muxy (cask and `muxy-app/tap`), the `.config/otty` link, and the tty7 note. Thank @marcuslannister for the request.
+- Remove Muxy (cask and `muxy-app/tap`), the `.config/otty` link, and the tty7 note.
 - Update the `dotfiles` input to deploy the Orca Karabiner mappings.
-- Add the `hunk` brew (ARM and Intel), a terminal diff viewer for agent-authored changes, to `darwin/homebrew-common.nix`; nixpkgs has no package for it. Thank @marcuslannister for the request.
-- Add the Orca cask (`stablyai/orca/orca`, ARM and Intel) to `darwin/homebrew-common.nix` with its `stablyai/orca` tap, and update the `dotfiles` input to trust that tap. Thank @marcuslannister for the request.
-- Add flent for bufferbloat tests on the Macs: nixpkgs `flent` without its Qt GUI (nixpkgs marks it bad on Darwin only for the GUI), plus the `netperf-enable-demo` brew from the `kris-anderson/netperf` tap, per flent's macOS install guide. Update the `dotfiles` input to trust that tap. Thank @marcuslannister for the request.
-- Document in `AGENTS.md` the dotfiles order: ship `~/dotfiles`, update the `dotfiles` input, deploy, then ship `flake.lock`. Thank @marcuslannister for the rule.
-- Add `AGENTS.md` (with a `CLAUDE.md` symlink) holding the deploy command `sudo darwin-rebuild switch --flake . --impure`, and add the missing `sudo` to the devShell `darwin-switch` alias. Thank @marcuslannister for the request.
+- Add the `hunk` brew (ARM and Intel), a terminal diff viewer for agent-authored changes, to `darwin/homebrew-common.nix`; nixpkgs has no package for it.
+- Add the Orca cask (`stablyai/orca/orca`, ARM and Intel) to `darwin/homebrew-common.nix` with its `stablyai/orca` tap, and update the `dotfiles` input to trust that tap.
+- Add flent for bufferbloat tests on the Macs: nixpkgs `flent` without its Qt GUI (nixpkgs marks it bad on Darwin only for the GUI), plus the `netperf-enable-demo` brew from the `kris-anderson/netperf` tap, per flent's macOS install guide. Update the `dotfiles` input to trust that tap.
+- Document in `AGENTS.md` the dotfiles order: ship `~/dotfiles`, update the `dotfiles` input, deploy, then ship `flake.lock`.
+- Add `AGENTS.md` (with a `CLAUDE.md` symlink) holding the deploy command `sudo darwin-rebuild switch --flake . --impure`, and add the missing `sudo` to the devShell `darwin-switch` alias.
 - Add the Omarchy tablet `surface-pro-7-plus` as standalone Home Manager (`home/home-omarchy.nix`) with a deploy-rs node, like vm98. Pacman and Omarchy keep the system, desktop configs and the CLI tools they ship; Nix adds the rest, plus kitty (with `targets.genericLinux` for GPU access) so it shares the Macs' kitty config. A new `liveDotfiles` flag links its dotfiles into `~/dotfiles` like the Macs, and `karabiner` is now linked on macOS only.
 - Install Emacs on Intel from the prebuilt `emacs-app` cask instead of `emacs-plus@31`: on x86_64 the formula also compiles gcc from source for libgccjit, which took over 10 hours. The cask has native-comp but no xwidgets; ARM Macs keep `emacs-plus@31`.
 - Remove the zellij-smart-tabs plugin: drop its fetched `.wasm`, the `~/.config/zellij/plugins` link, and its test, and update the `dotfiles` input so `config.kdl` no longer loads it.
-- Update the `dotfiles` input with the Karabiner modifier-chord fix, fast-forward-only pulls, `pis` and updated `pil` pi aliases, and Muxy package trust. Thank @marcuslannister for the update.
+- Update the `dotfiles` input with the Karabiner modifier-chord fix, fast-forward-only pulls, `pis` and updated `pil` pi aliases, and Muxy package trust.
 - Keep `herdr` on ARM only: current Homebrew has no x86_64 bottle, so Intel would compile `llvm@22` from source during activation.
-- Thank @marcuslannister for the Intel Mac migration and cleanup requests, including keeping `thaw` on ARM Macs only.
+- Keep `thaw` on ARM Macs only.
 - Rename the Intel Darwin configuration from `macbook-pro-2015-intel` to `macbook-pro-2015`.
 - Add `darwin/homebrew-common.nix` for the cross-architecture Homebrew subset and apply it to `macbook-pro-2015`. Keep `betterdisplay`, `iina`, `spotify`, `winbox` and `lm-studio` on ARM only by request; current Homebrew definitions also keep Raycast and tcping on ARM.
 - Pin `flake.lock` to the updated `dotfiles` input so the deployed shell includes the `pil` alias for pi with gpt-5.6-luna.
