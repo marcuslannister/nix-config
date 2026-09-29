@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Link `~/.orca/keybindings.json` from `dotfiles/.orca/keybindings.json`, and update the `dotfiles` input to include it. Saving a shortcut in Orca's UI replaces the link with a plain file; the next switch moves that file to `.backup`.
 - Link the Modus Operandi and Modus Vivendi Orca terminal themes from `dotfiles/.config/orca/themes` into `~/.warp/themes`, and update the `dotfiles` input to include them.
 - Remove Muxy (cask and `muxy-app/tap`), the `.config/otty` link, and the tty7 note.
 - Update the `dotfiles` input to deploy the Orca Karabiner mappings.
