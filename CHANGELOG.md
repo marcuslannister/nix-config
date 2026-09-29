@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Link the Modus Operandi and Modus Vivendi Orca terminal themes from `dotfiles/.config/orca/themes` into `~/.warp/themes`, and update the `dotfiles` input to include them.
 - Remove Muxy (cask and `muxy-app/tap`), the `.config/otty` link, and the tty7 note.
 - Update the `dotfiles` input to deploy the Orca Karabiner mappings.
 - Add the `hunk` brew (ARM and Intel), a terminal diff viewer for agent-authored changes, to `darwin/homebrew-common.nix`; nixpkgs has no package for it.

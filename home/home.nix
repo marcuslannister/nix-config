@@ -78,6 +78,10 @@ in
     # Tmux
     ".tmux.conf".source = "${dotfiles}/.tmux.conf";
 
+    # Orca terminal themes (Orca imports Warp YAML from ~/.warp/themes)
+    ".warp/themes/modus-operandi.yaml".source = mkDotfileSource ".config/orca/themes/modus-operandi.yaml";
+    ".warp/themes/modus-vivendi.yaml".source = mkDotfileSource ".config/orca/themes/modus-vivendi.yaml";
+
     # Scripts with fixed shebangs for NixOS
     ".local/bin/cuip" = {
       source = "${dotfiles}/local/bin/cuip";
