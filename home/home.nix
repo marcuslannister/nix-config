@@ -81,6 +81,8 @@ in
     # Orca terminal themes (Orca imports Warp YAML from ~/.warp/themes)
     ".warp/themes/modus-operandi.yaml".source = mkDotfileSource ".config/orca/themes/modus-operandi.yaml";
     ".warp/themes/modus-vivendi.yaml".source = mkDotfileSource ".config/orca/themes/modus-vivendi.yaml";
+    # Orca saves shortcuts with an atomic rename, which replaces this link with a plain file.
+    ".orca/keybindings.json".source = mkDotfileSource ".orca/keybindings.json";
 
     # Scripts with fixed shebangs for NixOS
     ".local/bin/cuip" = {
