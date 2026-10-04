@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Schedule store and cache upkeep on every Mac: `nix.gc` (Tuesday 11:00, `--delete-older-than 30d`), `nix.optimise` (Tuesday 12:00), and a `cache-cleanup` user agent that runs `brew cleanup --prune=all`, `npm cache clean --force`, and `uv cache prune` every two weeks from Tuesday 2026-10-06 13:00. Times follow each Mac's local zone.
 - Link `~/.orca/keybindings.json` from `dotfiles/.orca/keybindings.json`, and update the `dotfiles` input to include it. Saving a shortcut in Orca's UI replaces the link with a plain file; the next switch moves that file to `.backup`.
 - Link the Modus Operandi and Modus Vivendi Orca terminal themes from `dotfiles/.config/orca/themes` into `~/.warp/themes`, and update the `dotfiles` input to include them.
 - Remove Muxy (cask and `muxy-app/tap`), the `.config/otty` link, and the tty7 note.
