@@ -11,6 +11,37 @@
     trusted-users = [ "root" username ];
   };
 
+  # Keep old system generations from piling up.  gc runs Tuesday 11:00 and
+  # optimise an hour later; 30 days keeps recent rollbacks.  optimise, not
+  # auto-optimise-store, which has store corruption reports on macOS.
+  nix.gc = {
+    automatic = true;
+    interval = [ { Weekday = 2; Hour = 11; Minute = 0; } ];
+    options = "--delete-older-than 30d";
+  };
+  nix.optimise = {
+    automatic = true;
+    interval = [ { Weekday = 2; Hour = 12; Minute = 0; } ];
+  };
+
+  # Cache cleanup every two weeks, Tuesday 13:00, from 2026-10-06.  launchd has
+  # no biweekly interval, so the job fires weekly and skips odd weeks counted
+  # from that Tuesday (1791270000 = 2026-10-06 00:00 local).  uv prune, not
+  # clean: it keeps entries that live environments still use.  homebrew.prefix
+  # resolves per arch (ARM or Intel).
+  launchd.user.agents.cache-cleanup = {
+    path = [ "${config.homebrew.prefix}/bin" "/usr/bin" "/bin" pkgs.nodejs_24 pkgs.uv ];
+    script = ''
+      set -e
+      days=$(( ($(date +%s) - 1791270000) / 86400 ))
+      if [ "$days" -lt 0 ] || [ $(( days / 7 % 2 )) -ne 0 ]; then exit 0; fi
+      brew cleanup --prune=all
+      npm cache clean --force
+      uv cache prune
+    '';
+    serviceConfig.StartCalendarInterval = [ { Weekday = 2; Hour = 13; Minute = 0; } ];
+  };
+
   # Enable programs
   programs.zsh = {
     enable = true;
