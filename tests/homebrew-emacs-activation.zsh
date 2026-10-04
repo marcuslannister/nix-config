@@ -127,7 +127,24 @@ if ! copied; then
 fi
 print -- 'an icon-only change copies again'
 
-# 5. A Mac without emacs-plus is left alone.
+# 5. A copy whose signature broke is copied again from the signed keg.
+plutil -create xml1 $emacs_app/Contents/Info.plist
+plutil -insert CFBundleExecutable -string Emacs $emacs_app/Contents/Info.plist
+codesign --sign - $emacs_app 2>/dev/null
+run_sync >/dev/null
+printf '\n' >>$applications/Emacs.app/Contents/Info.plist
+if codesign --verify --strict $applications/Emacs.app 2>/dev/null; then
+  print -u2 -- 'the edited Info.plist did not break the signature'
+  exit 1
+fi
+run_sync >/dev/null
+if ! codesign --verify --strict $applications/Emacs.app 2>/dev/null; then
+  print -u2 -- 'a copy with a broken signature was left in place'
+  exit 1
+fi
+print -- 'a copy with a broken signature is copied again'
+
+# 6. A Mac without emacs-plus is left alone.
 APPLICATIONS_DIR=$applications STAMP_FILE=$work/stamp \
   /bin/sh $sync_script $work/opt/absent
 print -- 'missing keg is a no-op'

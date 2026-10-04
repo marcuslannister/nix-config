@@ -40,12 +40,18 @@ fingerprint() {
 
 # A matching stamp only says what was copied last time.  The bundles must also
 # still be in /Applications as real directories: a deleted Emacs Client.app, or
-# an entry someone replaced with a symlink, has to bring the copy back.
+# an entry someone replaced with a symlink, has to bring the copy back.  So does
+# a copy whose signature broke while the keg's holds: one byte rewritten in
+# Contents/Info.plist is enough for macOS to refuse the launch (error -54).
 destinations_intact() {
   for app in "$@"; do
     [ -d "$prefix/$app" ] || continue
     [ -d "$applications/$app" ] || return 1
     [ ! -L "$applications/$app" ] || return 1
+    if /usr/bin/codesign --verify --strict "$prefix/$app" 2>/dev/null &&
+       ! /usr/bin/codesign --verify --strict "$applications/$app" 2>/dev/null; then
+      return 1
+    fi
   done
 }
 
