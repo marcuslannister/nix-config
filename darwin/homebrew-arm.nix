@@ -9,7 +9,7 @@
 # adopting it installed and removed nothing.  It is now a decision as well: a
 # formula promoted here is installed on any of the three that lacks it at the
 # next switch, and one dropped from here leaves all three.  `betterdisplay`,
-# `iina`, `spotify`, `winbox` and `lm-studio` are deliberately not part of the
+# `iina`, `spotify` and `winbox` are deliberately not part of the
 # Intel profile by user choice.
 { ... }:
 
@@ -31,7 +31,6 @@
       "iina"
       "spotify"
       "winbox"
-      "lm-studio"
       "thaw"
     ];
   };

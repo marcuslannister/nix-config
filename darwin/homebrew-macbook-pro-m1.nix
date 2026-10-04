@@ -2,19 +2,17 @@
 #
 # What macbook-pro-m1 holds beyond darwin/homebrew.nix and the shared ARM list
 # in darwin/homebrew-arm.nix: the Exceptions, the taps that serve them, and the
-# five casks the two Mac minis do not have.
+# casks the two Mac minis do not have.
 { ... }:
 
 {
   homebrew = {
     taps = [
-      "abue-ammar/tinycast" # tinycast
       "barrybarrywu/tap" # tutti
       "crmne/tap" # spotifast
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
       "lance0/tap" # ttl
-      "supercmdlabs/supercmd" # supercmd
     ];
 
     # Exceptions, every one verified against nixpkgs 25.05 on 2026-08-11:
@@ -34,8 +32,6 @@
       "crisp"
       "electrum"
       "spotifast"
-      "supercmd"
-      "tinycast"
       "tutti"
     ];
   };

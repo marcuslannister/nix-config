@@ -43,7 +43,6 @@
       # window and input management
       "alt-tab"
       "bettertouchtool"
-      "hammerspoon"
       "karabiner-elements"
       "macgesture"
 
