@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Link `~/.cargo/config.toml` from `dotfiles/.cargo/config.toml` on macOS, so Cargo uses Apple clang instead of the `cc` from `gcc15`, which cannot link against the macOS SDK. Linux hosts do not get the link, because the file names `/usr/bin/clang`.
 - Copy `Emacs.app` and `Emacs Client.app` to `/Applications` again when the copy's code signature is broken but the keg's is valid. An edited `Contents/Info.plist` breaks the ad hoc signature, and macOS then refuses to launch the app (`LSOpenURLsWithCompletionHandler` error -54).
 - Remove the Hammerspoon (common), LM Studio (ARM), SuperCmd and Tinycast (macbook-pro-m1) casks, and the `supercmdlabs/supercmd` and `abue-ammar/tinycast` taps. `cleanup = "none"` leaves them installed on other Macs; uninstall there with `brew uninstall --cask`.
 - Schedule store and cache upkeep on every Mac: `nix.gc` (Tuesday 11:00, `--delete-older-than 30d`), `nix.optimise` (Tuesday 12:00), and a `cache-cleanup` user agent that runs `brew cleanup --prune=all`, `npm cache clean --force`, and `uv cache prune` every two weeks from Tuesday 2026-10-06 13:00. Times follow each Mac's local zone.
