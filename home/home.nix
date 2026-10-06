@@ -117,6 +117,11 @@ in
     ".local/share/vim/swap/.keep".text = "";
     ".local/share/vim/undo/.keep".text = "";
   } // pkgs.lib.optionalAttrs pkgs.stdenv.isDarwin {
+    # common-darwin.nix's gcc15 owns `cc` on PATH and cannot link against the
+    # macOS SDK; this points Cargo at Apple clang.  Darwin-only: it names
+    # /usr/bin/clang.
+    ".cargo/config.toml".source = mkDotfileSource ".cargo/config.toml";
+
     # CoreText/Kitty do not see fonts nested under /Library/Fonts/Nix Fonts.
     # Link the TTF where they look.
     "Library/Fonts/FluentEmojiFlat.ttf".source =
