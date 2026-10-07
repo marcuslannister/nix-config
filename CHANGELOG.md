@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add the T3 Code cask (`t3-code`, ARM and Intel) to `darwin/homebrew.nix`.
 - Update the `dotfiles` input to deploy the Cargo config and the Orca Control shortcut alternatives.
 - Link `~/.cargo/config.toml` from `dotfiles/.cargo/config.toml` on macOS, so Cargo uses Apple clang instead of the `cc` from `gcc15`, which cannot link against the macOS SDK. Linux hosts do not get the link, because the file names `/usr/bin/clang`.
 - Copy `Emacs.app` and `Emacs Client.app` to `/Applications` again when the copy's code signature is broken but the keg's is valid. An edited `Contents/Info.plist` breaks the ad hoc signature, and macOS then refuses to launch the app (`LSOpenURLsWithCompletionHandler` error -54).
