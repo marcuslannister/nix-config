@@ -111,6 +111,7 @@ in
 
     casks = [
       "graker"
+      "t3-code"
     ] ++ lib.optional (!isArm) "emacs-app";
 
     # The dragon-plus icon cannot be passed as a formula arg; it lives in
