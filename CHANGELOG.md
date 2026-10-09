@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add the Remnawave Node VPS `ycy` as a deploy-rs node with vm98's Home Manager profile (`homeConfigurations.debian`), over SSH port 22222. Debian, Docker and the node itself stay outside Nix.
+- Update the `deploy-rs` input: the old pin failed remote builds on Nix 2.33 and later with `getting status of "/nix/store/derivations"` (serokell/deploy-rs#355).
 - Add the T3 Code cask (`t3-code`, ARM and Intel) to `darwin/homebrew.nix`.
 - Update the `dotfiles` input to deploy the Cargo config and the Orca Control shortcut alternatives.
 - Link `~/.cargo/config.toml` from `dotfiles/.cargo/config.toml` on macOS, so Cargo uses Apple clang instead of the `cc` from `gcc15`, which cannot link against the macOS SDK. Linux hosts do not get the link, because the file names `/usr/bin/clang`.
