@@ -1,0 +1,136 @@
+#!/usr/bin/env python3
+"""sstore: Sub-Store API helper for vm16, with subscription URLs and node
+credentials redacted from everything it prints.
+
+vm16 is not managed by this flake; install with
+  scp scripts/sstore vm16:.local/bin/sstore
+
+Usage: sstore subs                      name, source, merge mode, redacted url
+       sstore collections               name: member subscriptions
+       sstore get NAME                  one subscription as JSON, redacted
+       sstore names NAME [TARGET]       node names a subscription produces
+       sstore cnames NAME [TARGET]      node names a collection produces
+       sstore patch NAME                merge a JSON object from stdin into a sub
+       sstore set-sub-id NAME           read a Remnawave short ID from stdin and
+                                        put it into NAME's /api/sub/<id> url
+       sstore delete NAME               delete a sub no collection uses
+       sstore self-test
+TARGET defaults to ClashMeta.  Downloads skip Sub-Store's cache.
+
+The API is http://127.0.0.1:3001 plus the container's
+SUB_STORE_FRONTEND_BACKEND_PATH, read with `sudo -n docker inspect sub-store`.
+"""
+import json
+import re
+import subprocess
+import sys
+import urllib.parse
+import urllib.request
+
+SUB_ID = re.compile(r"(/api/sub/)[^#?\s\"]+")
+UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
+LONG_TOKEN = re.compile(r"[A-Za-z0-9+/=_-]{40,}|[0-9a-f]{24,}", re.I)
+URL = re.compile(r"([a-z][a-z0-9+.-]*://[^/\s\"?#]+)([^\s\"]*)", re.I)
+
+
+def redact_url(m):
+    host, rest = m.groups()
+    if "/api/sub/" in rest:
+        return host + SUB_ID.sub(r"\1<id>", rest)
+    return host + ("/<redacted>" if rest else "")
+
+
+def redact(text):
+    """Keep only scheme://host of URLs (a Remnawave /api/sub/<id> keeps its
+    shape), then mask UUIDs and long or hex tokens anywhere."""
+    return LONG_TOKEN.sub("<secret>", UUID.sub("<uuid>", URL.sub(redact_url, text)))
+
+
+def api_base():
+    env = subprocess.run(
+        ["sudo", "-n", "docker", "inspect", "sub-store", "--format",
+         "{{range .Config.Env}}{{println .}}{{end}}"],
+        check=True, capture_output=True, text=True).stdout
+    path = next(line.split("=", 1)[1] for line in env.splitlines()
+                if line.startswith("SUB_STORE_FRONTEND_BACKEND_PATH="))
+    return "http://127.0.0.1:3001" + path
+
+
+def call(method, path, body=None):
+    data = json.dumps(body).encode() if body is not None else None
+    req = urllib.request.Request(api_base() + path, data=data, method=method,
+                                 headers={"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        raw = resp.read().decode()
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        return raw
+
+
+def node_names(path):
+    text = call("GET", path)
+    return [m.group(1) or m.group(2) for m in
+            re.finditer(r'"name":"([^"]+)"|^  - name: (.+)$', text, re.M)]
+
+
+def quote(name):
+    return urllib.parse.quote(name, safe="")
+
+
+def main(argv):
+    cmd, args = (argv[0] if argv else "-h"), argv[1:]
+    if cmd == "subs":
+        for s in call("GET", "/api/subs")["data"]:
+            print(" | ".join([s["name"], s.get("source", ""), s.get("mergeSources") or "-",
+                              redact(s.get("url") or "-")]))
+    elif cmd == "collections":
+        for c in call("GET", "/api/collections")["data"]:
+            print(f'{c["name"]}: {", ".join(c.get("subscriptions", []))}')
+    elif cmd == "get":
+        sub = call("GET", f"/api/sub/{quote(args[0])}")["data"]
+        if sub.get("content"):
+            sub["content"] = f"<{len(sub['content'].splitlines())} lines redacted>"
+        print(redact(json.dumps(sub, indent=2, ensure_ascii=False)))
+    elif cmd in ("names", "cnames"):
+        kind = "collection/" if cmd == "cnames" else ""
+        target = args[1] if len(args) > 1 else "ClashMeta"
+        for n in node_names(f"/download/{kind}{quote(args[0])}?target={target}&noCache=true"):
+            print(n)
+    elif cmd == "patch":
+        sub = call("GET", f"/api/sub/{quote(args[0])}")["data"]
+        sub.update(json.load(sys.stdin))
+        print(call("PATCH", f"/api/sub/{quote(args[0])}", sub)["status"])
+    elif cmd == "set-sub-id":
+        new_id = sys.stdin.readline().strip()
+        sub = call("GET", f"/api/sub/{quote(args[0])}")["data"]
+        url, n = SUB_ID.subn(lambda m: m.group(1) + new_id, sub.get("url") or "")
+        if not new_id or n != 1:
+            sys.exit(f"sstore: {args[0]} needs exactly one /api/sub/<id> url and an id on stdin")
+        sub["url"] = url
+        print(call("PATCH", f"/api/sub/{quote(args[0])}", sub)["status"])
+    elif cmd == "delete":
+        users = [c["name"] for c in call("GET", "/api/collections")["data"]
+                 if args[0] in c.get("subscriptions", [])]
+        if users:
+            sys.exit(f"sstore: {args[0]} is used by {', '.join(users)}")
+        print(call("DELETE", f"/api/sub/{quote(args[0])}")["status"])
+    elif cmd == "self-test":
+        got = redact('{"url":"http://192.168.8.98:3000/api/sub/yf_HZH0Afpp5zGgp#headers=%7B%7D",'
+                     '"uuid":"c10fb607-8a95-4dba-b612-97cb503da1dc",'
+                     '"public-key":"E1CrY7yFXNHcX8gDxjbkzq2z0ZHcWBmKY8IM3FvLiGY","name":"HK-Local-YCY-VLE",'
+                     '"remote":"https://sub.example.com/path/x.jpg?token=0123456789abcdef0123456789abcdef",'
+                     '"note":"key 0123456789abcdef0123456789abcdef"}')
+        want = ('{"url":"http://192.168.8.98:3000/api/sub/<id>#headers=%7B%7D",'
+                '"uuid":"<uuid>","public-key":"<secret>","name":"HK-Local-YCY-VLE",'
+                '"remote":"https://sub.example.com/<redacted>","note":"key <secret>"}')
+        if got != want:
+            sys.exit(f"sstore self-test FAILED:\n{got}")
+        print("sstore self-test: ok")
+    else:
+        print(__doc__)
+        sys.exit(0 if cmd in ("-h", "--help") else 2)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

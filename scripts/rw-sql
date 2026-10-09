@@ -1,0 +1,109 @@
+#!/usr/bin/env bash
+# rw-sql: query the Remnawave Panel database (container remnawave-db) with
+# credentials redacted from the output.  Installed on the Debian hosts by
+# home/home-debian.nix; only vm98 runs the Panel.
+set -euo pipefail
+
+usage() {
+  cat <<'EOF'
+Usage: rw-sql [--raw] [-c SQL]      SQL from -c, else from stdin
+       rw-sql --self-test
+
+Runs psql in the remnawave-db container and prints each result as a header
+row, data rows with " | " between fields, and a (N rows) footer; stops on
+the first error.  Pass SQL on stdin (a
+quoted heredoc) so that no shell layer rewrites it.
+
+Output is redacted unless --raw: whole columns whose name matches
+short_uuid, vless_uuid, password, secret, key, token or config become
+<redacted>, and in every other field UUIDs become <uuid> and tokens of 40+
+base64 characters or 24+ hex characters become <secret>.
+
+Tables used for node and user checks (Panel 3.4):
+  nodes(uuid, name, address, port, is_connected, is_disabled, traffic_used_bytes)
+  hosts(remark, address, port, sni, fingerprint, is_disabled, is_hidden,
+        config_profile_inbound_uuid)
+  config_profiles(uuid, name, config)      config holds the REALITY privateKey
+  config_profile_inbounds(uuid, profile_uuid, tag, type, port, security)
+  config_profile_inbounds_to_nodes(node_uuid, config_profile_inbound_uuid)
+  internal_squads(uuid, name)
+  internal_squad_inbounds(internal_squad_uuid, inbound_uuid)
+  users(uuid, id, username, status, short_uuid, vless_uuid, created_at)
+  user_traffic(id = users.id, used_traffic_bytes, online_at,
+               first_connected_at, last_connected_node_uuid)
+List a table's columns:
+  select column_name from information_schema.columns where table_name='nodes';
+EOF
+}
+
+# Reads psql unaligned output (fields split by \x1f, a "(N rows)" footer
+# after each result, so the next line is a header) and prints it redacted.
+redact() {
+  python3 -c '
+import re, sys
+raw = "--raw" in sys.argv
+secret_col = re.compile(r"short_uuid|vless_uuid|password|secret|key|token|^config$", re.I)
+uuid = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}", re.I)
+long_token = re.compile(r"[A-Za-z0-9+/=_-]{40,}|[0-9a-f]{24,}", re.I)
+footer = re.compile(r"^\(\d+ rows?\)$")
+header, mask = True, []
+for line in sys.stdin.read().splitlines():
+    if footer.match(line) or line.startswith(("ERROR:", "LINE ", "HINT:", "DETAIL:")) or line.strip().startswith("^"):
+        print(line); header = footer.match(line) is not None or header; continue
+    row = line.split("\x1f")
+    if header:
+        mask = [bool(secret_col.search(c)) for c in row]; header = False
+    elif not raw:
+        row = ["<redacted>" if i < len(mask) and mask[i] else long_token.sub("<secret>", uuid.sub("<uuid>", f)) for i, f in enumerate(row)]
+    print(" | ".join(row))
+' "$@"
+}
+
+self_test() {
+  local got want
+  local u=$'\x1f'
+  got=$(printf '%s\n' \
+    "username${u}status${u}short_uuid${u}vless_uuid" \
+    "normal${u}ACTIVE${u}yf_HZH0Afpp5zGgp${u}c10fb607-8a95-4dba-b612-97cb503da1dc" \
+    '(1 row)' \
+    "remark${u}address${u}port" \
+    "HK-Local-YCY-VLE${u}207.57.127.196${u}443" \
+    '(1 row)' \
+    "name${u}config" \
+    "HK-YCY-Reality${u}{\"privateKey\":\"E1CrY7yFXNHcX8gDxjbkzq2z0ZHcWBmKY8IM3FvLiGY\"}" \
+    '(1 row)' \
+    "remark${u}last_connected_node_uuid" \
+    "x E1CrY7yFXNHcX8gDxjbkzq2z0ZHcWBmKY8IM3FvLiGY${u}0edc7f47-64b7-445f-a859-b3410bab1df2" \
+    '(1 row)' | redact)
+  want='username | status | short_uuid | vless_uuid
+normal | ACTIVE | <redacted> | <redacted>
+(1 row)
+remark | address | port
+HK-Local-YCY-VLE | 207.57.127.196 | 443
+(1 row)
+name | config
+HK-YCY-Reality | <redacted>
+(1 row)
+remark | last_connected_node_uuid
+x <secret> | <uuid>
+(1 row)'
+  [[ $got == "$want" ]] && echo "rw-sql self-test: ok" || { printf 'rw-sql self-test FAILED:\n%s\n' "$got" >&2; exit 1; }
+}
+
+raw=0 sql=""
+while (($#)); do
+  case $1 in
+    --raw) raw=1 ;;
+    -c) sql=$2; shift ;;
+    --self-test) self_test; exit ;;
+    -h|--help) usage; exit ;;
+    *) usage >&2; exit 2 ;;
+  esac
+  shift
+done
+[[ -n $sql ]] || sql=$(cat)
+
+docker inspect remnawave-db >/dev/null 2>&1 || { echo "rw-sql: no remnawave-db container on this host" >&2; exit 1; }
+printf '%s\n' "$sql" | docker exec -i remnawave-db sh -c \
+  'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -q -A -F "$(printf "\037")" -v ON_ERROR_STOP=1' 2>&1 |
+  if ((raw)); then redact --raw; else redact; fi

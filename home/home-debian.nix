@@ -80,5 +80,7 @@ in
     # docker
     docker-compose
     sqlite
+    # Remnawave Panel database queries with credentials redacted (vm98)
+    (writeShellScriptBin "rw-sql" (builtins.readFile ../scripts/rw-sql))
   ];
 }
