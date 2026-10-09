@@ -283,6 +283,10 @@
 
     # === Deploy-rs Configuration ===
     deploy = {
+      # home.nix runs `npm install -g` on every activation, which can outlast
+      # the default 30s and trigger a rollback of a working generation.
+      confirmTimeout = 300;
+
       nodes = {
         # Debian node (home-manager only)
         vm98 = {
@@ -398,9 +402,9 @@
     );
 
     # === Checks ===
-    checks = builtins.mapAttrs
-      (system: deployLib: deployLib.deployChecks self.deploy)
-      deploy-rs.lib;
+    # Linux only: every deploy node is x86_64-linux, and darwin checks would
+    # need a Linux builder, which fails `deploy` from the Macs.
+    checks.${systems.linux} = deploy-rs.lib.${systems.linux}.deployChecks self.deploy;
 
     # === Formatters ===
     formatter = nixpkgs.lib.genAttrs [ systems.darwin systems.linux ] (system:
