@@ -53,7 +53,6 @@ in
     dust
     fzf
     fd
-    jq
 
     # misc
     zoxide

@@ -45,7 +45,7 @@ in
     # networking tools
 
     # development tools
-  ];
+  ] ++ lib.optionals pkgs.stdenv.isLinux [ pkgs.jq ];
 
   # === Dotfiles ===
   home.file = {
