@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `jq` to every Linux Home Manager config through `home/home.nix`, and drop the duplicate from `home/home-debian-ai.nix`.
 - Add the Remnawave Node VPS `ycy` as a deploy-rs node with vm98's Home Manager profile (`homeConfigurations.debian`), over SSH port 22222. Debian, Docker and the node itself stay outside Nix.
 - Update the `deploy-rs` input: the old pin failed remote builds on Nix 2.33 and later with `getting status of "/nix/store/derivations"` (serokell/deploy-rs#355).
 - Add the T3 Code cask (`t3-code`, ARM and Intel) to `darwin/homebrew.nix`.
