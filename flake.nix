@@ -302,6 +302,24 @@
           };
          };
 
+        # Remnawave Node VPS (home-manager only, vm98's profile).  Docker and
+        # the node itself stay outside Nix, in /opt/remnanode.
+        ycy = {
+          hostname = "ycy";
+          sshUser = username;
+          # Keepalive: the proxy on the way to ycy closes SSH sessions idle for
+          # about 25s.  It still cut long remote builds; if a deploy fails with
+          # "closed by remote host", build the profile on ycy first.
+          sshOpts = [ "-p" "22222" "-o" "ServerAliveInterval=10" ];
+          remoteBuild = true;
+
+          profiles.home = {
+            user = username;
+            path = deploy-rs.lib.${systems.linux}.activate.home-manager
+              self.homeConfigurations.debian;
+          };
+        };
+
         # Debian AI node (home-manager only)
         vm97 = {
           hostname = "vm97";
