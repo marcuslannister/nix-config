@@ -1,0 +1,16 @@
+name: check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  flake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+      # Evaluate every output for every system; build only the cheap deploy-rs
+      # schema check (the activation check builds every Home Manager profile).
+      - run: nix flake check --impure --no-build --all-systems
+      - run: nix build --impure .#checks.x86_64-linux.deploy-schema
