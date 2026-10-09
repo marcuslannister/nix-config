@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add `scripts/rw-sql` (Remnawave Panel database queries, installed on the Debian hosts) and `scripts/sstore` (Sub-Store API helper, copied to vm16). Both redact credentials from their output by default and have a `--self-test`/`self-test` for the redaction.
+- Set deploy-rs `confirmTimeout = 300`: the `npm install -g` activation step took 43–48 s on vm98 and outlasted the 30 s default, which rolled back a working generation.
+- Limit `checks` to x86_64-linux, so `deploy` from a Mac no longer fails in `nix flake check`; add a CI job that evaluates every output and builds the deploy-rs schema check; document Linux deploys and their failure modes in `docs/deploy-linux.md`.
 - Add `jq` to every Linux Home Manager config through `home/home.nix`, and drop the duplicate from `home/home-debian-ai.nix`.
 - Add the Remnawave Node VPS `ycy` as a deploy-rs node with vm98's Home Manager profile (`homeConfigurations.debian`), over SSH port 22222. Debian, Docker and the node itself stay outside Nix.
 - Update the `deploy-rs` input: the old pin failed remote builds on Nix 2.33 and later with `getting status of "/nix/store/derivations"` (serokell/deploy-rs#355).
