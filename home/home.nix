@@ -100,6 +100,12 @@ in
       executable = true;
     };
 
+    # Writes the live BetterTouchTool preset back to dotfiles; BTT Sync does the syncing.
+    ".local/bin/btt-export" = lib.mkIf pkgs.stdenv.isDarwin {
+      source = mkDotfileSource "local/bin/btt-export";
+      executable = true;
+    };
+
     ".local/bin/ns.sh" = {
       source = mkDotfileSource "local/bin/ns.sh";
       executable = false;
