@@ -194,7 +194,16 @@
       # minis have their casks declared but not yet their brews.
       "macbook-pro-m1" = mkDarwinConfig {
         system = systems.darwin;
-        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-macbook-pro-m1.nix scmpuffModule ];
+        modules = [
+          ./darwin/homebrew-arm.nix ./darwin/homebrew-macbook-pro-m1.nix scmpuffModule
+          # BetterTouchTool's Trackpad "1 Finger Tap -> Left Click" trigger does
+          # tap, double-tap and double-tap-drag text selection itself; macOS tap
+          # to click and tap-dragging would act on the same taps.
+          {
+            system.defaults.trackpad.Clicking = false;
+            system.defaults.trackpad.Dragging = false;
+          }
+        ];
       };
 
       default = macMiniConfig;  # This enables "darwin-rebuild build --flake ."
