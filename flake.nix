@@ -103,6 +103,14 @@
             nixpkgs.hostPlatform = system;
             nixpkgs.overlays = [ zjstatusOverlay ];
           }
+          # BetterTouchTool's Trackpad "1 Finger Tap -> Left Click" trigger (synced
+          # to every Mac by BTT Sync) does tap, double-tap and double-tap-drag text
+          # selection itself; macOS tap to click and tap-dragging would act on the
+          # same taps.
+          {
+            system.defaults.trackpad.Clicking = false;
+            system.defaults.trackpad.Dragging = false;
+          }
 
           # Home Manager integration
           home-manager.darwinModules.home-manager
@@ -196,13 +204,6 @@
         system = systems.darwin;
         modules = [
           ./darwin/homebrew-arm.nix ./darwin/homebrew-macbook-pro-m1.nix scmpuffModule
-          # BetterTouchTool's Trackpad "1 Finger Tap -> Left Click" trigger does
-          # tap, double-tap and double-tap-drag text selection itself; macOS tap
-          # to click and tap-dragging would act on the same taps.
-          {
-            system.defaults.trackpad.Clicking = false;
-            system.defaults.trackpad.Dragging = false;
-          }
         ];
       };
 

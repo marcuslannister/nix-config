@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Turn off macOS Tap to click and tap-dragging on every Mac, not only macbook-pro-m1: BTT Sync now gives every Mac the BetterTouchTool `1 Finger Tap` → `Left Click` trigger, and both would act on the same taps.
 - Link `~/.local/bin/btt-export` from dotfiles on the Macs.
 - Add `scripts/rw-sql` (Remnawave Panel database queries, installed on the Debian hosts) and `scripts/sstore` (Sub-Store API helper, copied to vm16). Both redact credentials from their output by default and have a `--self-test`/`self-test` for the redaction.
 - Set deploy-rs `confirmTimeout = 300`: the `npm install -g` activation step took 43–48 s on vm98 and outlasted the 30 s default, which rolled back a working generation.
