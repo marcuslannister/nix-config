@@ -101,9 +101,9 @@ in
     };
 
     # Writes the live BetterTouchTool preset back to dotfiles; BTT Sync does the syncing.
+    # No `executable`: setting it makes home-manager copy the out-of-store link, which the builder cannot read.
     ".local/bin/btt-export" = lib.mkIf pkgs.stdenv.isDarwin {
       source = mkDotfileSource "local/bin/btt-export";
-      executable = true;
     };
 
     ".local/bin/ns.sh" = {
