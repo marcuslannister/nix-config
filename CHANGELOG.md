@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Link the `xterm-kitty` terminfo entry from Nix's kitty into `~/.terminfo` on the Omarchy hosts, so SSH sessions from kitty work: Arch's ncurses does not include it.
 - Add the Omarchy laptop `thinkpad-x230` as standalone Home Manager with a deploy-rs node over the SSH alias `x230-w`. It uses the same profile as `surface-pro-7-plus` (`home/home-omarchy.nix`, live dotfiles links). The node shares one SSH connection, because the X230 refused new connections during activation.
 - Turn on macOS two-finger click as secondary (right) click on every Mac.
 - Turn off macOS Tap to click and tap-dragging on every Mac, not only macbook-pro-m1: BTT Sync now gives every Mac the BetterTouchTool `1 Finger Tap` → `Left Click` trigger, and both would act on the same taps.

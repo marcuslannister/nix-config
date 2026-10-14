@@ -19,6 +19,10 @@ in
   targets.genericLinux.enable = true;
   fonts.fontconfig.enable = true;
 
+  # ssh'ing in from kitty leaves TERM=xterm-kitty, which Arch's ncurses lacks.
+  # Beside home.nix's xterm-ghostty in ~/.terminfo, which ncurses searches first.
+  home.file.".terminfo/x/xterm-kitty".source = "${pkgs.kitty.terminfo}/share/terminfo/x/xterm-kitty";
+
   home.packages = with pkgs; [
     # kitty from Nix, not pacman, so it matches the Macs' config.
     kitty
