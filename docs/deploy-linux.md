@@ -1,6 +1,6 @@
 # Deploy a Linux node
 
-The deploy-rs nodes in `flake.nix` (`vm97`, `vm98`, `ycy`, `surface-pro-7-plus`) run standalone Home Manager. Deploy from a Mac:
+The deploy-rs nodes in `flake.nix` (`vm97`, `vm98`, `ycy`, `surface-pro-7-plus`, `thinkpad-x230`) run standalone Home Manager. Deploy from a Mac:
 
 ```sh
 nix develop --impure -c deploy .#<node> -- --impure

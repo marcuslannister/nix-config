@@ -1,9 +1,9 @@
 # nix-config
 
-Declarative configuration for four Macs, two Debian hosts, one Omarchy tablet
-and one NixOS VM. On macOS two package managers share the machine: Nix owns
-everything that is not an application bundle, and Homebrew owns the application
-bundles. On Omarchy, pacman owns the system and the desktop, and Nix owns only
+Declarative configuration for four Macs, two Debian hosts, two Omarchy machines
+(a tablet and a laptop) and one NixOS VM. On macOS two package managers share
+the machine: Nix owns everything that is not an application bundle, and
+Homebrew owns the application bundles. On Omarchy, pacman owns the system and the desktop, and Nix owns only
 the command-line tools that Omarchy does not ship.
 
 ## Language

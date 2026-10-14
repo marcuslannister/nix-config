@@ -270,6 +270,13 @@
         extraSpecialArgs = { inherit dotfiles; liveDotfiles = true; };
       };
 
+      # Omarchy laptop: same profile as the tablet.
+      thinkpad-x230 = mkHomeConfig {
+        system = systems.linux;
+        modules = [ ./home/home-omarchy.nix ];
+        extraSpecialArgs = { inherit dotfiles; liveDotfiles = true; };
+      };
+
       # Darwin home-manager (if not using darwinModules)
       darwin = mkHomeConfig {
         system = systems.darwin;
@@ -365,6 +372,22 @@
             user = username;
             path = deploy-rs.lib.${systems.linux}.activate.home-manager
               self.homeConfigurations.surface-pro-7-plus;
+          };
+        };
+
+        # Omarchy laptop (home-manager only), deployed like surface-pro-7-plus.
+        thinkpad-x230 = {
+          hostname = "x230-w";
+          sshUser = username;
+          # One shared connection: the X230 refused new SSH connections during
+          # activation, after the burst of them deploy-rs opens.
+          sshOpts = [ "-o" "ControlMaster=auto" "-o" "ControlPath=/tmp/ssh-%C" "-o" "ControlPersist=120" ];
+          remoteBuild = true;
+
+          profiles.home = {
+            user = username;
+            path = deploy-rs.lib.${systems.linux}.activate.home-manager
+              self.homeConfigurations.thinkpad-x230;
           };
         };
       };
