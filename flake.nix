@@ -110,6 +110,7 @@
           {
             system.defaults.trackpad.Clicking = false;
             system.defaults.trackpad.Dragging = false;
+            system.defaults.trackpad.TrackpadRightClick = true;
           }
 
           # Home Manager integration
