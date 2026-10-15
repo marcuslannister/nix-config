@@ -140,6 +140,9 @@
     delta
     skim # provides `sk`
     # bitwarden-cli
+    # Bitwarden client for the Vaultwarden vault; holds API tokens for agents.
+    rbw
+    pinentry_mac
 
     # GNU tool replacements (macOS ships BSD variants).  gnused and diffutils
     # shadow the BSD sed and diff, the same way gnutar/gnugrep/gawk already do.

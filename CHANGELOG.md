@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `rbw` (Bitwarden client for the Vaultwarden vault, to hold API tokens for agents) and `pinentry_mac` (its macOS unlock dialog) to every Mac.
 - Link the `xterm-kitty` terminfo entry from Nix's kitty into `~/.terminfo` on the Omarchy hosts, so SSH sessions from kitty work: Arch's ncurses does not include it.
 - Add the Omarchy laptop `thinkpad-x230` as standalone Home Manager with a deploy-rs node over the SSH alias `x230-w`. It uses the same profile as `surface-pro-7-plus` (`home/home-omarchy.nix`, live dotfiles links). The node shares one SSH connection, because the X230 refused new connections during activation.
 - Turn on macOS two-finger click as secondary (right) click on every Mac.
