@@ -11,11 +11,12 @@
       "steipete/tap" # peekaboo
       "kris-anderson/netperf" # netperf-enable-demo
       "stablyai/orca" # orca
+      "smarzban/tap" # tsk
     ];
 
     # Exceptions checked against nixpkgs: httping and nexttrace are unavailable
     # on Darwin, mole is a different tool in nixpkgs, peekaboo has no
-    # package, and hunk is not in nixpkgs.  netperf-enable-demo follows flent's documented macOS install
+    # package, and hunk and tsk are not in nixpkgs.  netperf-enable-demo follows flent's documented macOS install
     # (https://flent.org/intro.html#installing-flent).
     brews = [
       "httping"
@@ -24,6 +25,7 @@
       "netperf-enable-demo"
       "nexttrace"
       "peekaboo"
+      "smarzban/tap/tsk"
     ];
 
     casks = [
