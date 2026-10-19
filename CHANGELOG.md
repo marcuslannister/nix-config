@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Reorder the dotfiles workflow in `AGENTS.md`: build to check, ship `flake.lock`, then deploy.
 - Add `tsk` and its `smarzban/tap` to every Mac as an Exception (nixpkgs has no package), and update the `dotfiles` input to trust the tap.
 - Add `rbw` (Bitwarden client for the Vaultwarden vault, to hold API tokens for agents) and `pinentry_mac` (its macOS unlock dialog) to every Mac.
 - Link the `xterm-kitty` terminfo entry from Nix's kitty into `~/.terminfo` on the Omarchy hosts, so SSH sessions from kitty work: Arch's ncurses does not include it.
