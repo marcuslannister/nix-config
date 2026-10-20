@@ -10,7 +10,6 @@
       "tw93/tap" # mole
       "steipete/tap" # peekaboo
       "kris-anderson/netperf" # netperf-enable-demo
-      "stablyai/orca" # orca
       "smarzban/tap" # tsk
     ];
 
@@ -36,7 +35,6 @@
       # editors and terminals
       "kitty"
       "markedit"
-      "stablyai/orca/orca"
 
       # input methods and text
       "atext"

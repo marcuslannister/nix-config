@@ -24,11 +24,9 @@
       url = "github:marcuslannister/dotfiles";
       flake = false;
     };
-
-    zjstatus.url = "github:dj95/zjstatus";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles, nixpkgs-unstable, zjstatus }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles, nixpkgs-unstable }:
   let
     # System definitions
     systems = {
@@ -46,15 +44,10 @@
           plainUser = builtins.getEnv "USER";
       in if sudoUser != "" then sudoUser else plainUser;
 
-    zjstatusOverlay = final: prev: {
-      zjstatus = zjstatus.packages.${prev.stdenv.hostPlatform.system}.default;
-    };
-
     # Helper function to create pkgs for each system
     mkPkgs = system: nixpkgsInput: import nixpkgsInput {
       inherit system;
       config.allowUnfree = true;
-      overlays = [ zjstatusOverlay ];
     };
 
     # scmpuff took SCM Breeze's place on the three ARM Macs on 2026-08-12.  The
@@ -101,7 +94,6 @@
           sharedModules.homebrew
           {
             nixpkgs.hostPlatform = system;
-            nixpkgs.overlays = [ zjstatusOverlay ];
           }
           # BetterTouchTool's Trackpad "1 Finger Tap -> Left Click" trigger (synced
           # to every Mac by BTT Sync) does tap, double-tap and double-tap-drag text
@@ -176,7 +168,6 @@
           {
             networking.hostName = hostname;
             nix.settings.trusted-users = [ "root" username ];
-            nixpkgs.overlays = [ zjstatusOverlay ];
           }
         ] ++ modules;
       };

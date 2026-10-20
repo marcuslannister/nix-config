@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Remove zjstatus: the flake input, the overlay, the Zellij plugin link, and `tests/zellij-local-upstream-plugin.zsh`.
+- Remove the Orca cask and its `stablyai/orca` tap, and the Orca theme and keybinding links. `cleanup = "none"` leaves the app installed on other Macs; uninstall there with `brew uninstall --cask`.
+- Remove the T3 Code cask (`t3-code`). The same `cleanup = "none"` note applies.
 - Reorder the dotfiles workflow in `AGENTS.md`: build to check, ship `flake.lock`, then deploy.
 - Add `tsk` and its `smarzban/tap` to every Mac as an Exception (nixpkgs has no package), and update the `dotfiles` input to trust the tap.
 - Add `rbw` (Bitwarden client for the Vaultwarden vault, to hold API tokens for agents) and `pinentry_mac` (its macOS unlock dialog) to every Mac.

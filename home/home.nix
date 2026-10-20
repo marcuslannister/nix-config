@@ -78,12 +78,6 @@ in
     # Tmux
     ".tmux.conf".source = "${dotfiles}/.tmux.conf";
 
-    # Orca terminal themes (Orca imports Warp YAML from ~/.warp/themes)
-    ".warp/themes/modus-operandi.yaml".source = mkDotfileSource ".config/orca/themes/modus-operandi.yaml";
-    ".warp/themes/modus-vivendi.yaml".source = mkDotfileSource ".config/orca/themes/modus-vivendi.yaml";
-    # Orca saves shortcuts with an atomic rename, which replaces this link with a plain file.
-    ".orca/keybindings.json".source = mkDotfileSource ".orca/keybindings.json";
-
     # Scripts with fixed shebangs for NixOS
     ".local/bin/cuip" = {
       source = "${dotfiles}/local/bin/cuip";
@@ -163,7 +157,6 @@ in
     "helix/config.toml".source = mkDotfileSource ".config/helix/config.toml";
 
     "zellij/config.kdl".source = mkDotfileSource "/.config/zellij/config.kdl";
-    "zellij/plugins/zjstatus.wasm".source = "${pkgs.zjstatus}/bin/zjstatus.wasm";
     "zellij/themes/modus_operandi_tinted.kdl".source = "${dotfiles}/.config/zellij/themes/modus_operandi_tinted.kdl";
     "zellij/layouts/default.kdl".source = mkDotfileSource ".config/zellij/layouts/default.kdl";
   }
