@@ -91,8 +91,11 @@
     shellcheck
 
     # python
+    # openpyxl and pymupdf back the anvil.el xlsx and pdf MCP modules.
     (python3.withPackages (ps: with ps; [
+      openpyxl
       pip
+      pymupdf
       pyyaml
       setuptools
       wheel
