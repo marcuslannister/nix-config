@@ -122,6 +122,9 @@ in
     # /usr/bin/clang.
     ".cargo/config.toml".source = mkDotfileSource ".cargo/config.toml";
 
+    # Hammerspoon selects English (ABC) whenever an app becomes active.
+    ".hammerspoon/init.lua".source = mkDotfileSource ".hammerspoon/init.lua";
+
     # CoreText/Kitty do not see fonts nested under /Library/Fonts/Nix Fonts.
     # Link the TTF where they look.
     "Library/Fonts/FluentEmojiFlat.ttf".source =
