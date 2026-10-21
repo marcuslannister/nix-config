@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `openpyxl` and `pymupdf` to the Python on every Mac, so the anvil.el `xlsx` and `pdf` MCP modules in Emacs can read Excel and PDF files.
 - Remove zjstatus: the flake input, the overlay, the Zellij plugin link, and `tests/zellij-local-upstream-plugin.zsh`.
 - Remove the Orca cask and its `stablyai/orca` tap, and the Orca theme and keybinding links. `cleanup = "none"` leaves the app installed on other Macs; uninstall there with `brew uninstall --cask`.
 - Remove the T3 Code cask (`t3-code`). The same `cleanup = "none"` note applies.
