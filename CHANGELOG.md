@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input for the `cr` and `crnl` relay hostname change to `vm16.lan:9009`.
 - Add the Hammerspoon cask to every Mac, and link `~/.hammerspoon/init.lua` from dotfiles. It selects English (ABC) each time an app becomes active, so every app starts in English. Update the `dotfiles` input for the new file.
 - Add `openpyxl` and `pymupdf` to the Python on every Mac, so the anvil.el `xlsx` and `pdf` MCP modules in Emacs can read Excel and PDF files.
 - Remove zjstatus: the flake input, the overlay, the Zellij plugin link, and `tests/zellij-local-upstream-plugin.zsh`.
