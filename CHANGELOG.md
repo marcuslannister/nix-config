@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input for `ctrl+v` image paste: the Kitty smart paste sends `ctrl+v`, and herdr uses its default `ctrl+v` remote image bridge.
 - Link `~/.config/kitty/smart_paste.py` from dotfiles, for the Kitty `ctrl+v`/`cmd+v` smart paste. Update the `dotfiles` input for the new file.
 - Update the `dotfiles` input for the `cr` and `crnl` relay hostname change to `vm16.lan:9009`.
 - Add the Hammerspoon cask to every Mac, and link `~/.hammerspoon/init.lua` from dotfiles. It selects English (ABC) each time an app becomes active, so every app starts in English. Update the `dotfiles` input for the new file.
