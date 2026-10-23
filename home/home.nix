@@ -154,6 +154,7 @@ in
     "zsh/.zshrc.fzf".source = mkDotfileSource ".config/zsh/.zshrc.fzf";
     "kitty/kitty.conf".source = mkDotfileSource ".config/kitty/kitty.conf";
     "kitty/current-theme.conf".source = mkDotfileSource ".config/kitty/current-theme.conf";
+    "kitty/smart_paste.py".source = mkDotfileSource ".config/kitty/smart_paste.py";
 
     "herdr/config.toml".source = mkDotfileSource ".config/herdr/config.toml";
 
