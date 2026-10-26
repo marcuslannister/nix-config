@@ -45,6 +45,7 @@ in
     # networking tools
 
     # development tools
+    gitleaks # secret scan for the global privacy guard (agent-scripts ADR-0011)
   ] ++ lib.optionals pkgs.stdenv.isLinux [ pkgs.jq ];
 
   # === Dotfiles ===
