@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Run Syncthing on vm14 as a Home Manager user service (`home/syncthing.nix`, profile `debian-server-syncthing`) instead of the Docker container. `pkgs/syncthing.nix` pins 2.1.7, the Homebrew version on the Macs, because nixpkgs is still at 2.1.3. The unit drops `PrivateUsers` and `SystemCallFilter`: Debian 10's systemd 241 cannot run them. Declare the `syncthing` formula on macbook-pro-m1 as an Exception, as on mac-mini-m4.
 - Add the Docker hosts `vm14` and `vm16` as deploy-rs nodes with a new lean profile, `home/home-debian-server.nix` (`homeConfigurations.debian-server`): shell, dotfiles and server tools, no npm agent CLIs, `gitMinimal`, and only the `en_US.UTF-8` locale. The closure is 513 MiB, against 1.5 GiB for `debian`. On vm16, `/nix` is a bind mount from `/mnt/sda4/nix`, because the root disk is small.
 - Remove `cloudflared` from every Mac. The Cloudflare Tunnels run only as Docker containers on the LAN servers.
 - Update the `dotfiles` input for `ctrl+v` image paste: the Kitty smart paste sends `ctrl+v`, and herdr uses its default `ctrl+v` remote image bridge.

@@ -22,9 +22,15 @@
     # its tap: homebrew/core grew its own unrelated `ttl` formula on
     # 2026-08-31, and `brew bundle` refuses to resolve the bare name once two
     # taps claim it.  crip was dropped on 2026-09-01.
+    #
+    # syncthing: the second kind of Exception, as on mac-mini-m4.  The
+    # hand-made 2021 ~/Library/LaunchAgents/syncthing.plist runs
+    # /opt/homebrew/bin/syncthing; until 2026-10-28 that was a hand-copied
+    # 1.30.0 binary.  Keep its version equal to pkgs/syncthing.nix (vm14).
     brews = [
       "im-select"
       "lance0/tap/ttl"
+      "syncthing"
       "whatcable-cli"
     ];
 
