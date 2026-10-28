@@ -173,7 +173,6 @@
     wget
     httpie
     bandwhich
-    cloudflared
     dog
     doggo
     ffsend

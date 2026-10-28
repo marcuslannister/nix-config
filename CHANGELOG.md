@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Remove `cloudflared` from every Mac. The Cloudflare Tunnels run only as Docker containers on the LAN servers.
 - Update the `dotfiles` input for `ctrl+v` image paste: the Kitty smart paste sends `ctrl+v`, and herdr uses its default `ctrl+v` remote image bridge.
 - Link `~/.config/kitty/smart_paste.py` from dotfiles, for the Kitty `ctrl+v`/`cmd+v` smart paste. Update the `dotfiles` input for the new file.
 - Update the `dotfiles` input for the `cr` and `crnl` relay hostname change to `vm16.lan:9009`.
