@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add the Docker hosts `vm14` and `vm16` as deploy-rs nodes with a new lean profile, `home/home-debian-server.nix` (`homeConfigurations.debian-server`): shell, dotfiles and server tools, no npm agent CLIs, `gitMinimal`, and only the `en_US.UTF-8` locale. The closure is 513 MiB, against 1.5 GiB for `debian`. On vm16, `/nix` is a bind mount from `/mnt/sda4/nix`, because the root disk is small.
 - Remove `cloudflared` from every Mac. The Cloudflare Tunnels run only as Docker containers on the LAN servers.
 - Update the `dotfiles` input for `ctrl+v` image paste: the Kitty smart paste sends `ctrl+v`, and herdr uses its default `ctrl+v` remote image bridge.
 - Link `~/.config/kitty/smart_paste.py` from dotfiles, for the Kitty `ctrl+v`/`cmd+v` smart paste. Update the `dotfiles` input for the new file.

@@ -248,6 +248,12 @@
         extraSpecialArgs = { inherit dotfiles; };
       };
 
+      debian-server = mkHomeConfig {
+        system = systems.linux;
+        modules = [ ./home/home-debian-server.nix ];
+        extraSpecialArgs = { inherit dotfiles; };
+      };
+
       debian-ai = mkHomeConfig {
         system = systems.linux;
         modules = [ ./home/home-debian-ai.nix ];
@@ -330,6 +336,32 @@
             user = username;
             path = deploy-rs.lib.${systems.linux}.activate.home-manager
               self.homeConfigurations.debian;
+          };
+        };
+
+        # Docker hosts (home-manager only, lean profile).  Docker and the
+        # compose projects stay outside Nix.
+        vm14 = {
+          hostname = "vm14";
+          sshUser = username;
+          remoteBuild = true;
+
+          profiles.home = {
+            user = username;
+            path = deploy-rs.lib.${systems.linux}.activate.home-manager
+              self.homeConfigurations.debian-server;
+          };
+        };
+
+        vm16 = {
+          hostname = "vm16";
+          sshUser = username;
+          remoteBuild = true;
+
+          profiles.home = {
+            user = username;
+            path = deploy-rs.lib.${systems.linux}.activate.home-manager
+              self.homeConfigurations.debian-server;
           };
         };
 
