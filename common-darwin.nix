@@ -1,5 +1,5 @@
 # common-darwin.nix
-{ config, pkgs, unstable, username, ... }:
+{ config, pkgs, username, ... }:
 
 {
   # Darwin-specific configuration
@@ -84,10 +84,7 @@
     # read-only, so `corepack enable` always fails with EACCES. Declaring
     # pnpm itself sidesteps that rather than relying on corepack's shim.
     pnpm
-    # From unstable: 25.05 carries bun 1.2.13, a year behind.  Homebrew had
-    # 1.3.14; unstable is 1.3.13.  On Intel `unstable` resolves to 25.05, so
-    # that host stays on 1.2.13 (same trade-off as gcc15 and zellij).
-    unstable.bun
+    bun
     shellcheck
 
     # python
@@ -116,7 +113,7 @@
     ripgrep # recursively searches directories for a regex pattern
     helix
     tmux
-    unstable.zellij
+    zellij
     ncdu
     bat
     btop
@@ -196,9 +193,7 @@
     # binary only, while autotools and cmake look for `pkg-config` by name.
     pkg-config
     lld
-    # From unstable: 25.05's gcc15 is 15.1.0 and cannot build on aarch64-darwin.
-    # Its libgcc re-exports ___register_frame_table, which the linker cannot resolve.
-    unstable.gcc15
+    gcc15
     guile
     git-filter-repo
     quilt

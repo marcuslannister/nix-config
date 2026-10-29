@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Remove the `nixpkgs-unstable` input: the 26.05 inputs now carry the same or newer `bun`, `zellij`, `gcc15`, `scmpuff`, and Go, so the Macs and Linux profiles take them from `pkgs`.
+- Remove the unused `vm16-nixos` NixOS configuration (vm16 runs Debian with Home Manager), with `mkNixosConfig`, `common.nix`, `nixos.nix`, and `nodes/node-vm16-nixos.nix`.
 - Run Syncthing on vm14 as a Home Manager user service (`home/syncthing.nix`, profile `debian-server-syncthing`) instead of the Docker container. `pkgs/syncthing.nix` pins 2.1.7, the Homebrew version on the Macs, because nixpkgs is still at 2.1.3. The unit drops `PrivateUsers` and `SystemCallFilter`: Debian 10's systemd 241 cannot run them. Declare the `syncthing` formula on macbook-pro-m1 as an Exception, as on mac-mini-m4.
 - Add the Docker hosts `vm14` and `vm16` as deploy-rs nodes with a new lean profile, `home/home-debian-server.nix` (`homeConfigurations.debian-server`): shell, dotfiles and server tools, no npm agent CLIs, `gitMinimal`, and only the `en_US.UTF-8` locale. The closure is 513 MiB, against 1.5 GiB for `debian`. On vm16, `/nix` is a bind mount from `/mnt/sda4/nix`, because the root disk is small.
 - Remove `cloudflared` from every Mac. The Cloudflare Tunnels run only as Docker containers on the LAN servers.

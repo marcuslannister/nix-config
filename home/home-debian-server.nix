@@ -1,11 +1,11 @@
 # home-debian-server.nix
 # Lean profile for the small Docker hosts (vm14: 1 GB RAM, vm16: small root
 # disk): shell, dotfiles and server tools only.
-{ pkgs, lib, nixpkgs-unstable, ... }:
+{ pkgs, lib, ... }:
 
 let
   # Same scmpuff as home-debian.nix; see the note there.
-  scmpuffPkg = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.scmpuff;
+  scmpuffPkg = pkgs.scmpuff;
 in
 
 {

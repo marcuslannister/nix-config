@@ -1,5 +1,5 @@
 # home-debian-ai.nix
-{ config, pkgs, inputs, dotfiles, nixpkgs-unstable, ... }:
+{ config, pkgs, inputs, dotfiles, ... }:
 
 let
   # nixpkgs' own scmpuff rather than the v0.7.0 pin the ARM Macs run: that pin
@@ -7,10 +7,9 @@ let
   # testscript shell-wrapper suite, and those tests eval `scmpuff init -s`
   # whose output shells out to /usr/bin/env -- absent from the Linux build
   # sandbox, so the derivation cannot build here at all.  The Macs build
-  # unsandboxed and are unaffected.  Unstable's 0.6.0, not 25.05's 0.5.0,
-  # to stay closer to the Macs; both answer to the same `scmpuff exec
-  # --relative` that .zshrc uses.
-  scmpuffPkg = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.scmpuff;
+  # unsandboxed and are unaffected.  nixpkgs' 0.6.0 answers to the same
+  # `scmpuff exec --relative` that .zshrc uses.
+  scmpuffPkg = pkgs.scmpuff;
 in
 
 {
@@ -74,7 +73,6 @@ in
     (aspellWithDicts (dicts: with dicts; [en en-computers en-science]))
 
     # cmake
-    # unstable.syncthing
 
     # docker
     # docker-compose

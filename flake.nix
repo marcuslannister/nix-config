@@ -5,7 +5,6 @@
     # Use consistent nixpkgs for all platforms
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
@@ -26,7 +25,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles, nixpkgs-unstable }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles }:
   let
     # System definitions
     systems = {
@@ -51,21 +50,16 @@
     };
 
     # scmpuff took SCM Breeze's place on the three ARM Macs on 2026-08-12.  The
-    # pin to upstream v0.7.0 is what nixpkgs lacks (it ships 0.5.0/0.6.0), and it
-    # is built from unstable for the Go it wants: unstable carries 1.26, the
-    # 25.05 that `unstable` resolves to on Intel carries 1.24.  The Intel Mac
-    # therefore cannot take this module and Declares nixpkgs' 0.5.0 in its own
-    # entry below -- see specialArgs in mkDarwinConfig for why `unstable` is
-    # 25.05 there.  The Debian hosts build the same pin, in home/home-debian*.nix.
-    scmpuffModule = { unstable, ... }: {
-      environment.systemPackages = [ (unstable.callPackage ./pkgs/scmpuff.nix { }) ];
+    # pin to upstream v0.7.0 is what nixpkgs lacks (it ships 0.6.0), and its
+    # go.mod wants Go 1.26.  The Intel Mac Declares nixpkgs' scmpuff in its own
+    # entry below; the Debian hosts take nixpkgs' 0.6.0 in home/home-debian*.nix.
+    scmpuffModule = { pkgs, ... }: {
+      environment.systemPackages = [ (pkgs.callPackage ./pkgs/scmpuff.nix { }) ];
     };
 
     # Shared configuration modules
     sharedModules = {
-      common = import ./common.nix;
       common-darwin = import ./common-darwin.nix;  # For Darwin
-      nixos = import ./nixos.nix;
       home = import ./home/home.nix;
       homebrew = import ./darwin/homebrew.nix;  # For Darwin
     };
@@ -75,16 +69,7 @@
       nix-darwin.lib.darwinSystem {
         inherit system;
 
-        # Add specialArgs here with the correct input name
-        # On x86_64-darwin `unstable` is really 25.05: nixpkgs 26.11 dropped
-        # x86_64-darwin, and importing it throws at evaluation time, which would
-        # take the whole Intel host down.  The packages read through this arg
-        # (gcc15, zellij, syncthing) all exist in 25.05, just at older versions.
         specialArgs = {
-          unstable =
-            if system == systems.darwin-intel
-            then nixpkgs-darwin.legacyPackages.${system}
-            else nixpkgs-unstable.legacyPackages.${system};
           inherit dotfiles username;
         };
 
@@ -141,37 +126,6 @@
         extraSpecialArgs = inputs // { inherit username; } // extraSpecialArgs;
       };
 
-    # NixOS configuration factory
-    mkNixosConfig = { system, modules ? [], hostname }:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit username; };
-
-        modules = [
-          sharedModules.common
-          # sharedModules.nixos
-          ./nodes/node-${hostname}.nix
-
-          # Home Manager integration
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.${username} = sharedModules.home;
-              extraSpecialArgs = inputs // { inherit username; };
-              backupFileExtension = "backup";
-            };
-          }
-
-          # System-specific settings
-          {
-            networking.hostName = hostname;
-            nix.settings.trusted-users = [ "root" username ];
-          }
-        ] ++ modules;
-      };
-
   in
   {
     # === Darwin Configurations ===
@@ -216,12 +170,11 @@
         modules = [
           ./darwin/homebrew-common.nix
 
-          # nixpkgs' scmpuff, 0.5.0, where the other Macs run the v0.7.0 pin.
-          # This is the one host that cannot have the pin: its go.mod asks for
-          # Go 1.26, 25.05 carries 1.24, and unstable has no x86_64-darwin to
-          # borrow a newer one from.  0.5.0 answers to the same `scmpuff exec
-          # --relative` and its `init -s` names the same subcommands, which is
-          # all ~/.config/zsh/.zshrc.personal asks of it.
+          # nixpkgs' scmpuff (0.6.0), where the other Macs run the v0.7.0 pin.
+          # The pin needs Go 1.26, which 25.05 lacked; 26.05 has it, but the pin
+          # is not yet tried on this host.  0.6.0 answers to the same `scmpuff
+          # exec --relative` and its `init -s` names the same subcommands, which
+          # is all ~/.config/zsh/.zshrc.personal asks of it.
           ({ pkgs, ... }: {
             environment.systemPackages = [ pkgs.scmpuff ];
           })
@@ -292,14 +245,6 @@
         system = systems.darwin-intel;
         modules = [ sharedModules.home ];
         extraSpecialArgs = { inherit dotfiles; };
-      };
-    };
-
-    # === NixOS Configurations ===
-    nixosConfigurations = {
-      vm16-nixos = mkNixosConfig {
-        system = systems.linux;
-        hostname = "vm16-nixos";
       };
     };
 

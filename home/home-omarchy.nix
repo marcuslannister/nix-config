@@ -3,11 +3,11 @@
 # tools it ships (eza, ripgrep, fd, fzf, zoxide, git, docker).  Nix adds only
 # what Omarchy lacks.  zsh itself comes from pacman so /etc/shells lists it;
 # programs.zsh stays off so it does not write a ~/.zshrc over the dotfiles one.
-{ pkgs, nixpkgs-unstable, ... }:
+{ pkgs, ... }:
 
 let
   # nixpkgs' scmpuff, not the v0.7.0 pin: see home-debian.nix.
-  scmpuffPkg = nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.scmpuff;
+  scmpuffPkg = pkgs.scmpuff;
 in
 
 {
