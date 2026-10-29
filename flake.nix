@@ -214,6 +214,13 @@
         extraSpecialArgs = { inherit dotfiles; };
       };
 
+      # vm16: the lean profile plus the croc relay (moved off Docker 2026-10-28).
+      debian-server-croc-relay = mkHomeConfig {
+        system = systems.linux;
+        modules = [ ./home/home-debian-server.nix ./home/croc-relay.nix ];
+        extraSpecialArgs = { inherit dotfiles; };
+      };
+
       debian-ai = mkHomeConfig {
         system = systems.linux;
         modules = [ ./home/home-debian-ai.nix ];
@@ -313,7 +320,7 @@
           profiles.home = {
             user = username;
             path = deploy-rs.lib.${systems.linux}.activate.home-manager
-              self.homeConfigurations.debian-server;
+              self.homeConfigurations.debian-server-croc-relay;
           };
         };
 
