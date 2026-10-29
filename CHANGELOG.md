@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `caddy` on mac-mini-m4 as an Exception: nixpkgs has it, but the Homebrew formula ships a `brew services` launchd agent and this nix-darwin has no `services.caddy` option. It fronts Collie on the LAN; its Caddyfile, `/opt/homebrew/etc/Caddyfile`, lives outside this repo.
 - Remove the `nixpkgs-unstable` input: the 26.05 inputs now carry the same or newer `bun`, `zellij`, `gcc15`, `scmpuff`, and Go, so the Macs and Linux profiles take them from `pkgs`.
 - Remove the unused `vm16-nixos` NixOS configuration (vm16 runs Debian with Home Manager), with `mkNixosConfig`, `common.nix`, `nixos.nix`, and `nodes/node-vm16-nixos.nix`.
 - Run Syncthing on vm14 as a Home Manager user service (`home/syncthing.nix`, profile `debian-server-syncthing`) instead of the Docker container. `pkgs/syncthing.nix` pins 2.1.7, the Homebrew version on the Macs, because nixpkgs is still at 2.1.3. The unit drops `PrivateUsers` and `SystemCallFilter`: Debian 10's systemd 241 cannot run them. Declare the `syncthing` formula on macbook-pro-m1 as an Exception, as on mac-mini-m4.

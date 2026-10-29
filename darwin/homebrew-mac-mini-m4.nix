@@ -41,7 +41,13 @@
     # absolute path, so removing the formula stops the user's sync.  This
     # nix-darwin has no services.syncthing option, so Declaring the agent is
     # separate work.
+    #
+    # caddy: nixpkgs has it, but the Homebrew formula ships a launchd service
+    # (`brew services`), and this nix-darwin has no services.caddy option.  It
+    # fronts Collie (herdr.collie, 127.0.0.1:8787) for the local network.  The
+    # Caddyfile lives at /opt/homebrew/etc/Caddyfile, outside this repo.
     brews = [
+      "caddy"
       "syncthing"
     ];
 
