@@ -40,6 +40,6 @@ in
     ncdu
     duf
     dust
-    croc
+    (callPackage ../pkgs/croc.nix { })
   ];
 }

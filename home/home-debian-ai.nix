@@ -60,7 +60,7 @@ in
 
     # network
     iperf3
-    croc
+    (callPackage ../pkgs/croc.nix { })
     axel
     speedtest-cli
 

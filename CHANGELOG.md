@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Move every host to croc 11.5.5 through `pkgs/croc.nix`, the upstream release binary (nixpkgs 26.05 has 10.4.3, and its Go 1.27rc3 cannot build croc 11, which needs 1.27.1). 11.0 changed the PAKE handshake, so 10.x and 11.x peers should not be mixed.
 - Declare `caddy` on mac-mini-m4 as an Exception: nixpkgs has it, but the Homebrew formula ships a `brew services` launchd agent and this nix-darwin has no `services.caddy` option. It fronts Collie on the LAN; its Caddyfile, `/opt/homebrew/etc/Caddyfile`, lives outside this repo.
 - Remove the `nixpkgs-unstable` input: the 26.05 inputs now carry the same or newer `bun`, `zellij`, `gcc15`, `scmpuff`, and Go, so the Macs and Linux profiles take them from `pkgs`.
 - Remove the unused `vm16-nixos` NixOS configuration (vm16 runs Debian with Home Manager), with `mkNixosConfig`, `common.nix`, `nixos.nix`, and `nodes/node-vm16-nixos.nix`.
