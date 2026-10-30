@@ -228,7 +228,7 @@
       };
 
       # Omarchy tablet: live links into ~/dotfiles, like the Macs.
-      surface-pro-7-plus = mkHomeConfig {
+      surface-pro7 = mkHomeConfig {
         system = systems.linux;
         modules = [ ./home/home-omarchy.nix ];
         extraSpecialArgs = { inherit dotfiles; liveDotfiles = true; };
@@ -344,8 +344,8 @@
 
         # Omarchy tablet (home-manager only).  `hostname` is the SSH alias.
         # The account name differs from the Mac's, so deploy with
-        # `USER=<remote user> deploy .#surface-pro-7-plus -- --impure`.
-        surface-pro-7-plus = {
+        # `USER=<remote user> deploy .#surface-pro7 -- --impure`.
+        surface-pro7 = {
           hostname = "sp";
           sshUser = username;
           remoteBuild = true;
@@ -353,11 +353,11 @@
           profiles.home = {
             user = username;
             path = deploy-rs.lib.${systems.linux}.activate.home-manager
-              self.homeConfigurations.surface-pro-7-plus;
+              self.homeConfigurations.surface-pro7;
           };
         };
 
-        # Omarchy laptop (home-manager only), deployed like surface-pro-7-plus.
+        # Omarchy laptop (home-manager only), deployed like surface-pro7.
         thinkpad-x230 = {
           hostname = "x230-w";
           sshUser = username;

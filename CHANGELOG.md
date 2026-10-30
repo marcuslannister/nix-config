@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Rename the Omarchy tablet flake node `surface-pro-7-plus` to `surface-pro7`, to match its hostname. Deploy it with `.#surface-pro7`.
 - Declare `ttl`, `whatcable-cli`, `crisp`, and `tutti` (taps `lance0/tap` and `barrybarrywu/tap`) on mac-mini-m4, as on macbook-pro-m1. A switch with the macbook-pro-m1 configuration had installed them there; `im-select` from the same run was removed.
 - Move every host to croc 11.5.5 through `pkgs/croc.nix`, the upstream release binary (nixpkgs 26.05 has 10.4.3, and its Go 1.27rc3 cannot build croc 11, which needs 1.27.1). 11.0 changed the PAKE handshake, so 10.x and 11.x peers should not be mixed.
 - Run the croc relay on vm16 as a Home Manager user service (`home/croc-relay.nix`, profile `debian-server-croc-relay`) instead of the Docker container `schollz/croc:10.4.4`, on the same ports 9009-9013.
