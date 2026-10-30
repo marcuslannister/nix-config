@@ -27,8 +27,10 @@
 {
   homebrew = {
     taps = [
+      "barrybarrywu/tap" # tutti
       "crmne/tap" # spotifast
-      "darrylmorley/whatcable" # whatcable
+      "darrylmorley/whatcable" # whatcable, whatcable-cli
+      "lance0/tap" # ttl
       "neighbor-z/swiftmtp" # swiftmtp
     ];
 
@@ -46,9 +48,14 @@
     # (`brew services`), and this nix-darwin has no services.caddy option.  It
     # fronts Collie (herdr.collie, 127.0.0.1:8787) for the local network.  The
     # Caddyfile lives at /opt/homebrew/etc/Caddyfile, outside this repo.
+    #
+    # ttl and whatcable-cli have no nixpkgs package, as on macbook-pro-m1;
+    # ttl is qualified with its tap there too.
     brews = [
       "caddy"
+      "lance0/tap/ttl"
       "syncthing"
+      "whatcable-cli"
     ];
 
     casks = [
@@ -56,7 +63,9 @@
       "calibre"
 
       # shared with macbook-pro-m1 only
+      "crisp"
       "spotifast"
+      "tutti"
 
       # ~/.emacs.d/lisp/init-local.el asks for "Aporetic Sans M Nerd Font", and
       # nixpkgs has no equivalent.  The other 15 font casks this machine carried
