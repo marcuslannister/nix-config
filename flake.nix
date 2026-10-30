@@ -359,7 +359,7 @@
 
         # Omarchy laptop (home-manager only), deployed like surface-pro7.
         thinkpad-x230 = {
-          hostname = "x230-w";
+          hostname = "x230";
           sshUser = username;
           # One shared connection: the X230 refused new SSH connections during
           # activation, after the burst of them deploy-rs opens.
