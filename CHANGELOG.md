@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Declare `caddy` on mac-mini-m1 as an Exception, as on mac-mini-m4, to front Collie on the local network. Its Caddyfile, `/opt/homebrew/etc/Caddyfile`, lives outside this repo.
 - Drop `caddy` from macbook-pro-m1 again: that Mac needs no LAN door for Collie. This supersedes the macbook-pro-m1 `caddy` entry below.
 - Declare `caddy` on macbook-pro-m1 as an Exception, as on mac-mini-m4, to front Collie on the local network. Its Caddyfile, `/opt/homebrew/etc/Caddyfile`, lives outside this repo.
 - Take `bun` from Homebrew on every Mac instead of Nix, declared in `darwin/homebrew-common.nix` as an Exception. The Nix build (1.3.13) makes `bun build --compile` binaries that macOS kills at launch (exit 137), so `herdr.collie` could not build; Homebrew has the upstream 1.4.4. Run `darwin-rebuild switch` on each Mac.
