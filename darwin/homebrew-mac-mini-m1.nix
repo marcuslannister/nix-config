@@ -57,7 +57,14 @@
     # ttl is qualified with its tap: homebrew/core grew its own unrelated
     # `ttl` formula on 2026-08-31, and `brew bundle` refuses to resolve the
     # bare name once two taps claim it.  crip was dropped on 2026-09-01.
+    #
+    # caddy: as on mac-mini-m4.  nixpkgs has it, but the Homebrew formula ships
+    # a launchd service (`brew services`), and this nix-darwin has no
+    # services.caddy option.  It fronts Collie (herdr.collie, 127.0.0.1:8787)
+    # for the local network.  The Caddyfile lives at
+    # /opt/homebrew/etc/Caddyfile, outside this repo.
     brews = [
+      "caddy"
       "im-select"
       "lance0/tap/ttl"
       "whatcable-cli"
