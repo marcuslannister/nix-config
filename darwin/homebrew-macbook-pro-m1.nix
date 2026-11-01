@@ -27,7 +27,14 @@
     # hand-made 2021 ~/Library/LaunchAgents/syncthing.plist runs
     # /opt/homebrew/bin/syncthing; until 2026-10-28 that was a hand-copied
     # 1.30.0 binary.  Keep its version equal to pkgs/syncthing.nix (vm14).
+    #
+    # caddy: as on mac-mini-m4.  nixpkgs has it, but the Homebrew formula ships
+    # a launchd service (`brew services`), and this nix-darwin has no
+    # services.caddy option.  It fronts Collie (herdr.collie, 127.0.0.1:8787)
+    # for the local network.  The Caddyfile lives at
+    # /opt/homebrew/etc/Caddyfile, outside this repo.
     brews = [
+      "caddy"
       "im-select"
       "lance0/tap/ttl"
       "syncthing"
