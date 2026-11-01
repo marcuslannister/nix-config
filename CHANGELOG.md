@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Turn on macOS tap to click and tap-dragging (without drag lock) on every Mac, and set the double-click speed to 0.3 s. BetterTouchTool's "1 Finger Tap -> Left Click" sent single clicks only, so a double tap did not open a Finder folder; that trigger is now disabled.
 - Point the `thinkpad-x230` deploy node at the SSH alias `x230` (wired) instead of `x230-w` (Wi-Fi), which fails when Wi-Fi is down. The node keeps its shared SSH connection.
 - Rename the Omarchy tablet flake node `surface-pro-7-plus` to `surface-pro7`, to match its hostname. Deploy it with `.#surface-pro7`.
 - Declare `ttl`, `whatcable-cli`, `crisp`, and `tutti` (taps `lance0/tap` and `barrybarrywu/tap`) on mac-mini-m4, as on macbook-pro-m1. A switch with the macbook-pro-m1 configuration had installed them there; `im-select` from the same run was removed.

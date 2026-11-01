@@ -80,14 +80,16 @@
           {
             nixpkgs.hostPlatform = system;
           }
-          # BetterTouchTool's Trackpad "1 Finger Tap -> Left Click" trigger (synced
-          # to every Mac by BTT Sync) does tap, double-tap and double-tap-drag text
-          # selection itself; macOS tap to click and tap-dragging would act on the
-          # same taps.
+          # Native macOS tap to click and double-tap-drag. BetterTouchTool's
+          # "1 Finger Tap -> Left Click" sends every tap as a single click, so a
+          # double tap never opened a Finder folder; that trigger stays disabled.
           {
-            system.defaults.trackpad.Clicking = false;
-            system.defaults.trackpad.Dragging = false;
+            system.defaults.trackpad.Clicking = true;
+            system.defaults.trackpad.Dragging = true;
+            system.defaults.trackpad.DragLock = false;
             system.defaults.trackpad.TrackpadRightClick = true;
+            system.defaults.NSGlobalDomain."com.apple.mouse.tapBehavior" = 1;
+            system.defaults.CustomUserPreferences.NSGlobalDomain."com.apple.mouse.doubleClickThreshold" = 0.3;
           }
 
           # Home Manager integration
