@@ -62,6 +62,7 @@
       common-darwin = import ./common-darwin.nix;  # For Darwin
       home = import ./home/home.nix;
       homebrew = import ./darwin/homebrew.nix;  # For Darwin
+      docker-desktop = import ./darwin/docker-desktop.nix;  # For Darwin
     };
 
     # Darwin configuration factory
@@ -77,6 +78,7 @@
           # Base Darwin configuration
           sharedModules.common-darwin
           sharedModules.homebrew
+          sharedModules.docker-desktop
           {
             nixpkgs.hostPlatform = system;
           }
