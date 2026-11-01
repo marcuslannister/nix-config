@@ -84,7 +84,6 @@
     # read-only, so `corepack enable` always fails with EACCES. Declaring
     # pnpm itself sidesteps that rather than relying on corepack's shim.
     pnpm
-    bun
     shellcheck
 
     # python
