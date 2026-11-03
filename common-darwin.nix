@@ -130,6 +130,7 @@
     fzf
     fd
     sd
+    yq-go # provides `yq` for YAML (mihomo, Sub-Store output)
     p7zip
     pbzip2
     pigz
