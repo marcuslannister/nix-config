@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Add `yq-go` to every Mac through `common-darwin.nix`. The package provides the `yq` command for YAML, including mihomo and Sub-Store output.
 - Stop Docker Desktop before a `docker-desktop` cask upgrade on activation, and start it again after its privileged helpers are reinstalled. On 2026-10-29 the cask's uninstall step deleted the helpers while Docker's backend still ran. The backend opened the admin-password dialog and waited behind it after the helpers were back. Docker, OneCLI and every NanoClaw agent were down for 10 hours. Only hosts that Declare `docker-desktop` get the step (today mac-mini-m1), and a switch with no Docker upgrade leaves Docker running. If `brew bundle` fails after the stop, a trap starts Docker again. The Docker steps, with the helper repair, move to `darwin/docker-desktop.nix` and `tests/docker-desktop-activation.zsh`.
 - Declare `caddy` on mac-mini-m1 as an Exception, as on mac-mini-m4, to front Collie on the local network. Its Caddyfile, `/opt/homebrew/etc/Caddyfile`, lives outside this repo.
 - Drop `caddy` from macbook-pro-m1 again: that Mac needs no LAN door for Collie. This supersedes the macbook-pro-m1 `caddy` entry below.
