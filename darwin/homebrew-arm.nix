@@ -18,6 +18,7 @@
 
   homebrew = {
     taps = [
+      "fif7y/tap" # dimble
       "pouriyajamshidi/tap" # tcping
     ];
 
@@ -31,7 +32,7 @@
       "iina"
       "spotify"
       "winbox"
-      "thaw"
+      "dimble"
     ];
   };
 }
