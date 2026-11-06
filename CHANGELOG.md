@@ -4,6 +4,8 @@
 
 - Link the herdr-bar plugin config (`~/.config/herdr/plugins/config/herdr-bar/config.json`) from dotfiles, in `home/home.nix`, the same way as `herdr/config.toml`. Update the `dotfiles` input for the new file.
 
+- Remove the deploy-rs node `ycy`: the old Hong Kong VPS is retired; the new VPS (HK-YCY2, SSH alias `ycy`, was `ycy-6m`) replaces it and is not a deploy-rs node.
+
 - Remove the `winbox` cask from the ARM Macs, in `darwin/homebrew-arm.nix`. `cleanup = "none"` leaves it installed; uninstall it with `brew uninstall --cask winbox`.
 
 - Replace the `thaw` cask with `dimble` (tap `fif7y/tap`) on the ARM Macs, in `darwin/homebrew-arm.nix`. `cleanup = "none"` leaves `thaw` installed; uninstall it with `brew uninstall --cask thaw`. Update the `dotfiles` input for the new `fif7y/tap` entry in the Homebrew trust list; without it, run `env -u XDG_CONFIG_HOME brew trust --taps fif7y/tap` before the switch.
