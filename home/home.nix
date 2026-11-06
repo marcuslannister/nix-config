@@ -158,6 +158,7 @@ in
     "kitty/smart_paste.py".source = mkDotfileSource ".config/kitty/smart_paste.py";
 
     "herdr/config.toml".source = mkDotfileSource ".config/herdr/config.toml";
+    "herdr/plugins/config/herdr-bar/config.json".source = mkDotfileSource ".config/herdr/plugins/config/herdr-bar/config.json";
 
     "helix/config.toml".source = mkDotfileSource ".config/helix/config.toml";
 
