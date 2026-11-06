@@ -1,6 +1,6 @@
 # Deploy a Linux node
 
-The deploy-rs nodes in `flake.nix` (`vm14`, `vm16`, `vm97`, `vm98`, `ycy`, `surface-pro7`, `thinkpad-x230`) run standalone Home Manager. Deploy from a Mac:
+The deploy-rs nodes in `flake.nix` (`vm14`, `vm16`, `vm97`, `vm98`, `surface-pro7`, `thinkpad-x230`) run standalone Home Manager. Deploy from a Mac:
 
 ```sh
 nix develop --impure -c deploy .#<node> -- --impure
@@ -12,7 +12,7 @@ nix develop --impure -c deploy .#<node> -- --impure
 
 - **`Existing file '…' would be clobbered`**: the node has a plain file where the profile now puts a link. Compare it with the dotfiles version, move it to `<file>.backup`, and deploy again.
 - **Confirmation arrives before the activation waits, then rollback** (`Deployment confirmed` precedes `Waiting for confirmation event`): a stale `/tmp/deploy-rs-canary-*` from a cancelled deploy is on the node. Remove it and deploy again.
-- **`Connection … closed by remote host` during the build**: a proxy on the path cuts long SSH sessions (seen with `ycy`). Build on the node first, so that the deploy only activates:
+- **`Connection … closed by remote host` during the build**: a proxy on the path cuts long SSH sessions (seen with the retired `ycy`). Build on the node first, so that the deploy only activates:
 
   ```sh
   drv=$(nix eval --raw --impure .#deploy.nodes.<node>.profiles.home.path.drvPath)
