@@ -218,10 +218,11 @@
         extraSpecialArgs = { inherit dotfiles; };
       };
 
-      # vm16: the lean profile plus the croc relay (moved off Docker 2026-10-28).
+      # vm16: the lean profile plus the croc relay (moved off Docker 2026-10-28)
+      # and the SSH forward to CPA on oraus1 (2026-11-13).
       debian-server-croc-relay = mkHomeConfig {
         system = systems.linux;
-        modules = [ ./home/home-debian-server.nix ./home/croc-relay.nix ];
+        modules = [ ./home/home-debian-server.nix ./home/croc-relay.nix ./home/cpa-tunnel.nix ];
         extraSpecialArgs = { inherit dotfiles; };
       };
 
