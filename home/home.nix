@@ -65,8 +65,9 @@ in
     ".npmrc".source = mkDotfileSource ".npmrc";
 
     ".local/bin/git-ediff-tui" = {
-      source = "${dotfiles}/local/bin/git-ediff-tui";
-      executable = true;
+      # A live link on macOS, so script edits apply without a rebuild.  The repo file is 755.
+      source = mkDotfileSource "local/bin/git-ediff-tui";
+      executable = false;
     };
 
     # Vim

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Link `~/.local/bin/git-ediff-tui` live from dotfiles on macOS (`mkDotfileSource`), in `home/home.nix`, so script edits apply without a flake input update.
 - Add the `clash-verge-rev` cask to macbook-pro-m1, in `darwin/homebrew-macbook-pro-m1.nix`: a mihomo GUI with a TUN service, for the profile `config-verge.local.yaml` from proxy-config.
 
 - Link the herdr-bar plugin config (`~/.config/herdr/plugins/config/herdr-bar/config.json`) from dotfiles, in `home/home.nix`, the same way as `herdr/config.toml`. Update the `dotfiles` input for the new file.
