@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input for the LM Studio CLI folder (`~/.cache/lm-studio/bin`) on `PATH` in `.zshenv`.
 - Add `harper` (provides `harper-ls`, an offline grammar checker that Emacs runs through Eglot) to the Darwin system packages, in `common-darwin.nix`. Link the Harper user dictionary `~/.config/harper-ls/dictionary.txt` from dotfiles, in `home/home.nix`, and update the `dotfiles` input for the new file.
 
 - Link `~/.local/bin/git-ediff-tui` live from dotfiles on macOS (`mkDotfileSource`), in `home/home.nix`, so script edits apply without a flake input update.
