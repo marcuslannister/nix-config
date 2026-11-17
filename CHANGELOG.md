@@ -8,6 +8,8 @@
 
 - Add `home/cpa-tunnel.nix` to the vm16 profile (`debian-server-croc-relay`): the user service `cpa-tunnel` holds an SSH forward from `192.168.8.16:8317` to CPA (CLIProxyAPI) on `oraus1`, which listens on its own loopback only. It uses the system `ssh` and `Restart=always`. The forward-only key, the pinned host key and the UFW rule for the home `/24` are made by hand, as the module header says. It reconnects by itself when the home line to `oraus1` drops for a few minutes.
 
+- Add the `flclash` cask and its tap `chen08209/tap` (the author's tap; homebrew/cask has no FlClash) to macbook-pro-m1, in `darwin/homebrew-macbook-pro-m1.nix`: a second mihomo GUI, for the proxy-config profile `config-flclash.local.yaml`. dotfiles trusts the cask `chen08209/tap/flclash`.
+
 - Add the `clash-verge-rev` cask to macbook-pro-m1, in `darwin/homebrew-macbook-pro-m1.nix`: a mihomo GUI with a TUN service, for the profile `config-verge.local.yaml` from proxy-config.
 
 - Link the herdr-bar plugin config (`~/.config/herdr/plugins/config/herdr-bar/config.json`) from dotfiles, in `home/home.nix`, the same way as `herdr/config.toml`. Update the `dotfiles` input for the new file.

@@ -9,6 +9,7 @@
   homebrew = {
     taps = [
       "barrybarrywu/tap" # tutti
+      "chen08209/tap" # flclash: the author's tap; homebrew/cask has none
       "crmne/tap" # spotifast
       "daipeihust/tap" # im-select
       "darrylmorley/whatcable" # whatcable-cli
@@ -39,6 +40,8 @@
       "clash-verge-rev"
       "crisp"
       "electrum"
+      # Mihomo GUI (chen08209/tap); profile from proxy-config (config-flclash.local.yaml)
+      "flclash"
       "spotifast"
       "tutti"
     ];
