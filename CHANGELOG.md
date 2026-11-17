@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add `harper` (provides `harper-ls`, an offline grammar checker that Emacs runs through Eglot) to the Darwin system packages, in `common-darwin.nix`. Link the Harper user dictionary `~/.config/harper-ls/dictionary.txt` from dotfiles, in `home/home.nix`, and update the `dotfiles` input for the new file.
+
 - Link `~/.local/bin/git-ediff-tui` live from dotfiles on macOS (`mkDotfileSource`), in `home/home.nix`, so script edits apply without a flake input update.
 
 - Add `home/cpa-tunnel.nix` to the vm16 profile (`debian-server-croc-relay`): the user service `cpa-tunnel` holds an SSH forward from `192.168.8.16:8317` to CPA (CLIProxyAPI) on `oraus1`, which listens on its own loopback only. It uses the system `ssh` and `Restart=always`. The forward-only key, the pinned host key and the UFW rule for the home `/24` are made by hand, as the module header says. It reconnects by itself when the home line to `oraus1` drops for a few minutes.

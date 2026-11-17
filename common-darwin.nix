@@ -138,6 +138,7 @@
     # misc
     zoxide
     delta
+    harper # provides harper-ls, the grammar checker Emacs runs through Eglot
     skim # provides `sk`
     # bitwarden-cli
     # Bitwarden client for the Vaultwarden vault; holds API tokens for agents.

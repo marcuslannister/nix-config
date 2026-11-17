@@ -61,6 +61,10 @@ in
     # Version Control
     ".gitconfig".source = mkDotfileSource ".gitconfig";
 
+    # Harper user dictionary.  A live link on macOS, so words added in Emacs
+    # land in ~/dotfiles; a store copy on other hosts is read-only.
+    ".config/harper-ls/dictionary.txt".source = mkDotfileSource ".config/harper-ls/dictionary.txt";
+
     # Package managers
     ".npmrc".source = mkDotfileSource ".npmrc";
 
