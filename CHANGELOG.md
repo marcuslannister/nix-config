@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add the `symbola` font (unfree) to `fonts.packages` in `common-darwin.nix`. Emacs uses it as the last fallback font for Unicode symbols that macOS fonts lack: telega shows them as hex boxes otherwise, as its FAQ says.
+
 - Update the `dotfiles` input for the gpt-6.2 models in the Codex and Pi aliases (`.zshrc.personal`), and for the removed `tsk` tap trust and herdr keys (`prefix+t`, `prefix+a`).
 
 - Remove `tsk` and its tap `smarzban/tap` from every Mac, in `darwin/homebrew-common.nix`. `cleanup = "none"` leaves them installed; uninstall with `brew uninstall tsk` and `brew untap smarzban/tap`. dotfiles drops the tap trust and the two herdr keys for it.

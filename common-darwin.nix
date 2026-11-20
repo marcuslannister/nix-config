@@ -263,6 +263,7 @@
     (callPackage ./pkgs/fluent-emoji-flat { })
     source-sans-pro
     source-serif-pro
+    symbola # the Unicode symbol fallback that telega (Emacs) advises; unfree
     nerd-fonts.iosevka-term
     nerd-fonts.jetbrains-mono
   ];
