@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Remove `tsk` and its tap `smarzban/tap` from every Mac, in `darwin/homebrew-common.nix`. `cleanup = "none"` leaves them installed; uninstall with `brew uninstall tsk` and `brew untap smarzban/tap`. dotfiles drops the tap trust and the two herdr keys for it.
+
 - Remove the `clash-verge-rev` cask from macbook-pro-m1, in `darwin/homebrew-macbook-pro-m1.nix`. `cleanup = "none"` leaves it installed; quit its TUN service first, then uninstall it with `brew uninstall --cask clash-verge-rev`.
 
 - Add TDLib 1.8.68, for `telega-server` (the Emacs Telegram client, which needs 1.8.66 or newer; nixpkgs-darwin has 1.8.63 and Homebrew 1.8.0). A new flake input `nixpkgs-unstable` supplies only `tdlib`, through an overlay (`tdlibModule` in `flake.nix`), and `~/.local/share/tdlib` links to it, so telega has one prefix with `include/` and `lib/`. It applies to the Apple silicon Macs only: nixpkgs-unstable dropped x86_64-darwin, so macbook-pro-2015 has no TDLib. dotfiles needs no change. Build `telega-server` again after a TDLib update.
