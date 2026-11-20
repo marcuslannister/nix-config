@@ -36,8 +36,6 @@
     ];
 
     casks = [
-      # Mihomo GUI with a TUN service; profile from proxy-config (config-verge.local.yaml)
-      "clash-verge-rev"
       "crisp"
       "electrum"
       # Mihomo GUI (chen08209/tap); profile from proxy-config (config-flclash.local.yaml)
