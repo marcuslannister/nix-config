@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add TDLib 1.8.68, for `telega-server` (the Emacs Telegram client, which needs 1.8.66 or newer; nixpkgs-darwin has 1.8.63 and Homebrew 1.8.0). A new flake input `nixpkgs-unstable` supplies only `tdlib`, through an overlay (`tdlibModule` in `flake.nix`), and `~/.local/share/tdlib` links to it, so telega has one prefix with `include/` and `lib/`. It applies to the Apple silicon Macs only: nixpkgs-unstable dropped x86_64-darwin, so macbook-pro-2015 has no TDLib. dotfiles needs no change. Build `telega-server` again after a TDLib update.
+
 - Update the `dotfiles` input for the LM Studio CLI folder (`~/.cache/lm-studio/bin`) on `PATH` in `.zshenv`.
 - Add `harper` (provides `harper-ls`, an offline grammar checker that Emacs runs through Eglot) to the Darwin system packages, in `common-darwin.nix`. Link the Harper user dictionary `~/.config/harper-ls/dictionary.txt` from dotfiles, in `home/home.nix`, and update the `dotfiles` input for the new file.
 

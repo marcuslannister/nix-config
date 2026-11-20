@@ -5,6 +5,8 @@
     # Use consistent nixpkgs for all platforms
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
+    # Only for tdlib (see tdlibModule): the 26.05 pin has 1.8.63, and telega needs 1.8.66.
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     nix-darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
@@ -25,7 +27,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nix-darwin, home-manager, deploy-rs, dotfiles }:
+  outputs = inputs@{ self, nixpkgs, nixpkgs-darwin, nixpkgs-unstable, nix-darwin, home-manager, deploy-rs, dotfiles }:
   let
     # System definitions
     systems = {
@@ -55,6 +57,19 @@
     # entry below; the Debian hosts take nixpkgs' 0.6.0 in home/home-debian*.nix.
     scmpuffModule = { pkgs, ... }: {
       environment.systemPackages = [ (pkgs.callPackage ./pkgs/scmpuff.nix { }) ];
+    };
+
+    # TDLib for telega-server (the Emacs Telegram client).  Telega needs 1.8.66 or newer;
+    # nixpkgs-darwin has 1.8.63 and Homebrew 1.8.0, so tdlib comes from nixpkgs-unstable
+    # (1.8.68, in the binary cache).  Unstable dropped x86_64-darwin, so only the Apple
+    # silicon Macs take it (see mkDarwinConfig).  The link gives telega one prefix with
+    # include/ and lib/: nix-darwin's system profile links neither.  telega-server keeps
+    # the store path of the library it was built against, so rebuild it after a TDLib update.
+    tdlibModule = { pkgs, username, ... }: {
+      nixpkgs.overlays = [
+        (_: prev: { tdlib = nixpkgs-unstable.legacyPackages.${prev.stdenv.hostPlatform.system}.tdlib; })
+      ];
+      home-manager.users.${username}.home.file.".local/share/tdlib".source = pkgs.tdlib;
     };
 
     # Shared configuration modules
@@ -105,7 +120,7 @@
               backupFileExtension = "backup";
             };
           }
-        ] ++ modules;
+        ] ++ nixpkgs.lib.optionals (system == systems.darwin) [ tdlibModule ] ++ modules;
       };
 
       macMiniConfig = mkDarwinConfig {
