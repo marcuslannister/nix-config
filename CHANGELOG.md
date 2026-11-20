@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input for the gpt-6.2 models in the Codex and Pi aliases (`.zshrc.personal`), and for the removed `tsk` tap trust and herdr keys (`prefix+t`, `prefix+a`).
+
 - Remove `tsk` and its tap `smarzban/tap` from every Mac, in `darwin/homebrew-common.nix`. `cleanup = "none"` leaves them installed; uninstall with `brew uninstall tsk` and `brew untap smarzban/tap`. dotfiles drops the tap trust and the two herdr keys for it.
 
 - Remove the `clash-verge-rev` cask from macbook-pro-m1, in `darwin/homebrew-macbook-pro-m1.nix`. `cleanup = "none"` leaves it installed; quit its TUN service first, then uninstall it with `brew uninstall --cask clash-verge-rev`.
