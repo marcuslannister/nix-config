@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input for the claude.ai connectors switch in `.zshrc`: `ENABLE_CLAUDEAI_MCP_SERVERS=false` by default, and `claude --docs` to turn them on.
+
 - Add the `symbola` font (unfree) to `fonts.packages` in `common-darwin.nix`. Emacs uses it as the last fallback font for Unicode symbols that macOS fonts lack: telega shows them as hex boxes otherwise, as its FAQ says.
 
 - Update the `dotfiles` input for the gpt-6.2 models in the Codex and Pi aliases (`.zshrc.personal`), and for the removed `tsk` tap trust and herdr keys (`prefix+t`, `prefix+a`).
