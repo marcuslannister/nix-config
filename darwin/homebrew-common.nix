@@ -34,8 +34,8 @@
 
     casks = [
       # browsers
-      "brave-browser"
       "google-chrome"
+      "vivaldi"
 
       # editors and terminals
       "kitty"

@@ -77,6 +77,7 @@
       "fontbase"
       "forklift"
       "orion"
+      "raycast"
 
       # this machine only.  squirrel-app is the input method, Declared under
       # the current token; the retired `squirrel` record is dropped by path,

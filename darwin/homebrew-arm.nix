@@ -2,8 +2,8 @@
 #
 # ARM-only additions to darwin/homebrew-common.nix.  The common module carries
 # the cross-architecture subset; these packages stay on the ARM Macs because
-# the current Intel profile does not use them.  `raycast` is ARM-only in the
-# current cask definition, and the current `tcping` release is darwin-arm64.
+# the current Intel profile does not use them.  The current `tcping` release is
+# darwin-arm64.
 #
 # This list started as a description of what was already true on all three, so
 # adopting it installed and removed nothing.  It is now a decision as well: a
@@ -27,7 +27,6 @@
     ];
 
     casks = [
-      "raycast"
       "betterdisplay"
       "iina"
       "spotify"

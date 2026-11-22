@@ -61,6 +61,7 @@
     casks = [
       # shared with mac-mini-m1 only
       "calibre"
+      "raycast"
 
       # shared with macbook-pro-m1 only
       "crisp"
@@ -75,6 +76,7 @@
 
       # this machine only
       "anki"
+      "brave-browser"
       "fluidvoice"
       "macdown-3000"
       "magicquit"

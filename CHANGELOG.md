@@ -4,6 +4,10 @@
 
 - `home/home-omarchy.nix`: the header comment lists `herdr` among the tools Omarchy ships (it is in `omarchy-base.packages`), so Nix does not install it. A Nix `herdr` package on the x230 would be a second copy that `pacman` and `omarchy-update` do not manage.
 
+- Add the `vivaldi` cask to every Mac, in `darwin/homebrew-common.nix` (nixpkgs builds Vivaldi for Linux only). Move the `brave-browser` cask from there to `darwin/homebrew-mac-mini-m4.nix`, so only mac-mini-m4 declares it. `cleanup = "none"` leaves Brave installed on the other Macs; uninstall it with `brew uninstall --cask brave-browser`.
+
+- Move the `raycast` cask from `darwin/homebrew-arm.nix` to `darwin/homebrew-mac-mini-m4.nix` and `darwin/homebrew-mac-mini-m1.nix`, so macbook-pro-m1 no longer declares it and the two Mac minis keep it. `cleanup = "none"` does not remove it from macbook-pro-m1; it was removed there with `brew uninstall --cask raycast`.
+
 - Update the `dotfiles` input for the claude.ai connectors switch in `.zshrc`: `ENABLE_CLAUDEAI_MCP_SERVERS=false` by default, and `claude --docs` to turn them on.
 
 - Add the `symbola` font (unfree) to `fonts.packages` in `common-darwin.nix`. Emacs uses it as the last fallback font for Unicode symbols that macOS fonts lack: telega shows them as hex boxes otherwise, as its FAQ says.
