@@ -1,6 +1,6 @@
 # home-omarchy.nix
 # Omarchy (Arch + Hyprland) owns the system, the desktop configs and the CLI
-# tools it ships (eza, ripgrep, fd, fzf, zoxide, git, docker).  Nix adds only
+# tools it ships (eza, ripgrep, fd, fzf, zoxide, git, docker, herdr).  Nix adds only
 # what Omarchy lacks.  zsh itself comes from pacman so /etc/shells lists it;
 # programs.zsh stays off so it does not write a ~/.zshrc over the dotfiles one.
 { pkgs, ... }:

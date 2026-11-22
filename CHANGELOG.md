@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- `home/home-omarchy.nix`: the header comment lists `herdr` among the tools Omarchy ships (it is in `omarchy-base.packages`), so Nix does not install it. A Nix `herdr` package on the x230 would be a second copy that `pacman` and `omarchy-update` do not manage.
+
 - Update the `dotfiles` input for the claude.ai connectors switch in `.zshrc`: `ENABLE_CLAUDEAI_MCP_SERVERS=false` by default, and `claude --docs` to turn them on.
 
 - Add the `symbola` font (unfree) to `fonts.packages` in `common-darwin.nix`. Emacs uses it as the last fallback font for Unicode symbols that macOS fonts lack: telega shows them as hex boxes otherwise, as its FAQ says.
