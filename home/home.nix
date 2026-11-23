@@ -74,6 +74,12 @@ in
       executable = false;
     };
 
+    # Starts Claude Code with the Calends MCP server for one run; the settings live in a Vaultwarden item.
+    ".local/bin/claude-calends" = {
+      source = mkDotfileSource "local/bin/claude-calends";
+      executable = false;
+    };
+
     # Vim
     ".vimrc".source = "${dotfiles}/.vimrc";
     ".vim" = {

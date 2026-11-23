@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Link `claude-calends` from `dotfiles` into `~/.local/bin` (`home/home.nix`, a live link on macOS like `git-ediff-tui`).
+
 - Update the `dotfiles` input for the `cchd` alias in `.zshrc.personal`: `ccd` with the Haiku model and `xhigh` effort, like `ccsd` for Sonnet.
 
 - `home/home-omarchy.nix`: the header comment lists `herdr` among the tools Omarchy ships (it is in `omarchy-base.packages`), so Nix does not install it. A Nix `herdr` package on the x230 would be a second copy that `pacman` and `omarchy-update` do not manage.
