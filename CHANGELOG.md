@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input for `claude-calends` (`local/bin`), so that a rebuild installs the launcher.
 - Link `claude-calends` from `dotfiles` into `~/.local/bin` (`home/home.nix`, a live link on macOS like `git-ediff-tui`).
 
 - Update the `dotfiles` input for the `cchd` alias in `.zshrc.personal`: `ccd` with the Haiku model and `xhigh` effort, like `ccsd` for Sonnet.
