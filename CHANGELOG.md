@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Update the `dotfiles` input for the `cchd` alias in `.zshrc.personal`: `ccd` with the Haiku model and `xhigh` effort, like `ccsd` for Sonnet.
+
 - `home/home-omarchy.nix`: the header comment lists `herdr` among the tools Omarchy ships (it is in `omarchy-base.packages`), so Nix does not install it. A Nix `herdr` package on the x230 would be a second copy that `pacman` and `omarchy-update` do not manage.
 
 - Add the `vivaldi` cask to every Mac, in `darwin/homebrew-common.nix` (nixpkgs builds Vivaldi for Linux only). Move the `brave-browser` cask from there to `darwin/homebrew-mac-mini-m4.nix`, so only mac-mini-m4 declares it. `cleanup = "none"` leaves Brave installed on the other Macs; uninstall it with `brew uninstall --cask brave-browser`.
