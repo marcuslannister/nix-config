@@ -41,7 +41,10 @@
       # Mihomo GUI (chen08209/tap); profile from proxy-config (config-flclash.local.yaml)
       "flclash"
       "spotifast"
-      "tutti"
+      # homebrew/cask has an unrelated Tutti (https://tutti.sh/).  A bare
+      # `tutti` installs that cask.  Qualify the name so brew bundle installs
+      # this tap and reinstalls when the installed tap differs.
+      "barrybarrywu/tap/tutti"
     ];
   };
 }

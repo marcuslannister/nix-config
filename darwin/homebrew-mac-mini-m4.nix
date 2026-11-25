@@ -27,7 +27,6 @@
 {
   homebrew = {
     taps = [
-      "barrybarrywu/tap" # tutti
       "crmne/tap" # spotifast
       "darrylmorley/whatcable" # whatcable, whatcable-cli
       "lance0/tap" # ttl
@@ -66,7 +65,6 @@
       # shared with macbook-pro-m1 only
       "crisp"
       "spotifast"
-      "tutti"
 
       # ~/.emacs.d/lisp/init-local.el asks for "Aporetic Sans M Nerd Font", and
       # nixpkgs has no equivalent.  The other 15 font casks this machine carried

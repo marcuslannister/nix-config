@@ -55,6 +55,10 @@ done
 declared_leaves=()
 for b in $declared_brews; do declared_leaves+=(${b:t}); done
 
+# Caskroom directories are tokens. A qualified name still installs as the token.
+declared_cask_tokens=()
+for c in $declared_casks; do declared_cask_tokens+=(${c:t}); done
+
 # The closure comes from the receipts, not from `brew deps`, for two reasons.
 # `brew deps` refuses any formula whose tap is missing from Homebrew's trust
 # store, and one refusal blanks a whole batch.  It also answers from the
@@ -112,11 +116,11 @@ missing_from() {
 expected_formulae=($declared_leaves $dependencies)
 
 adopted_formulae=(${(@f)"$(missing_from expected_formulae $installed_formulae)"})
-adopted_casks=(${(@f)"$(missing_from declared_casks $installed_casks)"})
+adopted_casks=(${(@f)"$(missing_from declared_cask_tokens $installed_casks)"})
 adopted_taps=(${(@f)"$(missing_from declared_taps $installed_taps)"})
 
 absent_formulae=(${(@f)"$(missing_from installed_formulae $declared_leaves)"})
-absent_casks=(${(@f)"$(missing_from installed_casks $declared_casks)"})
+absent_casks=(${(@f)"$(missing_from installed_casks $declared_cask_tokens)"})
 absent_taps=(${(@f)"$(missing_from installed_taps $declared_taps)"})
 
 drift=0
