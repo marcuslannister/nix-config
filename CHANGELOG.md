@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Remove the `atext` cask from every Mac, in `darwin/homebrew-common.nix`. The Homebrew cask is aText 3 and has no version pin; keep 2.40.5 (released 27 Jan 2022) installed by hand. `cleanup = "none"` leaves aText 3 installed on the other Macs; it was removed on macbook-pro-m1 with `brew uninstall --cask atext`.
+
 - Update the `dotfiles` input for `claude-calends` (`local/bin`), so that a rebuild installs the launcher.
 - Link `claude-calends` from `dotfiles` into `~/.local/bin` (`home/home.nix`, a live link on macOS like `git-ediff-tui`).
 

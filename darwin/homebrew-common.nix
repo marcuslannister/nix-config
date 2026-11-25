@@ -42,7 +42,8 @@
       "markedit"
 
       # input methods and text
-      "atext"
+      # atext is not Declared. The Homebrew cask is aText 3 and has no version pin.
+      # Install 2.40.5 by hand.
       "squirrel-app"
 
       # window and input management
