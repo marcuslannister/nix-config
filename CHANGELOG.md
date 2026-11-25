@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Declare Emacs 31.1 (`emacs-pgtk` from nixpkgs-unstable) for the Omarchy hosts, in `home/home-omarchy.nix`. The 26.05 pin is 30.2. Link `emacs` into `~/.local/bin`, because `~/.zshenv` does not put `~/.nix-profile/bin` on PATH and `git-ediff-tui` execs `emacs`.
+
 - Declare `barrybarrywu/tap/tutti` only on macbook-pro-m1, in `darwin/homebrew-macbook-pro-m1.nix`. The bare name installs Homebrew's unrelated Tutti (`https://tutti.sh/`). Remove the cask and the tap `barrybarrywu/tap` from mac-mini-m4. `cleanup = "none"` leaves them installed there; uninstall with `brew uninstall --cask tutti` and `brew untap barrybarrywu/tap`.
 
 - Remove the `atext` cask from every Mac, in `darwin/homebrew-common.nix`. The Homebrew cask is aText 3 and has no version pin; keep 2.40.5 (released 27 Jan 2022) installed by hand. `cleanup = "none"` leaves aText 3 installed on the other Macs; it was removed on macbook-pro-m1 with `brew uninstall --cask atext`.
