@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Set `homebrew.onActivation.autoUpdate = false` in `darwin/homebrew.nix`, so a switch no longer updates Homebrew itself. `upgrade = true` stays.
+
 - Add `scripts/darwin-switch.sh`, which runs `sudo darwin-rebuild switch --flake . --impure` with the full `darwin-rebuild` path that the sudoers rule names. The Claude Code ask rule `Bash(sudo:*)` matches before any allow rule, so an agent that types `sudo darwin-rebuild` stops at a dialog; the refresh-mac skill and `AGENTS.md` call the script.
 
 - Remove the `raycast` cask from mac-mini-m1, in `darwin/homebrew-mac-mini-m1.nix`, so only mac-mini-m4 declares it. It was removed on mac-mini-m1 with `brew uninstall --cask raycast`; its settings in `~/Library` stay.
