@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add `scripts/darwin-switch.sh`, which runs `sudo darwin-rebuild switch --flake . --impure` with the full `darwin-rebuild` path that the sudoers rule names. The Claude Code ask rule `Bash(sudo:*)` matches before any allow rule, so an agent that types `sudo darwin-rebuild` stops at a dialog; the refresh-mac skill and `AGENTS.md` call the script.
+
 - Remove the `raycast` cask from mac-mini-m1, in `darwin/homebrew-mac-mini-m1.nix`, so only mac-mini-m4 declares it. It was removed on mac-mini-m1 with `brew uninstall --cask raycast`; its settings in `~/Library` stay.
 
 - Let the account run `sudo darwin-rebuild` without a password on mac-mini-m1 and mac-mini-m4 (`rebuildSudoModule` in `flake.nix`), so an agent in a Herdr pane can run the refresh-mac skill there. The rule applies after the first switch, which still asks for the password. It gives root to any process of that account, because `darwin-rebuild` can switch to any flake.
