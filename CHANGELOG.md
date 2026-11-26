@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Remove the `raycast` cask from mac-mini-m1, in `darwin/homebrew-mac-mini-m1.nix`, so only mac-mini-m4 declares it. It was removed on mac-mini-m1 with `brew uninstall --cask raycast`; its settings in `~/Library` stay.
+
 - Let the account run `sudo darwin-rebuild` without a password on mac-mini-m1 and mac-mini-m4 (`rebuildSudoModule` in `flake.nix`), so an agent in a Herdr pane can run the refresh-mac skill there. The rule applies after the first switch, which still asks for the password. It gives root to any process of that account, because `darwin-rebuild` can switch to any flake.
 
 - Declare Emacs 31.1 (`emacs-pgtk` from nixpkgs-unstable) for the Omarchy hosts, in `home/home-omarchy.nix`. The 26.05 pin is 30.2. Link `emacs` into `~/.local/bin`, because `~/.zshenv` does not put `~/.nix-profile/bin` on PATH and `git-ediff-tui` execs `emacs`.

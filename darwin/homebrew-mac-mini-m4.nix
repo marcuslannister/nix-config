@@ -60,7 +60,7 @@
     casks = [
       # shared with mac-mini-m1 only
       "calibre"
-      "raycast"
+      "raycast" # this machine only since 2026-11-25
 
       # shared with macbook-pro-m1 only
       "crisp"
