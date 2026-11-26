@@ -59,6 +59,15 @@
       environment.systemPackages = [ (pkgs.callPackage ./pkgs/scmpuff.nix { }) ];
     };
 
+    # Lets an agent in a Herdr pane run the refresh-mac skill, which has no TTY
+    # for a sudo password.  Any flake can be switched this way, so it is root
+    # for this account, the same as the hand-made NOPASSWD ALL on macbook-pro-m1.
+    rebuildSudoModule = { username, ... }: {
+      security.sudo.extraConfig = ''
+        ${username} ALL=(root) NOPASSWD: /run/current-system/sw/bin/darwin-rebuild
+      '';
+    };
+
     # TDLib for telega-server (the Emacs Telegram client).  Telega needs 1.8.66 or newer;
     # nixpkgs-darwin has 1.8.63 and Homebrew 1.8.0, so tdlib comes from nixpkgs-unstable
     # (1.8.68, in the binary cache).  Unstable dropped x86_64-darwin, so only the Apple
@@ -160,7 +169,7 @@
       # fallback any Mac lands on must not carry one machine's cask list.
       "mac-mini-m4" = mkDarwinConfig {
         system = systems.darwin;
-        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-mac-mini-m4.nix scmpuffModule ];
+        modules = [ ./darwin/homebrew-arm.nix ./darwin/homebrew-mac-mini-m4.nix scmpuffModule rebuildSudoModule ];
       };
 
       # The only host whose Homebrew state is fully written down: the two Mac
@@ -180,6 +189,7 @@
           ./darwin/homebrew-arm.nix
           ./darwin/homebrew-mac-mini-m1.nix
           scmpuffModule
+          rebuildSudoModule
         ];
       };
 
